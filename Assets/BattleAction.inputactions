@@ -1,0 +1,74 @@
+{
+    "name": "BattleAction",
+    "maps": [
+        {
+            "name": "PlayerAction",
+            "id": "b0281df8-1465-4a7a-9d4e-1481e8847d35",
+            "actions": [
+                {
+                    "name": "Draw",
+                    "type": "Button",
+                    "id": "b7bf4df0-0bec-42bf-8c86-6f255db41fd9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Discard",
+                    "type": "Button",
+                    "id": "f2f998c7-d332-4957-a3f6-d3dd93d0d322",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Play",
+                    "type": "Button",
+                    "id": "f5db8d00-90ad-4b10-ab77-686416a1c804",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e178c254-09fd-40ed-8de7-e610acea6834",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Draw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cfe4f4e-84be-4a82-bf3b-b4dff2d67d67",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Discard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f2d4a2c-4086-42c5-a54a-7d525657049b",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Play",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
