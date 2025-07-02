@@ -1,3 +1,5 @@
+using System;
+using UniRx;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -8,12 +10,15 @@ public class InputManager : MonoBehaviour
     {
         inputs = new BattleAction();
 
-        inputs.PlayerAction.Play.performed += ctx => Debug.Log("Play");
-        inputs.PlayerAction.Draw.performed += ctx => Debug.Log("Draw");
-        inputs.PlayerAction.Discard.performed += ctx => Debug.Log("Discard");
+        inputs.PlayerAction.Play.performed += ctx => Play.OnNext(Unit.Default);
+        inputs.PlayerAction.Draw.performed += ctx => Draw.OnNext(Unit.Default);
+        inputs.PlayerAction.Discard.performed += ctx => Discard.OnNext(Unit.Default);
 
         inputs.Enable();
     }
+    public Subject<Unit> Play = new Subject<Unit>();
+    public Subject<Unit> Draw = new Subject<Unit>();
+    public Subject<Unit> Discard = new Subject<Unit>();
 
     private void OnDestroy()
     {
