@@ -1,13 +1,11 @@
+using System;
 using UnityEngine;
 
 
 [RequireComponent(typeof(CardView))]
 public class Card : MonoBehaviour
 {
-    // static state
-    public static bool CanSelect = true;
-    private float originY;
-   
+    public static bool CanSelect = true;   
     public CardData Data {  get; private set;} 
     private CardView cardView;
 
@@ -27,12 +25,8 @@ public class Card : MonoBehaviour
     public void SetFace(bool isFront)
     {
         IsFront = isFront;
+        cardView.Artwork.sprite = cardView.CardFront;
     }
-    public void MoveUp()
-    {
-        originY = transform.localPosition.y;
-    }
-   
 }
 public enum CardState
 {

@@ -10,7 +10,7 @@ public class CardManager : MonoBehaviour
     public MoveCards moveCards;
     public InputManager inputManager;
 
-    private List<Card> deck = new List<Card>();
+    private List<Card> allCards = new List<Card>();
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class CardManager : MonoBehaviour
     public void DrawHand()
     {
         List<Card> cards = new List<Card>();
-        cards = deck.GetRange(0, 8);
+        cards = allCards.GetRange(0, 8);
         moveCards.MoveTo(MoveCards.Place.Hand, cards);
     }
     private void InitializeDeck()
@@ -36,8 +36,8 @@ public class CardManager : MonoBehaviour
         {
             var card = cardFactory.CreateCard(item, deckData.CardBack);
             card.gameObject.SetActive(true);
-            deck.Add(card);
+            allCards.Add(card);
         }
-        deck = deck.OrderBy(x => Random.value).ToList();
+        allCards = allCards.OrderBy(x => Random.value).ToList();
     }
 }

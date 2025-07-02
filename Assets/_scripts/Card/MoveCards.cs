@@ -23,6 +23,7 @@ public class MoveCards : MonoBehaviour
         {
             var item = cards.ElementAt(i);
             item.transform.SetParent(playerHand);
+            item.SetFace(true);
             item.transform.DOLocalMove(positions.ElementAt(i), 0.2f).SetEase(Ease.OutQuad);
         }
     }
