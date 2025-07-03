@@ -6,9 +6,9 @@ public class CardSelectHandler : MonoBehaviour
 {
 
     public static bool CanSelect = true;
-    public Subject<Card> OnClick =  new Subject<Card>();
-    
-    private bool isSelecting = false;
+    public static Subject<Card> OnClick =  new Subject<Card>();
+
+    public bool isSelecting;
     private Card cardCtrl => GetComponent<Card>();
     public void OnMouseDown()
     {

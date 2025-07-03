@@ -117,6 +117,15 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sort"",
+                    ""type"": ""Button"",
+                    ""id"": ""40ee644d-b23f-4afa-92f2-e4f077336cbe"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
                     ""action"": ""Play"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83667e66-12d0-4dd2-b58d-38501ae697b8"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sort"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -163,6 +183,7 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
         m_PlayerAction_Draw = m_PlayerAction.FindAction("Draw", throwIfNotFound: true);
         m_PlayerAction_Discard = m_PlayerAction.FindAction("Discard", throwIfNotFound: true);
         m_PlayerAction_Play = m_PlayerAction.FindAction("Play", throwIfNotFound: true);
+        m_PlayerAction_Sort = m_PlayerAction.FindAction("Sort", throwIfNotFound: true);
     }
 
     ~@BattleAction()
@@ -246,6 +267,7 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerAction_Draw;
     private readonly InputAction m_PlayerAction_Discard;
     private readonly InputAction m_PlayerAction_Play;
+    private readonly InputAction m_PlayerAction_Sort;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerAction".
     /// </summary>
@@ -269,6 +291,10 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerAction/Play".
         /// </summary>
         public InputAction @Play => m_Wrapper.m_PlayerAction_Play;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerAction/Sort".
+        /// </summary>
+        public InputAction @Sort => m_Wrapper.m_PlayerAction_Sort;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -304,6 +330,9 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
             @Play.started += instance.OnPlay;
             @Play.performed += instance.OnPlay;
             @Play.canceled += instance.OnPlay;
+            @Sort.started += instance.OnSort;
+            @Sort.performed += instance.OnSort;
+            @Sort.canceled += instance.OnSort;
         }
 
         /// <summary>
@@ -324,6 +353,9 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
             @Play.started -= instance.OnPlay;
             @Play.performed -= instance.OnPlay;
             @Play.canceled -= instance.OnPlay;
+            @Sort.started -= instance.OnSort;
+            @Sort.performed -= instance.OnSort;
+            @Sort.canceled -= instance.OnSort;
         }
 
         /// <summary>
@@ -385,5 +417,12 @@ public partial class @BattleAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPlay(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Sort" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSort(InputAction.CallbackContext context);
     }
 }
