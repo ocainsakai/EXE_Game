@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CardFactorySetting", menuName = "Scriptable Objects/ardFactorySetting")]
+[CreateAssetMenu(fileName = "CardFactorySetting", menuName = "Scriptable Objects/CardFactorySetting")]
 public class CardFactorySetting : ScriptableObject
 {
     public int _poolSize = 52;

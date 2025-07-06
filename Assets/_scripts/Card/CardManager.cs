@@ -8,10 +8,10 @@ public class CardManager : MonoBehaviour
 {
     public DeckData deckData;
     public CardFactory cardFactory;
-    public CardsMove moveCards;
-
+    public CardsMove cardsMove;
     public CardsContext cardsContext;
-
+    public PokerManager pokerManager;
+    public GamePhase gamePhase;
     public enum SortType
     {
         Rank,
@@ -19,13 +19,33 @@ public class CardManager : MonoBehaviour
     }
     public SortType currentSortType;
     private List<Card> allCards = new List<Card>();
-
+    public bool canUpdateUI = true;
     private void Awake()
     {
         cardFactory = GetComponent<CardFactory>();
         CardSelectHandler.OnClick.Subscribe(card => CardOnClickHandle(card));
+        BlindCardContext();
+        InitializeDeck();
+
     }
-    #region
+
+    private void BlindCardContext()
+    {
+        cardsContext.selected.ObserveCountChanged()
+            .Subscribe(card =>
+                    {   if (canUpdateUI)
+                        pokerManager.UpdatePoker(cardsContext.selected);
+                    });
+        cardsContext.selected.ObserveAdd()
+            .Subscribe(x => x.Value.Select());
+        cardsContext.selected.ObserveRemove()
+            .Subscribe(x => x.Value.Unselect());
+    }
+
+    private void Start()
+    {
+    }
+    
     public void NextSortType()
     {
         SortType[] types = (SortType[])Enum.GetValues(typeof(SortType));
@@ -37,6 +57,7 @@ public class CardManager : MonoBehaviour
     }
     public void Sort()
     {
+        cardsContext.ResetHand();
         SortByType(currentSortType);
     }
     public void SortByType(SortType sortType)
@@ -50,13 +71,15 @@ public class CardManager : MonoBehaviour
                 cardsContext.SortBySuit();
                 break;
         }
-        moveCards.MoveToHand(cardsContext.hand);
+        cardsMove.MoveToHand(cardsContext.hand);
     }
-    #endregion
-    private void Start()
+    
+    public void ResetBoard()
     {
-        InitializeDeck();
+        cardsMove.MoveToDiscard(cardsContext.played);
+        gamePhase.currentPhase.Value = Phase.StartTurn;
     }
+   
     private void InitializeDeck()
     {
         foreach (var item in deckData.startingCards)
@@ -82,17 +105,32 @@ public class CardManager : MonoBehaviour
             }
         }
     }
+    public void MoveToScore()
+    {
+        canUpdateUI = false;
+        CardSelectHandler.IsBlockClick = true;
+        var cards = cardsContext.TakeSelect();
+        cardsContext.hand.RemoveAll(x => cards.Contains(x));
+        //cardsContext.selected.Clear();
 
+        cardsContext.played.AddRange(cards);
+        cardsMove.MoveToScore(cards);
+        cardsMove.MoveToHand(cardsContext.hand);
+    }
     public void Discard()
     {
-        List<Card> cards = new List<Card>();
-        cards = cardsContext.selected.ToList();
+        var cards = cardsContext.TakeSelect();
         cardsContext.hand.RemoveAll(x => cards.Contains(x));
+
         cardsContext.selected.Clear();
-        moveCards.MoveToDiscard(cards);
+
+        cardsMove.MoveToDiscard(cards);
     }
     public void DrawHand(int amout)
     {
+        canUpdateUI = true;
+        CardSelectHandler.IsBlockClick = false;
+
         if (amout > cardsContext.deck.Count)
         {
             return;
@@ -102,6 +140,6 @@ public class CardManager : MonoBehaviour
         cardsContext.deck.RemoveRange(0, amout);
         cardsContext.hand.AddRange(cards);
         Sort();
-        moveCards.MoveToHand(cardsContext.hand);
+        cardsMove.MoveToHand(cardsContext.hand);
     }
 }

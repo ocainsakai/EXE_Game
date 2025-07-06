@@ -9,7 +9,7 @@ public class CardData : ScriptableObject
     public string CardName => ToString();
     public int RankValue => (int)Rank;
     public int SuitValue => (int)Suit;
-    public int chipAmount => RankValue == 14 ? 11 : RankValue > 10 ? 10 : RankValue;
+    public int Value => RankValue == 14 ? 11 : RankValue > 10 ? 10 : RankValue;
 
     public override string ToString() => $"{Rank} of {Suit}";
     

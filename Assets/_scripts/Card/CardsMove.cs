@@ -8,13 +8,6 @@ public class CardsMove : MonoBehaviour
     public Transform discardPiles;
     public Transform deckPiles;
     public Transform scoreBoard;
-    public enum Place
-    {
-        Hand,
-        DiscardPile,
-        Deck,
-        ScoreBoard
-    }
     public enum Align
     {
         None,
@@ -24,13 +17,18 @@ public class CardsMove : MonoBehaviour
 
     public void MoveToHand(IEnumerable<Card> cards)
     {
-        Transform target = GetTarget(Place.Hand);
+        Transform target = playerHand;
         MoveTo(cards, target, Align.Center);
     }
     public void MoveToDiscard(IEnumerable<Card> cards)
     {
-        Transform target = GetTarget(Place.DiscardPile);
+        Transform target = discardPiles;
         MoveTo(cards, target, Align.None);
+    }
+    public void MoveToScore(IEnumerable<Card> cards)
+    {
+        Transform target = scoreBoard;
+        MoveTo(cards, target, Align.Center);
     }
     private void MoveTo(IEnumerable<Card> cards, Transform target, Align align = Align.None)
     {
@@ -40,20 +38,8 @@ public class CardsMove : MonoBehaviour
             var item = cards.ElementAt(i);
             item.transform.SetParent(playerHand);
             item.SetFace(true);
-            item.GetComponent<CardSelectHandler>().isSelecting = false;
             item.transform.DOMove(positions.ElementAt(i), 0.2f).SetEase(Ease.OutQuad);
         }
-    }
-    private Transform GetTarget(Place place)
-    {
-        switch (place)
-        {
-            case Place.Hand: return playerHand;
-            case Place.DiscardPile: return discardPiles;
-            case Place.Deck: return deckPiles;
-            case Place.ScoreBoard: return scoreBoard;
-        }
-        return playerHand.transform;
     }
     private IEnumerable<Vector3> CalculatePos(Align align, Vector3 pos, int count) {
         Vector3[] result = Enumerable.Repeat(pos, count).ToArray();
