@@ -15,7 +15,7 @@ public class MainMenuHomeScene : MonoBehaviour {
 
 	void Awake(){
 		Instance = this;
-		soundManager = FindObjectOfType<SoundManager> ();
+		soundManager = FindFirstObjectByType<SoundManager>();
 	}
 
 	// Use this for initialization

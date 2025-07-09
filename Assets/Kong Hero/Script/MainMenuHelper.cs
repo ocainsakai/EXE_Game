@@ -6,7 +6,7 @@ public class MainMenuHelper : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		HideHelper ();
+		HideHelper();
 	}
 
 	public void ShowHelper(){
