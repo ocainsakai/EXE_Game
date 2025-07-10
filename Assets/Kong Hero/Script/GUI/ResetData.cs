@@ -6,7 +6,7 @@ public class ResetData : MonoBehaviour {
 	SoundManager soundManager;
 
 	void Start(){
-		soundManager = FindObjectOfType<SoundManager> ();
+		soundManager = FindFirstObjectByType<SoundManager> ();
 		CharacterHolder.Instance.GetPickedCharacter ();
 	}
 

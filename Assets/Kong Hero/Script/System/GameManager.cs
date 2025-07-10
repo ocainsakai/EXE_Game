@@ -28,13 +28,13 @@ public class GameManager: MonoBehaviour {
 	void Awake(){
 		Instance = this;
 		State = GameState.Menu;
-		Player = FindObjectOfType<Player> ();
+		Player = FindFirstObjectByType<Player> ();
 
 		if (CharacterHolder.Instance != null && CharacterHolder.Instance.CharacterPicked != null) {
 			Instantiate (CharacterHolder.Instance.CharacterPicked, Player.transform.position, Player.transform.rotation);
 			Destroy (Player.gameObject);
 
-			Player = FindObjectOfType<Player> ();
+			Player = FindFirstObjectByType<Player> ();
 		}
 	}
 
@@ -79,9 +79,9 @@ public class GameManager: MonoBehaviour {
 
 
 	void Start(){
-		menuManager = FindObjectOfType<MenuManager> ();
+		menuManager = FindFirstObjectByType<MenuManager> ();
 
-		soundManager = FindObjectOfType<SoundManager> ();
+		soundManager = FindFirstObjectByType<SoundManager> ();
 
 		Coin = SavedCoins;
 		Bullet = SavedBullets;

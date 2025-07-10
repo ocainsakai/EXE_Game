@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour {
 		saveTimerCheckPoint = timer;
 
 
-		_checkpoints = FindObjectsOfType<CheckPoint> ().OrderBy (t => t.transform.position.x).ToList ();
+		_checkpoints = FindObjectsByType<CheckPoint>(FindObjectsSortMode.None).OrderBy (t => t.transform.position.x).ToList ();
 		_currentCheckpointIndex = _checkpoints.Count > 0 ? 0 : -1;
 		//
 	
@@ -49,11 +49,11 @@ public class LevelManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Player = FindObjectOfType<Player> ();
-		Camera = FindObjectOfType<CameraFollow> ();
+		Player = FindFirstObjectByType<Player> ();
+		Camera = FindFirstObjectByType<CameraFollow> ();
 
-		var listener = FindObjectsOfType<MonoBehaviour>().OfType<IPlayerRespawnListener>();
-		//		var listener = (IPlayerRespawnListener)FindObjectsOfType(typeof(IPlayerRespawnListener));
+		var listener = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IPlayerRespawnListener>();
+		//		var listener = (IPlayerRespawnListener)FindObjectsByType(typeof(IPlayerRespawnListener));
 
 		foreach (var _listener in listener) {
 			for (int i = _checkpoints.Count - 1; i >= 0; i--) {
