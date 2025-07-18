@@ -18,6 +18,8 @@ public class HexMapGenerator : MonoBehaviour
     public Transform gridParent; // Parent object to hold all hex tiles
     
     private List<GameObject> hexTiles = new List<GameObject>();
+    private readonly string[] tileTypes = { "Fight", "Elite Fight", "Shop" };
+    private System.Random rng = new System.Random();
     
     void Start()
     {
@@ -40,18 +42,26 @@ public class HexMapGenerator : MonoBehaviour
         }
         
         // First column: only one hex at row 1 (middle)
-        CreateHexTile(1, 0);
+        CreateHexTile(1, 0, "Normal");
         // Other columns: three hexes at rows 0, 1, 2
         for (int col = 1; col < columns; col++)
         {
             for (int row = 0; row < 3; row++)
             {
-                CreateHexTile(row, col);
+                // Nếu là tile cuối cùng (1, columns-1) thì là Boss
+                if (col == columns - 1 && row == 1)
+                {
+                    CreateHexTile(row, col, "Boss");
+                }
+                else
+                {
+                    CreateHexTile(row, col);
+                }
             }
         }
     }
     
-    private void CreateHexTile(int row, int col)
+    private void CreateHexTile(int row, int col, string forcedType = null)
     {
         if (hexTilePrefab == null)
         {
@@ -70,12 +80,14 @@ public class HexMapGenerator : MonoBehaviour
         hexTiles.Add(hexTile);
         
         // Optional: Add tile data component for future use
-        HexTileData tileData = hexTile.GetComponent<HexTileData>();
+        HexData tileData = hexTile.GetComponent<HexData>();
         if (tileData == null)
         {
-            tileData = hexTile.AddComponent<HexTileData>();
+            tileData = hexTile.AddComponent<HexData>();
         }
-        tileData.Initialize(row, col, position);
+        // Nếu có forcedType thì dùng, không thì random
+        string type = forcedType ?? tileTypes[rng.Next(tileTypes.Length)];
+        tileData.Initialize(row, col, type);
     }
     
     private Vector3 CalculateHexPosition(int row, int col)
@@ -139,18 +151,3 @@ public class HexMapGenerator : MonoBehaviour
     }
 }
 
-// Helper class to store tile data
-public class HexTileData : MonoBehaviour
-{
-    public int row;
-    public int col;
-    public Vector3 worldPosition;
-    public bool isOccupied = false;
-    
-    public void Initialize(int r, int c, Vector3 pos)
-    {
-        row = r;
-        col = c;
-        worldPosition = pos;
-    }
-}
