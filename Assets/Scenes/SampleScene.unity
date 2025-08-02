@@ -273,14 +273,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 139896816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ecfa48fd2253b940b302b6a01af7d4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 99b7c0d3a0ab2444986b8efe6caae574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _cardContainer: {fileID: 139896818}
-  alignment: 1
-  totalWidth: 1000
-  height: 300
-  spacing: 50
+  _animateLayout: 1
+  _moveDuration: 0.25
+  _moveEase: 1
+  _layoutSettings: {fileID: 11400000, guid: c692d9885c8dcf347a4547827e284ea8, type: 2}
 --- !u!1 &296146406
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,8 +828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1658228880}
   - component: {fileID: 1658228881}
-  - component: {fileID: 1658228882}
-  - component: {fileID: 1658228883}
+  - component: {fileID: 1658228884}
   m_Layer: 5
   m_Name: Deck
   m_TagString: Untagged
@@ -853,7 +852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 401, y: -391}
+  m_AnchoredPosition: {x: 0, y: -391}
   m_SizeDelta: {x: 1000, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1658228881
@@ -868,7 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8872b431d56ce46aafc1e05cca3fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1658228882
+--- !u!114 &1658228884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -877,40 +876,79 @@ MonoBehaviour:
   m_GameObject: {fileID: 1658228879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ecfa48fd2253b940b302b6a01af7d4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 99b7c0d3a0ab2444986b8efe6caae574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _cardContainer: {fileID: 1658228881}
-  alignment: 0
-  totalWidth: 1000
-  height: 300
-  spacing: 50
---- !u!114 &1658228883
+  _animateLayout: 1
+  _moveDuration: 0.25
+  _moveEase: 1
+  _layoutSettings: {fileID: 11400000, guid: c692d9885c8dcf347a4547827e284ea8, type: 2}
+--- !u!1 &1824348241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1824348242}
+  - component: {fileID: 1824348244}
+  - component: {fileID: 1824348243}
+  m_Layer: 0
+  m_Name: Battle Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1824348242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824348241}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 522.30707, y: 218.23471, z: -18.833464}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1824348243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658228879}
+  m_GameObject: {fileID: 1824348241}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073555fa5adc6d64faea1373ad0f3503, type: 3}
+  m_Script: {fileID: 11500000, guid: b3526a38efd13d44696d199a1f12fd5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefabRef:
-    m_AssetGUID: ff8e8916b9684a04f8c73336f2d07990
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
-  cardDatas:
-    m_LabelString: Standard
+  player: {fileID: 460327909}
+--- !u!114 &1824348244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824348241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6fbecc4bc644141ad25d7fe8b1c5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
+  - {fileID: 1824348242}
   - {fileID: 460327908}
   - {fileID: 296146410}
   - {fileID: 414363801}

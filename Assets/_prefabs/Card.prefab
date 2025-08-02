@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 1780499033445566477}
   - component: {fileID: 8416655850170998864}
   - component: {fileID: 8637859793889256273}
-  - component: {fileID: 8801008045084042842}
   - component: {fileID: 3191227315901995986}
   m_Layer: 0
   m_Name: Card
@@ -167,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6958d0e453480fa4297ba88274301dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardSwapper: {fileID: 0}
 --- !u!114 &8637859793889256273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,21 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1749a17c3a1b84f96797f73245faa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8801008045084042842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8597234337281464543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d84460667995d3429be4e7efec5200c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dataHolder: {fileID: 1780499033445566477}
-  duration: 0.25
-  easing: 6
 --- !u!114 &3191227315901995986
 MonoBehaviour:
   m_ObjectHideFlags: 0

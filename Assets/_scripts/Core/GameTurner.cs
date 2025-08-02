@@ -9,6 +9,10 @@ public class GameTurner : GameUnit, ICountable
     {
         // Implement attack logic here
     }
+    public virtual void StartTurn()
+    {
+        
+    }
     public void DecreaseCount(int amount)
     {
         _count.Value -= amount;

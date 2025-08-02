@@ -11,27 +11,12 @@ public class PlayerCardHolder : MonoBehaviour
 
     public void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Deck.Cards.Count <=0)
         {
-            
-            
-            if (Deck.Cards.Count > 0)
-            {
-                addhand();
-            } else
-            {
-                foreach (Transform child in Deck.transform)
-                {
-                    Deck.Add(child.GetComponent<Card>());
-                }
-            }
+           
         }
+
     }
-    private void addhand()
-    {
-        var card = Deck.Cards[0];
-        Hand.Add(Deck.Cards[0]);
-        Deck.Remove(card);
-    }
+   
 }
+
