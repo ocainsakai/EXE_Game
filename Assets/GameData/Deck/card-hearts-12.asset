@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d369084cb154d14c9e7333386437e5f, type: 3}
+  m_Name: card-hearts-12
+  m_EditorClassIdentifier: 
+  Cost: 0
+  Name: 
+  Description: 
+  Suit: 0
+  Rank: 12
+  Art: {fileID: -1766300541523665513, guid: 3a6a18dfec1f4cf48a112a1dbf79f78f, type: 3}
