@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Standard Card
+  m_EditorClassIdentifier: 
+  m_GroupName: Standard Card
+  m_GUID: 78e24e2941b2df342a5d1263be6e1ddd
+  m_SerializeEntries:
+  - m_GUID: 08521bad777577c478661073eee41487
+    m_Address: Assets/GameData/Deck/card-diamonds-6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 093e74a237f3c3649aa44118b47c8064
+    m_Address: Assets/GameData/Deck/card-clubs-7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b05ad4d84047f54586b3ea50f2d83a8
+    m_Address: Assets/GameData/Deck/card-diamonds-9.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d328248e02b5a64585fb470325bee26
+    m_Address: Assets/GameData/Deck/card-hearts-6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22b92c263d5e4dd46bcdc9486d0eea02
+    m_Address: Assets/GameData/Deck/card-spades-6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25be92e12f1ff9f438b5729fe0692fbb
+    m_Address: Assets/GameData/Deck/card-clubs-3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27c6f0244a07d864e8eb962147a64b92
+    m_Address: Assets/GameData/Deck/card-diamonds-3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b20192529da9bc4683f0b414ffea572
+    m_Address: Assets/GameData/Deck/card-spades-9.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f619117035c3484594f450015f5d28e
+    m_Address: Assets/GameData/Deck/card-spades-5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 358859c93dd567f4388df192d85ed56f
+    m_Address: Assets/GameData/Deck/card-clubs-6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 419923f36f78ca74bae4524eaf9028b4
+    m_Address: Assets/GameData/Deck/card-hearts-9.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44a487b00f96aa442811b363a10199a6
+    m_Address: Assets/GameData/Deck/card-hearts-12.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 452c68311911c6e4d94c371f41a32e04
+    m_Address: Assets/GameData/Deck/card-diamonds-1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4645c847a4912d842b0e54140bee2e43
+    m_Address: Assets/GameData/Deck/card-diamonds-12.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4822f5dfec6824b4fa86c0843e8ff5b2
+    m_Address: Assets/GameData/Deck/card-clubs-10.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 499952366053a8048af82e6d383db7f8
+    m_Address: Assets/GameData/Deck/card-clubs-2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49c71745a8cfcde408d58440fa1519cc
+    m_Address: Assets/GameData/Deck/card-spades-13.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bfdd61d319c63e41a02dcd80a60e107
+    m_Address: Assets/GameData/Deck/card-spades-1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4df4c445ebe3176459370ee77a902f7c
+    m_Address: Assets/GameData/Deck/card-hearts-11.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e89b7adf87e123478bb04c1b2734a39
+    m_Address: Assets/GameData/Deck/card-spades-2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 529d75a4c9d67db4fb344d4a29278a60
+    m_Address: Assets/GameData/Deck/card-clubs-5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bb6507f5a0ba024ca983b0ad704dca8
+    m_Address: Assets/GameData/Deck/card-clubs-13.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62c5185f1199d7743bea810a9bc6460c
+    m_Address: Assets/GameData/Deck/card-hearts-1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 798a0155fc3cb8e4aa5a985603ded2a5
+    m_Address: Assets/GameData/Deck/card-clubs-12.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 874f58ac2dd52d6488b0d7070688dd05
+    m_Address: Assets/GameData/Deck/card-clubs-1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9037c83843436d74795cfbb2fe13548b
+    m_Address: Assets/GameData/Deck/card-hearts-5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91515dea853d9784fa3ae24e23d80078
+    m_Address: Assets/GameData/Deck/card-diamonds-8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92f9fadcc21db7340b03a2746fc1ce2a
+    m_Address: Assets/GameData/Deck/card-clubs-4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 953a2377940317644bb0d2e2168973c4
+    m_Address: Assets/GameData/Deck/card-hearts-8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a76b160593fbe5543b51fb08a5dccfff
+    m_Address: Assets/GameData/Deck/card-spades-8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b216f2aba9a3ace47ab9cd1e3e52d926
+    m_Address: Assets/GameData/Deck/card-diamonds-7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcd44c8957bf4034e8bdd00c91950da3
+    m_Address: Assets/GameData/Deck/card-hearts-7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c16fd873b3e491e45a3c8c29cd94db90
+    m_Address: Assets/GameData/Deck/card-diamonds-13.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c51916b89d1a3d54c8fcb62275227627
+    m_Address: Assets/GameData/Deck/card-hearts-3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8a841af97fd0974184bf0009a7c8130
+    m_Address: Assets/GameData/Deck/card-diamonds-11.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cae64664183a57a4a8e271c0d4207d73
+    m_Address: Assets/GameData/Deck/card-spades-12.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: caf1435f7bf243d429f0f306dbb343ef
+    m_Address: Assets/GameData/Deck/card-spades-10.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ced5506b079098c49ab827985f0187ef
+    m_Address: Assets/GameData/Deck/card-clubs-9.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d53e72555b1de2a46a3cfb6f19269357
+    m_Address: Assets/GameData/Deck/card-hearts-10.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9df38b1c3621864795279cef9cb305e
+    m_Address: Assets/GameData/Deck/card-hearts-13.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2c565ee75b820f4ab4690362914e6ff
+    m_Address: Assets/GameData/Deck/card-diamonds-5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e40b9fc3293061346bcfc40cb8472203
+    m_Address: Assets/GameData/Deck/card-spades-7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e633547e60d9c2e4f9b0f2b8f2100ae8
+    m_Address: Assets/GameData/Deck/card-diamonds-2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e945dd42c28308749be3b360ad6a288f
+    m_Address: Assets/GameData/Deck/card-spades-4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec931bd3831818548aa31b4f4388dbd9
+    m_Address: Assets/GameData/Deck/card-clubs-11.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed32dbed6b9210e48bc2607952b994e8
+    m_Address: Assets/GameData/Deck/card-spades-3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f381c5f8ee5e76247a7af6fec147eac6
+    m_Address: Assets/GameData/Deck/card-clubs-8.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f54d87734047166429ea420bbc17e570
+    m_Address: Assets/GameData/Deck/card-hearts-2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f578fae36299baa4f907458afd283d6f
+    m_Address: Assets/GameData/Deck/card-diamonds-10.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5f3a5c496669704aa854fb12d371f1a
+    m_Address: Assets/GameData/Deck/card-diamonds-4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f87bab7f36f431d48b6b829cc762ddba
+    m_Address: Assets/GameData/Deck/card-hearts-4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9c58f894b4268b46a148f1f4f61abb4
+    m_Address: Assets/GameData/Deck/card-spades-11.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Standard
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8357584b6bb8d864dbd1c2564cf8d26e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 26dce717278213f44bb65a7a2221a825, type: 2}
+    - {fileID: 11400000, guid: 6ac8715160f55c749bfd90b10e8550df, type: 2}
