@@ -11,7 +11,7 @@ public class CardInputDecider : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public event Action<Vector2> OnDragging; 
     public event Action OnEndDrag;      
 
-    public bool CanSelect { get; set; } = false;
+    public bool CanInteract { get; set; } = false;
     //private float _pointerDownTime;
     private Vector2 _pointerDownPos;
     private bool _isDragging;
@@ -22,7 +22,7 @@ public class CardInputDecider : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public CardState CurrentState { get; private set; } = CardState.Idle;
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!CanSelect)
+        if (!CanInteract)
         {
             return;
         }
@@ -35,7 +35,7 @@ public class CardInputDecider : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!CanSelect)
+        if (!CanInteract)
         {
             return;
         }
@@ -58,7 +58,7 @@ public class CardInputDecider : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!CanSelect)
+        if (!CanInteract)
         {
             return;
         }

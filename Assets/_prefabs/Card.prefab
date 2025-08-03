@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 2918854555426625825}
   - component: {fileID: 8156643537941935296}
   - component: {fileID: 1780499033445566477}
-  - component: {fileID: 8416655850170998864}
   - component: {fileID: 8637859793889256273}
   - component: {fileID: 3191227315901995986}
   m_Layer: 0
@@ -137,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa58e1a52d8e9294d85834cb9760d7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 0
-  ATK: 0
+  inputDecider: {fileID: 8637859793889256273}
+  selecter: {fileID: 3191227315901995986}
   dataHolder: {fileID: 1780499033445566477}
 --- !u!114 &1780499033445566477
 MonoBehaviour:
@@ -154,18 +153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     value: {fileID: 0}
---- !u!114 &8416655850170998864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8597234337281464543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6958d0e453480fa4297ba88274301dcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8637859793889256273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,3 +179,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected:
     value: 0
+  CanSelect: 0

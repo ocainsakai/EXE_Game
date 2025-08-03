@@ -1,6 +1,7 @@
 ﻿
     public enum PokerHandType
     {
+        None,
         HighCard,
         OnePair,
         TwoPair,

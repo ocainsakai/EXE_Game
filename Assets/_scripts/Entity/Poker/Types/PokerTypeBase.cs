@@ -9,7 +9,7 @@ public abstract partial class PokerTypeBase
 
     protected bool ValidateInput(int[] ranks, int[] suits = null)
     {
-        if (ranks == null || ranks.Length < 5)
+        if (ranks == null)
             return false;
 
         if (suits != null && suits.Length != ranks.Length)
@@ -20,13 +20,13 @@ public abstract partial class PokerTypeBase
 
     protected bool HasFlush(int[] suits)
     {
-        if (!ValidateInput(suits)) return false;
+        if (!ValidateInput(suits) || suits.Length < 5) return false;
         return suits.Distinct().Count() == 1;
     }
 
     protected bool HasStraight(int[] ranks)
     {
-        if (!ValidateInput(ranks)) return false;
+        if (!ValidateInput(ranks) || ranks.Length < 5) return false;
 
         Array.Sort(ranks);
 

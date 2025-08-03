@@ -6,6 +6,6 @@ public class HighCardType : PokerTypeBase
 
     public override bool IsMatch(int[] ranks, int[] suits)
     {
-        return true;
+        return ranks.Length > 0;
     }
 }

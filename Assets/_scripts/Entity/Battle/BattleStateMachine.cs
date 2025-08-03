@@ -1,17 +1,18 @@
 using Ain;
-using UnityEngine;
 
 public class BattleStateMachine : StateMachine<IState>
 {
-    [SerializeField] CardDatabase standardCards;
-    [SerializeField] EnemyDatabase combatContext;
-    [SerializeField] EnemyBattleUI battleUI;
-    public Player player;
-    private void Start()
-    {
-        battleUI.InitializedEnemy(combatContext.Enemies);
-        player.Initialize(standardCards.Cards);
-    }
+    public BattleStart battleStart;
+    public BattleEnd battleEnd;
+    public DrawPhase drawPhase;
+    public EnemyTurn enemyTurn;
+    public PlayerTurn playerTurn;
+    private BattleManager _battleManager;
 
+    public void Initialize(BattleManager battleManager)
+    {
+        _battleManager = battleManager;
+        battleStart = new BattleStart(this, _battleManager.deckList);
+    }
 
 }

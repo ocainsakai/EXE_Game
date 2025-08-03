@@ -1,30 +1,37 @@
-﻿using Ain;
-using Cysharp.Threading.Tasks;
-using System.Threading;
+using Ain;
+using System.Collections.Generic;
 using UnityEngine;
-
-public enum BattleState { PlayerTurn, EnemyTurn, Victory, Defeat }
 
 public class BattleManager : Singleton<BattleManager>
 {
-    public CancellationTokenSource CancellationTokenSource { get; private set; }
-    public IState CurrentState { get; private set; }
-    public void ChangeState(IState state)
+    [SerializeField] public CardList deckList;
+    [SerializeField] public EnemyList enemyList;
+    [SerializeField] public CardDatabase standardCards;
+    [SerializeField] public EnemyDatabase combatContext;
+    [SerializeField] public EnemyBattleUI battleUI;
+    [SerializeField] private BattleStateMachine battleStateMachine;
+
+    protected override void Awake()
     {
-        if (CurrentState != null)
-        {
-            CurrentState.OnExit();
-        }
-        CurrentState = state;
-        if (CurrentState != null)
-        {
-            CurrentState.OnEnter();
-        }
+        battleStateMachine.Initialize(this);
+        base.Awake();
+        //battleStateMachine = new BattleStateMachine(this);
     }
-    private void OnDestroy()
+    private void Start()
     {
-        CancellationTokenSource?.Cancel();
-        CancellationTokenSource?.Dispose();
+        //SetInitialState(new BattleStart(this, deckList));
+        InitializeEnemies();
     }
-  
+
+    private void InitializeEnemies()
+    {
+        var enemies = battleUI.InitializedEnemy(combatContext.Enemies);
+        enemyList.enemies.Clear();
+        enemyList.enemies.AddRange(enemies);
+    }
+
+    public List<Card> CreateStandardCard()
+    {
+        return CardFactory.Instance.GetCards(standardCards.Cards);
+    }
 }

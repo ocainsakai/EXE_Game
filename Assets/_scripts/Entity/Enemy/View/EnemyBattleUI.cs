@@ -14,8 +14,9 @@ public class EnemyBattleUI : MonoBehaviour
         }
         // Initialize any necessary components or references here
     }
-    public void InitializedEnemy(IEnumerable<EnemyData> enemies)
+    public List<Enemy> InitializedEnemy(IEnumerable<EnemyData> enemies)
     {
+        List<Enemy> enemyList = new List<Enemy>();
         int i = 0;
         foreach (var enemyData in enemies)
         {
@@ -23,8 +24,9 @@ public class EnemyBattleUI : MonoBehaviour
             var enemyEntity = Instantiate(enemyData.Prefab);
             enemyEntity.transform.localPosition = Vector3.zero;
             enemyEntity.transform.SetParent(slot, false);
-
+            enemyList.Add(enemyEntity.GetComponent<Enemy>());
             i++;
         }
+        return enemyList;
     }
 }

@@ -30,6 +30,6 @@ public class PokerHandEvaluator
                 return pokerType.Type;
             }
         }
-        return PokerHandType.HighCard;
+        return PokerHandType.None;
     }
 }

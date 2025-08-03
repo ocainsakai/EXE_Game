@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class CardSelecter : MonoBehaviour, ISelectable
 {
-    public bool CanSelect { get; set; } = false;
     public ReactiveProperty<bool> isSelected = new ReactiveProperty<bool>(false);
     public bool IsSelected => isSelected.Value;
-
+    public bool CanSelect = false;
     private RectTransform _rectTransform;
     private Vector2 _originalPosition;
 

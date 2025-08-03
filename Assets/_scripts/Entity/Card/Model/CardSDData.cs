@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSDCardData", menuName = "Card Data/SD Card", order = 2)]
+[CreateAssetMenu(fileName = "NewSDCardData", menuName = "Scriptable Objects/SD Card", order = 2)]
 public class CardSDData : CardData
 {
     public int Suit;
