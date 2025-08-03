@@ -1,23 +1,16 @@
-using UniRx;
-using UnityEngine;
+using Ain;
 
-public class GameManager : MonoBehaviour
+using UnityEngine.SceneManagement;
+
+public class GameManager : Singleton<GameManager>
 {
-    public GamePhase gamePhase;
+   
     public InputManager inputManager;
 
-    private void Awake()
-    {
-        inputManager.Play.Subscribe(_ => ChangeTurn(Phase.PlayerTurn));
 
-    }
-    private void Start()
+    public void ChangeScenceToCombat()
     {
-        ChangeTurn(Phase.StartTurn);
-    }
-    public void ChangeTurn(Phase phase)
-    {
-        gamePhase.currentPhase.Value = phase;
+        SceneManager.LoadScene("Battle");
     }
 }
 public enum Phase

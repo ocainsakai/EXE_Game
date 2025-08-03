@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CardSelecter : MonoBehaviour, ISelectable
 {
-    public static bool CanSelect { get; set; } = true;
+    public bool CanSelect { get; set; } = false;
     public ReactiveProperty<bool> isSelected = new ReactiveProperty<bool>(false);
     public bool IsSelected => isSelected.Value;
 

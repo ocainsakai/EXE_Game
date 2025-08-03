@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies:
   - EnemyID: 
-    DisplayName: 
+    DisplayName: Cat
     Icon: {fileID: 2587706737540376869, guid: 08087a7661d5eb649bcbd698cfd813f5, type: 3}
     BaseHP: 0
     BaseAttack: 0
     Prefab: {fileID: 4969692141661249980, guid: 469b0bd9f01449e43a7ee279a02f5d58, type: 3}
     Deck: []
   - EnemyID: 
-    DisplayName: 
+    DisplayName: Fly Box
     Icon: {fileID: 3048245471483143454, guid: e6dda1fbe17e2b44bb232816309c1c0d, type: 3}
     BaseHP: 0
     BaseAttack: 0
     Prefab: {fileID: 4958306181277299653, guid: 99748bd765ed9c048930a7b7630e3de6, type: 3}
     Deck: []
   - EnemyID: 
-    DisplayName: 
+    DisplayName: Mushroom
     Icon: {fileID: 5827293808285669160, guid: 70860bbefc930394d938aa090d771dec, type: 3}
     BaseHP: 0
     BaseAttack: 0

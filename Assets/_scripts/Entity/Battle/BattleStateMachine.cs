@@ -3,17 +3,15 @@ using UnityEngine;
 
 public class BattleStateMachine : StateMachine<IState>
 {
+    [SerializeField] CardDatabase standardCards;
+    [SerializeField] EnemyDatabase combatContext;
+    [SerializeField] EnemyBattleUI battleUI;
     public Player player;
     private void Start()
     {
-        SetInitialState(new BattleStart(this));
+        battleUI.InitializedEnemy(combatContext.Enemies);
+        player.Initialize(standardCards.Cards);
     }
-    public void Update()
-    {
-        CurrentState?.Tick();
-    }
-    public void Draw()
-    {
-        //ChangeState(new DrawPhase(player));
-    }
+
+
 }

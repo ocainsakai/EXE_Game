@@ -6,7 +6,7 @@ public class EnemySelectionUI : MonoBehaviour
     [SerializeField] private EnemyDatabase _enemyDB;
     [SerializeField] private Transform _enemyButtonContainer;
     [SerializeField] private GameObject _enemyButtonPrefab;
-
+    [SerializeField] private EnemySelectedUI _enemySelectedUI;
     private void Start()
     {
         foreach (var enemy in _enemyDB.Enemies)
@@ -18,7 +18,7 @@ public class EnemySelectionUI : MonoBehaviour
 
     private void OnEnemySelected(EnemyData selectedEnemy)
     {
-        CombatSimulationManager.Instance.SetSelectedEnemy(selectedEnemy);
-        SceneManager.LoadScene("BattleScene");
+        //Debug.Log(("Selected Enemy: {0}", selectedEnemy.DisplayName));
+        _enemySelectedUI.AddEnemySelected(selectedEnemy);
     }
 }
