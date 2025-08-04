@@ -1,5 +1,6 @@
 ﻿using Ain;
-
+using Unity.VisualScripting.Dependencies.NCalc;
+using UnityEngine;
 public class EnemyTurn : IState
 {
     private BattleManager battleManager;
@@ -12,15 +13,21 @@ public class EnemyTurn : IState
 
     public void OnEnter()
     {
-        foreach (var enemy in enemyManager.enemyList.enemies)
+        Debug.Log("EnemyTurn: OnEnter");
+        var enimies = enemyManager.GetEnemiesAlive();
+        foreach (var enemy in enimies)
         {
-            // Start the enemy's turn
             enemy.Count();
         }
+
+        enemyManager.EndTurn();
+        battleManager.PlayerTurn();
     }
 
     public void OnExit()
     {
+        Debug.Log("EnemyTurn: OnExit");
+       
     }
 
     public void Tick()

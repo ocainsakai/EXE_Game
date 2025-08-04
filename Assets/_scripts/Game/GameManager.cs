@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("Battle");
     }
 
-    internal void BattleEnd()
+    internal void ChangeScenceToMap()
     {
         SceneManager.LoadScene("Map_Demo");
     }

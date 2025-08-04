@@ -1,4 +1,5 @@
 ﻿using Ain;
+using UnityEngine;
 
 public class PlayerTurn : IState
 {
@@ -12,11 +13,13 @@ public class PlayerTurn : IState
 
     public void OnEnter()
     {
+         Debug.Log("PlayerTurn: OnEnter");
         playerController.StartTurn();
     }
 
     public void OnExit()
     {
+        Debug.Log("PlayerTurn: OnExit");
         playerController.DisableAllActions();
         // Reset the hand or perform any cleanup if necessary
         //playerController.handController.Discard(playerController.handController.Hand);

@@ -63,6 +63,10 @@ public class Counter : MonoBehaviour
         _currentCount.Value = Mathf.Max(_currentCount.Value - amount, 0);
     }
 
+    public void ResetCount()
+    {
+        _currentCount.Value = MaxCount.Value;
+    }
     public void SetMaxCount(int newMaxCount, bool adjustCurrentCount = false)
     {
         if (newMaxCount <= 0)

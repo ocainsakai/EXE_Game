@@ -2150,7 +2150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardPrefab: {fileID: 8597234337281464543, guid: ff8e8916b9684a04f8c73336f2d07990, type: 3}
-  _cardPoolParent: {fileID: 0}
+  _cardPoolParent: {fileID: 66714920}
   _defaultPoolSize: 20
   _maxPoolSize: 100
 --- !u!4 &1599175296
@@ -2392,7 +2392,6 @@ MonoBehaviour:
   enemyManager: {fileID: 1827537081}
   deckManager: {fileID: 268931702}
   playerController: {fileID: 460327911}
-  _sm: {fileID: 0}
 --- !u!114 &1824348246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3170,7 +3169,7 @@ SceneRoots:
   - {fileID: 1824348242}
   - {fileID: 1827537080}
   - {fileID: 268931701}
+  - {fileID: 1599175296}
   - {fileID: 460327908}
   - {fileID: 296146410}
   - {fileID: 414363801}
-  - {fileID: 1599175296}

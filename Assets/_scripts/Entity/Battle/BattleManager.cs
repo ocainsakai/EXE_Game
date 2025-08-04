@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using UniRx;
 
-public class BattleManager : MonoBehaviour, IDisposable
+public class BattleManager : Singleton<BattleManager>, IDisposable
 {
     [SerializeField] public EnemyManager enemyManager;
     [SerializeField] public DeckManager deckManager;
@@ -10,37 +10,35 @@ public class BattleManager : MonoBehaviour, IDisposable
     
     private BattleStateMachine _sm;
     private CompositeDisposable _disposables = new CompositeDisposable();
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _sm = new BattleStateMachine(this);
-        playerController.OnPlayerEndTurn += CheckCondition;
+        playerController.OnPlayerEndTurn += EnemyTurn;
     }
     private void Start()
     {
         _sm.ChangeState(BattleState.BattleStart);
+        PlayerTurn();
+
     }
     public void Initialize()
     {
         deckManager.InitializeDeck();
         enemyManager.InitializeEnemies();
-        playerController.Initialize(this);
+        playerController.Initialize();
     }
     public void PlayerTurn()
     {
         _sm.ChangeState(BattleState.PlayerTurn);
     }
-    public void CheckCondition()
-    {
-        Debug.Log("Checking battle conditions...");
-        if (enemyManager.AllEnimiesDied())
-        {
+    public void WinBattle() =>
             _sm.ChangeState(BattleState.WinBattle);
-        }
-        else 
-        {
+    public void LoseBattle() =>
             _sm.ChangeState(BattleState.LoseBattle);
-        }
-    }
+    public void EnemyTurn() =>    
+        _sm.ChangeState(BattleState.EnemyTurn);
+
 
     public void OnDestroy()
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DeckManager : MonoBehaviour
+public class DeckManager : Singleton<DeckManager>
 {
     [SerializeField] public CardList deckList;
     [SerializeField] public CardDatabase standardCards;

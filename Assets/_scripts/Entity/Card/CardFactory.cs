@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class CardFactory : MonoBehaviour
+public class CardFactory : Singleton<CardFactory>
 {
-
-    public static CardFactory Instance { get; private set; }
     [Header("Settings")]
     [SerializeField] private GameObject _cardPrefab;
     [SerializeField] private Transform _cardPoolParent;
@@ -16,14 +14,9 @@ public class CardFactory : MonoBehaviour
     private Dictionary<CardSDData, ObjectPool<Card>> _cardPools;
     private Dictionary<Card, CardSDData> _cardToDataMap;
 
-    protected void Awake()
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+        base.Awake();
         InitializePools();
     }
 

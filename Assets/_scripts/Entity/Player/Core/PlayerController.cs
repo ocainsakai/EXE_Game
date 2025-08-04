@@ -3,8 +3,9 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class PlayerController : MonoBehaviour
+using UniRx;
+using Cysharp.Threading.Tasks;
+public class PlayerController : Singleton<PlayerController>
 {
     [Header("Dependencies")]
     [SerializeField] private Button[] actionButtons;
@@ -24,8 +25,9 @@ public class PlayerController : MonoBehaviour
     public PlayerHandController HandController => handController;
     // action
     public Action OnPlayerEndTurn;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitializeComponents();
         SetupActionButtons();
         _sm = new PlayerStateMachine(this);
@@ -35,9 +37,37 @@ public class PlayerController : MonoBehaviour
     private void InitializeComponents()
     {
         _health = new Health(_healthComponent);
+        _health.OnDamageTaken.Subscribe(x => Debug.Log($"Player took damage: {x}")).AddTo(this);
+        _health.OnDeath.Subscribe(async x => 
+        {
+            Debug.Log("Player has died.");
+            await UniTask.Delay(1000);
+            BattleManager.Instance.LoseBattle();
+        }).AddTo(this);
         _healthComponent.Initialize(100, 0);
     }
+    public void Initialize()
+    {
+        if (_isInitialized) return;
+        handController.Initialize(this);
+        handController.DrawCard(deckList);
+        _isInitialized = true;
+    }
+    private void OnDestroy()
+    {
+        // Clean up event listeners
+        foreach (var button in actionButtons)
+        {
+            if (button != null)
+            {
+                button.onClick.RemoveAllListeners();
+            }
+        }
+    }
 
+
+    // Button click handlers
+    #region Button Click Handlers
     private void SetupActionButtons()
     {
         if (actionButtons == null || actionButtons.Length < 4)
@@ -66,28 +96,6 @@ public class PlayerController : MonoBehaviour
 
         DisableAllActions();
     }
-
-    private void OnDestroy()
-    {
-        // Clean up event listeners
-        foreach (var button in actionButtons)
-        {
-            if (button != null)
-            {
-                button.onClick.RemoveAllListeners();
-            }
-        }
-    }
-
-    public void Initialize(BattleManager battleManager)
-    {
-        if (_isInitialized) return;
-        handController.Initialize(this);
-        handController.DrawCard(deckList);
-        _isInitialized = true;
-    }
-
-    // Button click handlers
     private void OnPlayButtonClicked()
     {
         if (!_isInitialized) return;
@@ -106,7 +114,9 @@ public class PlayerController : MonoBehaviour
         handController.Sort();
     }
 
+    #endregion
     // Action control methods
+    #region Action Control Methods
     public void EnableAllActions()
     {
         foreach (var button in actionButtons)
@@ -122,8 +132,9 @@ public class PlayerController : MonoBehaviour
             button.interactable = false;
         }
     }
-
+    #endregion
     // Turn management
+    #region Turn Management
     public void StartTurn()
     {
         _sm.ChangeState(PlayerStateType.Action);
@@ -131,8 +142,12 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
+        if (handController.Hand.cards.Count == 0)
+        {
+            Debug.LogWarning("No cards selected for attack.");
+            return;
+        }
         Debug.Log("Attack Phase Started");
-        DisableAllActions();
         _sm.ChangeState(PlayerStateType.Attack);
     }
 
@@ -142,4 +157,10 @@ public class PlayerController : MonoBehaviour
         DisableAllActions();
         OnPlayerEndTurn?.Invoke();
     }
+
+    internal bool IsPlayerDead()
+    {
+        return _healthComponent.CurrentHP.Value <= 0;
+    }
+    #endregion
 }

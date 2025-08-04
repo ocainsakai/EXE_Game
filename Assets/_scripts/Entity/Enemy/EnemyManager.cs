@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
     [SerializeField] public EnemyList enemyList;
     [SerializeField] public EnemyDatabase enemiesInCombat;
@@ -13,8 +15,16 @@ public class EnemyManager : MonoBehaviour
         enemyList.enemies.Clear();
         enemyList.enemies.AddRange(enemies);
     }
+    public IEnumerable<Enemy> GetEnemiesAlive()
+    {
+        return enemyList.enemies.Where(x => !x.IsDead.Value);
+    }
     public bool AllEnimiesDied()
     {
         return enemyList.enemies.TrueForAll(x => x.IsDead.Value);
+    }
+    public void EndTurn()
+    {
+        
     }
 }

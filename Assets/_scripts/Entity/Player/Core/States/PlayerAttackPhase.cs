@@ -1,14 +1,17 @@
 ﻿using System.Linq;
+using UnityEngine;
 
 public class PlayerAttackPhase : PlayerBaseState
 {
     private EnemyList enemyList;
     public PlayerAttackPhase(PlayerController handController) : base(handController)
     {
+        enemyList = EnemyManager.Instance.enemyList;
     }
 
     public override void OnEnter()
     {
+        Debug.Log("PlayerAttackPhase: OnEnter");
         int mult = controller.handController.Mult;
         foreach (var card in controller.handController.TakeSelected())
         {
@@ -24,6 +27,7 @@ public class PlayerAttackPhase : PlayerBaseState
 
     public override void OnExit()
     {
+        Debug.Log("PlayerAttackPhase: OnExit");
         // Reset the hand or perform any cleanup if necessary
         controller.handController.Discard(controller.handController.Hand);
     }

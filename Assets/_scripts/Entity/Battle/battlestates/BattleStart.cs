@@ -13,6 +13,7 @@ public class BattleStart : IState
     }
     public void OnEnter()
     {
+        Debug.Log("BattleStart: OnEnter");
         _battleManager.Initialize();
         _cts = new CancellationTokenSource();
 
@@ -20,6 +21,7 @@ public class BattleStart : IState
 
     public void OnExit()
     {
+        Debug.Log("BattleStart: OnExit");
         _cts?.Cancel();
         _cts?.Dispose();
     }

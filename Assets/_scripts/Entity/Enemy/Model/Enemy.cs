@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDisposable
 {
@@ -39,8 +40,8 @@ public class Enemy : MonoBehaviour, IDisposable
         IsDead.Value = false;
 
         counter.Initialize(
-            initialCount: 5,
-            initialMaxCount: 10,
+            initialCount: 1,
+            initialMaxCount: 3,
             onCurrentCountChanged: () => HandleCurrentCounterChanged(),
             onCountReachedZero: () => HandleCountReachZero(),
             onMaxCountChanged: () => HandleMaxCountChanged()
@@ -50,14 +51,22 @@ public class Enemy : MonoBehaviour, IDisposable
     public void Count() => counter.DecreaseCount();
     private void HandleMaxCountChanged()
     {
+        // animation or other logic when max count changes
     }
 
     private void HandleCountReachZero()
     {
+        PlayerController.Instance.PlayerHealth.TakeDamage(10, DamageType.Physical);
+        Debug.Log("Enemy has reached zero count.");
+        counter.ResetCount();
     }
-
+    public void Attack()
+    {
+        
+    }
     private void HandleCurrentCounterChanged()
     {
+        // animation or other logic when current count changes
     }
 
     private async UniTask OnDeath()
@@ -76,6 +85,9 @@ public class Enemy : MonoBehaviour, IDisposable
             {
                 _animator.enabled = false;
             }
+            GetComponentInChildren<Image>().color = Color.black;
+            if (EnemyManager.Instance.AllEnimiesDied())
+                BattleManager.Instance.WinBattle();
         }
         catch (OperationCanceledException)
         {
