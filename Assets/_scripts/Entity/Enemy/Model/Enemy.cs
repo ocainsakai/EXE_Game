@@ -4,11 +4,11 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class Enemy : GameTurner, IDisposable
+public class Enemy : MonoBehaviour, IDisposable
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private HealthComponent _health;
-
+    [SerializeField] private Counter counter;
     private CompositeDisposable _disposables = new CompositeDisposable();
     public Health healthCtrl;
     public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
@@ -37,6 +37,27 @@ public class Enemy : GameTurner, IDisposable
             _animator.enabled = true;
         }
         IsDead.Value = false;
+
+        counter.Initialize(
+            initialCount: 5,
+            initialMaxCount: 10,
+            onCurrentCountChanged: () => HandleCurrentCounterChanged(),
+            onCountReachedZero: () => HandleCountReachZero(),
+            onMaxCountChanged: () => HandleMaxCountChanged()
+        );
+    }
+
+    public void Count() => counter.DecreaseCount();
+    private void HandleMaxCountChanged()
+    {
+    }
+
+    private void HandleCountReachZero()
+    {
+    }
+
+    private void HandleCurrentCounterChanged()
+    {
     }
 
     private async UniTask OnDeath()

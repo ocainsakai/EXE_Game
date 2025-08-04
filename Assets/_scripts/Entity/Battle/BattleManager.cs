@@ -1,58 +1,44 @@
-using Ain;
 using UnityEngine;
 using System;
 using UniRx;
 
 public class BattleManager : MonoBehaviour, IDisposable
 {
-    
-    [SerializeField] public CardList deckList;
-    [SerializeField] public EnemyList enemyList;
-    [SerializeField] public CardDatabase standardCards;
-    [SerializeField] public EnemyDatabase combatContext;
-    [SerializeField] public EnemyBattleUI battleUI;
+    [SerializeField] public EnemyManager enemyManager;
+    [SerializeField] public DeckManager deckManager;
     [SerializeField] public PlayerController playerController;
-    [SerializeField] private BattleStateMachine _sm;
-
+    
+    private BattleStateMachine _sm;
     private CompositeDisposable _disposables = new CompositeDisposable();
     protected void Awake()
     {
-        _sm.Initialize(this, playerController);
+        _sm = new BattleStateMachine(this);
+        playerController.OnPlayerEndTurn += CheckCondition;
     }
     private void Start()
     {
-        _sm.ChangeState(_sm.battleStart);
+        _sm.ChangeState(BattleState.BattleStart);
     }
-    public void InitializeDeck()
+    public void Initialize()
     {
-        var cards = CardFactory.Instance.GetCards(standardCards.Cards);
-        deckList.cards.Clear();
-        deckList.cards.AddRange(cards);
-    }
-    public void InitializeEnemies()
-    {
-        var enemies = battleUI.InitializedEnemy(combatContext.Enemies);
-        enemyList.enemies.Clear();
-        enemyList.enemies.AddRange(enemies);
-    }
-    public void InitializePlayer()
-    {
+        deckManager.InitializeDeck();
+        enemyManager.InitializeEnemies();
         playerController.Initialize(this);
     }
     public void PlayerTurn()
     {
-        _sm.ChangeState(_sm.playerTurn);
+        _sm.ChangeState(BattleState.PlayerTurn);
     }
     public void CheckCondition()
     {
         Debug.Log("Checking battle conditions...");
-        if (enemyList.enemies.TrueForAll(x => x.IsDead.Value))
+        if (enemyManager.AllEnimiesDied())
         {
-            _sm.ChangeState(_sm.winBattle);
+            _sm.ChangeState(BattleState.WinBattle);
         }
         else 
         {
-            _sm.ChangeState(_sm.enemyTurn);
+            _sm.ChangeState(BattleState.LoseBattle);
         }
     }
 

@@ -1,22 +1,16 @@
 using Ain;
-
-public class BattleStateMachine : StateMachine<IState>
+using System.Collections.Generic;
+public class BattleStateMachine : StateMachine<BattleState,IState>
 {
-    public BattleStart battleStart;
-    public BattleEnd winBattle;
-    public BattleEnd loseBattle;
-    public DrawPhase drawPhase;
-    public EnemyTurn enemyTurn;
-    public PlayerTurn playerTurn;
-    //private BattleManager _battleManager;
-
-    public void Initialize(BattleManager battleManager, PlayerController playerController)
+    public BattleStateMachine(BattleManager battleManager)
     {
-        battleStart = new BattleStart(battleManager, battleManager.deckList);
-        playerTurn = new PlayerTurn(battleManager, playerController);
-        enemyTurn = new EnemyTurn(battleManager);
-        winBattle = new BattleEnd(battleManager, true);
-        //loseBattle = new BattleEnd(battleManager, false);
+        States = new Dictionary<BattleState, IState>
+        {
+            { BattleState.BattleStart,  new BattleStart(battleManager) },
+            { BattleState.PlayerTurn, new PlayerTurn(battleManager, battleManager.playerController) },
+            { BattleState.EnemyTurn, new EnemyTurn(battleManager, battleManager.enemyManager) },
+            { BattleState.WinBattle,    new BattleEnd(battleManager, true) },
+            { BattleState.LoseBattle, new BattleEnd(battleManager, false) },
+        };
     }
-
 }
