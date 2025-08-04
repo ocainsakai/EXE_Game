@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46337fc6227af4340889fba2aaf2ad45, type: 3}
-  m_Name: HUDData
+  m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
+  m_Name: Cat
   m_EditorClassIdentifier: 
-  PokerType:
-    value: 0
-  PokerMult:
-    value: 0
+  Icon: {fileID: 2587706737540376869, guid: 08087a7661d5eb649bcbd698cfd813f5, type: 3}
+  cost: 300
+  reward: 500
+  Prefab: {fileID: 4969692141661249980, guid: 469b0bd9f01449e43a7ee279a02f5d58, type: 3}

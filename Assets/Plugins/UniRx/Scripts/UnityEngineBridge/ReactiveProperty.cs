@@ -245,6 +245,11 @@ namespace UniRx
         {
             return false;
         }
+
+        public object Subscribe(object updateCoinText)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /// <summary>

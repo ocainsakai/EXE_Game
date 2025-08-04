@@ -12,4 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88e96a897cad4b4c946fed4fc24e597, type: 3}
   m_Name: CombatContext
   m_EditorClassIdentifier: 
-  Enemies: []
+  Enemies:
+  - EnemyID: 
+    DisplayName: Cat
+    Icon: {fileID: 0}
+    BaseHP: 0
+    BaseAttack: 0
+    Prefab: {fileID: 4969692141661249980, guid: 469b0bd9f01449e43a7ee279a02f5d58, type: 3}
+    Deck: []
+  - EnemyID: 
+    DisplayName: Cat
+    Icon: {fileID: 0}
+    BaseHP: 0
+    BaseAttack: 0
+    Prefab: {fileID: 4969692141661249980, guid: 469b0bd9f01449e43a7ee279a02f5d58, type: 3}
+    Deck: []

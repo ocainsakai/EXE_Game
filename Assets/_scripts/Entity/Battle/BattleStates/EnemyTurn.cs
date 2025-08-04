@@ -2,18 +2,23 @@
 
 public class EnemyTurn : IState
 {
+    private BattleManager battleManager;
+
+    public EnemyTurn(BattleManager battleManager)
+    {
+        this.battleManager = battleManager;
+    }
+
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        battleManager.PlayerTurn();
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public void Tick()
     {
-        throw new System.NotImplementedException();
     }
 }

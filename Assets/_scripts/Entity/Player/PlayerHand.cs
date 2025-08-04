@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    [SerializeField] PlayerStateMachine playerStateMachine;
+    [SerializeField] PlayerController playerController;
     [SerializeField] CardList hand;
     [SerializeField] PokerData HUD;
+    public CardList Hand => hand;
     private PokerHandEvaluator pokerHandEvaluator = new PokerHandEvaluator();
     private int currentSortType = 1;
     public int HandSize = 8;
-    private void Awake()
+    public void Initialize(PlayerController playerController)
     {
+        this.playerController = playerController;
         hand.cards.Clear();
     }
     public List<Card> TakeSelected()
@@ -50,7 +52,6 @@ public class PlayerHand : MonoBehaviour
 
     private void CheckSelect(bool obj)
     {
-        //Debug.Log(obj);
         var selectedCards = TakeSelected();
         if (selectedCards.Count >= 5)
         {
@@ -73,10 +74,11 @@ public class PlayerHand : MonoBehaviour
     }
     public void Discard(CardList discardPile)
     {
-        CardFactory.Instance.ReturnCards(TakeSelected());
+        var cards = TakeSelected();
         ClearSelected();
+        CardFactory.Instance.ReturnCards(cards);
         UpdateHUD(TakeSelected());
-        
+        DrawCard(playerController.deckList);
     }
     public void Sort()
     {

@@ -3,10 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class EnemySelectionUI : MonoBehaviour
 {
-    [SerializeField] private EnemyDatabase _enemyDB;
     [SerializeField] private Transform _enemyButtonContainer;
     [SerializeField] private GameObject _enemyButtonPrefab;
+    [SerializeField] private EnemyDatabase _enemyDB;
     [SerializeField] private EnemySelectedUI _enemySelectedUI;
+    [SerializeField] private CoinRSO _playerCoinRSO;
     private void Start()
     {
         foreach (var enemy in _enemyDB.Enemies)
@@ -18,7 +19,12 @@ public class EnemySelectionUI : MonoBehaviour
 
     private void OnEnemySelected(EnemyData selectedEnemy)
     {
-        //Debug.Log(("Selected Enemy: {0}", selectedEnemy.DisplayName));
+        if (_playerCoinRSO.onwnerCoins.Value < selectedEnemy.cost)
+        {
+            Debug.LogWarning("Not enough coins to select this enemy.");
+            return;
+        }
+        _playerCoinRSO.onwnerCoins.Value -= selectedEnemy.cost;
         _enemySelectedUI.AddEnemySelected(selectedEnemy);
     }
 }

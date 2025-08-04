@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class BattleStart : IState
 {
-    private readonly BattleStateMachine _battleManager;
+    private readonly BattleManager _battleManager;
     private CardList deckList;
     private CancellationTokenSource _cts;
 
-    public BattleStart(BattleStateMachine battleManager, CardList deckList)
+    public BattleStart(BattleManager battleManager, CardList deckList)
     {
         _battleManager = battleManager;
         this.deckList = deckList;
     }
     public void OnEnter()
     {
-        deckList.cards.Clear();
-        Debug.Log("Battle Start Enter");
-        //deckList.cards = _battleManager.CreateStandardCard();
+        _battleManager.InitializeDeck();
+        _battleManager.InitializeEnemies();
+        _battleManager.InitializePlayer();
         _cts = new CancellationTokenSource();
 
     }
@@ -33,8 +33,5 @@ public class BattleStart : IState
     {
         
     }
-    //private async UniTaskVoid LoadCardsAsync(CancellationToken ct)
-    //{
-        
-    //}
+   
 }

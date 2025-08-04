@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +20,7 @@ public class EnemyBattleUI : MonoBehaviour
         foreach (var enemyData in enemies)
         {
             Transform slot = _slots[i];
+    
             var enemyEntity = Instantiate(enemyData.Prefab);
             enemyEntity.transform.localPosition = Vector3.zero;
             enemyEntity.transform.SetParent(slot, false);

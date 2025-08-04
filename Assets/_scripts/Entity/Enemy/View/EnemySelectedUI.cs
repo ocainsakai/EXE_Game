@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySelectedUI : MonoBehaviour
 {
-    
+    [SerializeField] private Button playButton;
     [SerializeField] private Transform[] slots;
 
     [SerializeField] private EnemyDatabase combatContext;
@@ -11,6 +12,7 @@ public class EnemySelectedUI : MonoBehaviour
 
     private void Start()
     {
+        playButton.onClick.AddListener(() => GameManager.Instance.ChangeScenceToCombat());
         if (slots.Length == 0)
         {
             Debug.LogError("No slots assigned for enemy selection.");
@@ -32,5 +34,6 @@ public class EnemySelectedUI : MonoBehaviour
         var enemyEntity = Instantiate(enemyData.Prefab);
         enemyEntity.transform.localPosition = Vector3.zero;
         enemyEntity.transform.SetParent(slot, false);
+        enemyEntity.GetComponentInChildren<HealthDisplay>().gameObject.SetActive(false);
     }
 }

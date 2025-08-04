@@ -1,10 +1,12 @@
-using Ain;
+﻿using Ain;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class CardFactory : Singleton<CardFactory>
+public class CardFactory : MonoBehaviour
 {
+
+    public static CardFactory Instance { get; private set; }
     [Header("Settings")]
     [SerializeField] private GameObject _cardPrefab;
     [SerializeField] private Transform _cardPoolParent;
@@ -14,10 +16,15 @@ public class CardFactory : Singleton<CardFactory>
     private Dictionary<CardSDData, ObjectPool<Card>> _cardPools;
     private Dictionary<Card, CardSDData> _cardToDataMap;
 
-    protected override void Awake()
+    protected void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         InitializePools();
-        base.Awake();
     }
 
     private void InitializePools()
@@ -103,11 +110,15 @@ public class CardFactory : Singleton<CardFactory>
 
     private void OnDestroy()
     {
-        // Cleanup all pools
-        foreach (var pool in _cardPools.Values)
-        {
-            pool.Clear();
-        }
+        //// Cleanup all pools
+        //foreach (var pool in _cardPools.Values)
+        //{
+        //    if (pool != null)
+        //    {
+        //        // Kiểm tra từng item trong Pool trước khi Clear
+        //        pool.Dispose();
+        //    }
+        //}
         _cardPools.Clear();
         _cardToDataMap.Clear();
     }

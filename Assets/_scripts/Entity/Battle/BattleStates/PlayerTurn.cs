@@ -2,18 +2,28 @@
 
 public class PlayerTurn : IState
 {
+    private BattleManager battleManager;
+    private PlayerController playerController;
+    public PlayerTurn(BattleManager battleManager, PlayerController playerController)
+    {
+        this.battleManager = battleManager;
+        this.playerController = playerController;
+    }
+
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        playerController.StartTurn();
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        playerController.TurnOffAction();
+        // Reset the hand or perform any cleanup if necessary
+        //playerController.handController.Discard(playerController.handController.Hand);
+        //battleManager.CheckCondition();
     }
 
     public void Tick()
     {
-        throw new System.NotImplementedException();
     }
 }

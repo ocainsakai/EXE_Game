@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
-public class EnemyData
+[CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Objects/EnemyData")]
+public class EnemyData : ScriptableObject
 {
-    public string EnemyID;
-    public string DisplayName;
     public Sprite Icon;
-    public int BaseHP;
-    public int BaseAttack;
-    public GameObject Prefab; // Prefab chứa EnemyEntity
-    public List<CardData> Deck;
+    public int cost;
+    public int reward;
+    public GameObject Prefab; 
 }

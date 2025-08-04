@@ -1,12 +1,17 @@
 using Ain;
+using Cysharp.Threading.Tasks;
+using System;
 using UniRx;
 using UnityEngine;
 
-public class Enemy : GameTurner
+public class Enemy : GameTurner, IDisposable
 {
-    [SerializeField] Animator _animator;
-    [SerializeField] HealthComponent _health;
-    private Health health;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private HealthComponent _health;
+
+    private CompositeDisposable _disposables = new CompositeDisposable();
+    public Health healthCtrl;
+    public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
 
     private void Awake()
     {
@@ -22,9 +27,57 @@ public class Enemy : GameTurner
 
     private void Start()
     {
-        health = new Health(_health);
+        healthCtrl = new Health(_health);
         _health.Initialize(100f, 0f);
-        _count = new ReactiveProperty<int>(1);
+        healthCtrl.OnDamageTaken.Subscribe(x => OnDameTaken()).AddTo(_disposables);
+        healthCtrl.OnDeath.Subscribe(async x => await OnDeath()).AddTo(_disposables);
+
+        if (_animator != null)
+        {
+            _animator.enabled = true;
+        }
+        IsDead.Value = false;
     }
-    public void TakeDame(int amount) => health.TakeDamage(amount, DamageType.Physical);
+
+    private async UniTask OnDeath()
+    {
+        IsDead.Value = true;
+        if (_animator != null)
+        {
+            _animator.SetBool("Dead", IsDead.Value);
+        }
+
+        try
+        {
+            await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            if (_animator != null)
+            {
+                _animator.enabled = false;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("Enemy destroyed before death animation finished");
+        }
+    }
+
+    public void OnDameTaken()
+    {
+        if (_animator != null)
+        {
+            _animator.SetTrigger("Hurt");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Dispose();
+    }
+
+    public void Dispose()
+    {
+        _disposables?.Dispose();
+        IsDead?.Dispose();
+    }
 }

@@ -51,7 +51,7 @@ public class Card : MonoBehaviour
         // Assuming the card has an Attack method
         if (Data != null && enemy != null)
         {
-            enemy.TakeDame(Data.Rank);
+            enemy.healthCtrl.TakeDamage(Data.Rank, Ain.DamageType.Physical);
         }
     }
 }

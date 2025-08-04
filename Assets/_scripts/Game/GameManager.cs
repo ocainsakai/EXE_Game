@@ -1,5 +1,5 @@
 using Ain;
-
+using System;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
@@ -11,6 +11,11 @@ public class GameManager : Singleton<GameManager>
     public void ChangeScenceToCombat()
     {
         SceneManager.LoadScene("Battle");
+    }
+
+    internal void BattleEnd()
+    {
+        SceneManager.LoadScene("Map_Demo");
     }
 }
 public enum Phase

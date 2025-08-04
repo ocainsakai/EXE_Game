@@ -1,37 +1,72 @@
 using Ain;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UniRx;
 
-public class BattleManager : Singleton<BattleManager>
+public class BattleManager : MonoBehaviour, IDisposable
 {
+    
     [SerializeField] public CardList deckList;
     [SerializeField] public EnemyList enemyList;
     [SerializeField] public CardDatabase standardCards;
     [SerializeField] public EnemyDatabase combatContext;
     [SerializeField] public EnemyBattleUI battleUI;
-    [SerializeField] private BattleStateMachine battleStateMachine;
+    [SerializeField] public PlayerController playerController;
+    [SerializeField] private BattleStateMachine _sm;
 
-    protected override void Awake()
+    private CompositeDisposable _disposables = new CompositeDisposable();
+    protected void Awake()
     {
-        battleStateMachine.Initialize(this);
-        base.Awake();
-        //battleStateMachine = new BattleStateMachine(this);
+        _sm.Initialize(this, playerController);
+        //base.Awake();
     }
     private void Start()
     {
-        //SetInitialState(new BattleStart(this, deckList));
-        InitializeEnemies();
+        _sm.ChangeState(_sm.battleStart);
     }
-
-    private void InitializeEnemies()
+    public void InitializeDeck()
+    {
+        var cards = CardFactory.Instance.GetCards(standardCards.Cards);
+        deckList.cards.Clear();
+        deckList.cards.AddRange(cards);
+    }
+    public void InitializeEnemies()
     {
         var enemies = battleUI.InitializedEnemy(combatContext.Enemies);
         enemyList.enemies.Clear();
         enemyList.enemies.AddRange(enemies);
     }
-
-    public List<Card> CreateStandardCard()
+    public void InitializePlayer()
     {
-        return CardFactory.Instance.GetCards(standardCards.Cards);
+        playerController.Initialize(this);
+    }
+    public void PlayerTurn()
+    {
+        _sm.ChangeState(_sm.playerTurn);
+    }
+    public void CheckCondition()
+    {
+        if (enemyList.enemies.TrueForAll(x => x.IsDead.Value))
+        {
+            _sm.ChangeState(_sm.winBattle);
+        }
+        else 
+        {
+            _sm.ChangeState(_sm.enemyTurn);
+        }
+    }
+
+    public void OnDestroy()
+    {
+        Dispose();
+    }
+
+    public void Dispose()
+    {
+        _disposables?.Dispose();
+    }
+
+    internal void ClearBattle()
+    {
     }
 }
