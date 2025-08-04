@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9451e15eb7b245c48a243c9003831fdc, type: 3}
   m_Name: PokerData
   m_EditorClassIdentifier: 
+  PokerDatabase: {fileID: 11400000, guid: b992b74d49b96f14bbfd7201a2d7e312, type: 2}
   PokerType:
     value: 0
   PokerMult:

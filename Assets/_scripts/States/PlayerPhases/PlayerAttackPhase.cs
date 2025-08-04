@@ -15,13 +15,14 @@ public class PlayerAttackPhase : IState
 
     public void OnEnter()
     {
+        int mult = _player.handController.Mult;
         foreach (var card in _player.handController.TakeSelected())
         {
             // Assuming each card has a method to attack an enemy
             var targetEnemy = enemyList.enemies.FirstOrDefault(x => !x.IsDead.Value);
             if (targetEnemy != null)
             {
-                card.Attack(targetEnemy);
+                card.Attack(targetEnemy, mult);
             }
         }
         _player.EndTurn();

@@ -6,7 +6,7 @@ public class PlayerStateMachine : StateMachine<IState>
     public PlayerAttackPhase attackPhase;
     public PlayerAction action;
 
-    public void Initialiez(PlayerController controller, BattleManager battleManager)
+    public void Initialize(PlayerController controller, BattleManager battleManager)
     {
         //this.controller = controller;
         drawPhase = new PlayerDrawPhase(controller.handController, controller.deckList);

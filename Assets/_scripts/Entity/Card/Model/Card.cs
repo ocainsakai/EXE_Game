@@ -54,4 +54,12 @@ public class Card : MonoBehaviour
             enemy.healthCtrl.TakeDamage(Data.Rank, Ain.DamageType.Physical);
         }
     }
+    public void Attack(Enemy enemy, int mult)
+    {
+        // Overloaded method to allow custom damage
+        if (Data != null && enemy != null)
+        {
+            enemy.healthCtrl.TakeDamage(Data.Rank * mult, Ain.DamageType.Physical);
+        }
+    }
 }

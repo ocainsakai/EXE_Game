@@ -16,7 +16,7 @@ public class BattleStateMachine : StateMachine<IState>
         playerTurn = new PlayerTurn(battleManager, playerController);
         enemyTurn = new EnemyTurn(battleManager);
         winBattle = new BattleEnd(battleManager, true);
-        loseBattle = new BattleEnd(battleManager, false);
+        //loseBattle = new BattleEnd(battleManager, false);
     }
 
 }

@@ -22,14 +22,14 @@ public class PlayerHUD : MonoBehaviour
 
     private void UpdatePokerMult(int obj)
     {
-        pokerMult.text = obj.ToString();
+        pokerMult.text = "MULT: "+ obj.ToString();
     }
 
     private void UpdatePokerType(PokerHandType type)
     {
         pokerType.text = type switch
         {
-            PokerHandType.None => "Poker Type",
+            PokerHandType.None => "POKER Type",
             PokerHandType.HighCard => "High Card",
             PokerHandType.OnePair => "One Pair",
             PokerHandType.TwoPair => "Two Pair",
@@ -42,5 +42,6 @@ public class PlayerHUD : MonoBehaviour
             PokerHandType.RoyalFlush => "Royal Flush",
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
+        pokerType.text = pokerType.text.ToUpper();
     }
 }

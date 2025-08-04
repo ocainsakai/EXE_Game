@@ -6,71 +6,145 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public CoinRSO coinRSO;
-    [SerializeField] public CardList deckList;
-    [SerializeField] public BattleManager _battleManager;
-    [SerializeField] public PlayerHand handController;
+    // Serialized Fields
+    [SerializeField] private BattleManager _battleManager;
     [SerializeField] private HealthComponent _healthComponent;
-    [SerializeField] private PlayerStateMachine _sm;
     [SerializeField] private Button[] actionButtons;
-    public Health _health { get; private set; }
+
+    [SerializeField] public CardList deckList;
+    [SerializeField] public CoinRSO coinRSO;
+    [SerializeField] public PlayerHand handController;
+    // Private Fields
+    private PlayerStateMachine _sm;
+    private Health _health;
+    private bool _isInitialized = false;
+
+    // Properties
+    public Health PlayerHealth => _health;
+    public BattleManager BattleManager => _battleManager;
+    public PlayerHand HandController => handController;
 
     private void Awake()
     {
-        InitiializeActionBtn();
+        InitializeComponents();
+        SetupActionButtons();
+        _sm.ChangeState(_sm.action);
+    }
+
+    private void InitializeComponents()
+    {
         _health = new Health(_healthComponent);
         _healthComponent.Initialize(100, 0);
         _sm = GetComponent<PlayerStateMachine>();
-        _sm.Initialiez(this, _battleManager);
-        _sm.ChangeState(_sm.action);
+        _sm.Initialize(this, _battleManager);
+    }
 
-    }
-    internal void TurnOnAction()
+    private void SetupActionButtons()
     {
-        foreach (var button in actionButtons)
+        if (actionButtons == null || actionButtons.Length < 4)
         {
-            button.enabled = true;
+            Debug.LogError("Action buttons not properly assigned!");
+            return;
         }
-    }
-    public void TurnOffAction()
-    {
-        foreach (var button in actionButtons)
-        {
-            button.enabled = false;
-        }
-    }
-    private void InitiializeActionBtn()
-    {
+
+        // Set button texts
         actionButtons[0].GetComponentInChildren<TextMeshProUGUI>().text = "PLAY";
         actionButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = "DISCARD";
         actionButtons[2].GetComponentInChildren<TextMeshProUGUI>().text = "SORT";
         actionButtons[3].GetComponentInChildren<TextMeshProUGUI>().text = "SKIP";
 
-        actionButtons[0].onClick.AddListener(() => Attack());
-        actionButtons[1].onClick.AddListener(() => handController.Discard(handController.Hand));
-        actionButtons[2].onClick.AddListener(() => handController.Sort());
-        //actionButtons[3].onClick.AddListener(() );
+        // Clear existing listeners to prevent duplicates
+        foreach (var button in actionButtons)
+        {
+            button.onClick.RemoveAllListeners();
+        }
 
-        TurnOffAction();
+        // Add new listeners
+        actionButtons[0].onClick.AddListener(OnPlayButtonClicked);
+        actionButtons[1].onClick.AddListener(OnDiscardButtonClicked);
+        actionButtons[2].onClick.AddListener(OnSortButtonClicked);
+        // actionButtons[3] left for future use
+
+        DisableAllActions();
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up event listeners
+        foreach (var button in actionButtons)
+        {
+            if (button != null)
+            {
+                button.onClick.RemoveAllListeners();
+            }
+        }
     }
 
     public void Initialize(BattleManager battleManager)
     {
+        if (_isInitialized) return;
+
         _battleManager = battleManager;
         deckList = battleManager.deckList;
         handController.Initialize(this);
         handController.DrawCard(deckList);
+        _isInitialized = true;
     }
-    public void StartTurn()     {
+
+    // Button click handlers
+    private void OnPlayButtonClicked()
+    {
+        if (!_isInitialized) return;
+        Attack();
+    }
+
+    private void OnDiscardButtonClicked()
+    {
+        if (!_isInitialized) return;
+        handController.Discard(handController.Hand);
+    }
+
+    private void OnSortButtonClicked()
+    {
+        if (!_isInitialized) return;
+        handController.Sort();
+    }
+
+    // Action control methods
+    public void EnableAllActions()
+    {
+        foreach (var button in actionButtons)
+        {
+            button.interactable = true;
+        }
+    }
+
+    public void DisableAllActions()
+    {
+        foreach (var button in actionButtons)
+        {
+            button.interactable = false;
+        }
+    }
+
+    // Turn management
+    public void StartTurn()
+    {
         _sm.ChangeState(_sm.action);
+        EnableAllActions();
     }
+
     public void Attack()
     {
+        Debug.Log("Attack Phase Started");
+        DisableAllActions();
         _sm.ChangeState(_sm.attackPhase);
     }
 
     public void EndTurn()
     {
+        Debug.Log("End Turn");
+        DisableAllActions();
         _battleManager.CheckCondition();
     }
 }

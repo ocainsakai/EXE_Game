@@ -13,17 +13,5 @@ MonoBehaviour:
   m_Name: CombatContext
   m_EditorClassIdentifier: 
   Enemies:
-  - EnemyID: 
-    DisplayName: Cat
-    Icon: {fileID: 0}
-    BaseHP: 0
-    BaseAttack: 0
-    Prefab: {fileID: 4969692141661249980, guid: 469b0bd9f01449e43a7ee279a02f5d58, type: 3}
-    Deck: []
-  - EnemyID: 
-    DisplayName: Cat
-    Icon: {fileID: 0}
-    BaseHP: 0
-    BaseAttack: 0
-    Prefab: {fileID: 4969692141661249980, guid: 469b0bd9f01449e43a7ee279a02f5d58, type: 3}
-    Deck: []
+  - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
+  - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}

@@ -17,7 +17,7 @@ public class PlayerTurn : IState
 
     public void OnExit()
     {
-        playerController.TurnOffAction();
+        playerController.DisableAllActions();
         // Reset the hand or perform any cleanup if necessary
         //playerController.handController.Discard(playerController.handController.Hand);
         //battleManager.CheckCondition();

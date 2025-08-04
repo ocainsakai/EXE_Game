@@ -9,12 +9,12 @@ public class PlayerAction : IState
     }
     public void OnEnter()
     {
-        controller.TurnOnAction();
+        controller.EnableAllActions();
         // Logic for entering the action phase, if any
     }
     public void OnExit()
     {
-        controller.TurnOffAction();
+        controller.DisableAllActions();
         // Logic for exiting the action phase, if any
     }
     public void Tick()

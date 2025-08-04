@@ -18,7 +18,6 @@ public class BattleManager : MonoBehaviour, IDisposable
     protected void Awake()
     {
         _sm.Initialize(this, playerController);
-        //base.Awake();
     }
     private void Start()
     {
@@ -46,6 +45,7 @@ public class BattleManager : MonoBehaviour, IDisposable
     }
     public void CheckCondition()
     {
+        Debug.Log("Checking battle conditions...");
         if (enemyList.enemies.TrueForAll(x => x.IsDead.Value))
         {
             _sm.ChangeState(_sm.winBattle);

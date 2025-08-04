@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UniRx;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BattleEnd : IState
@@ -21,7 +22,7 @@ public class BattleEnd : IState
     public void OnEnter()
     {
         _cts = new CancellationTokenSource();
-
+        Debug.Log("BattleEnd.OnEnter() called");
         // Xử lý kết thúc trận đấu (thắng/thua)
         HandleBattleResultAsync().Forget();
     }
@@ -38,15 +39,27 @@ public class BattleEnd : IState
         // 1. Hiệu ứng kết thúc (ví dụ: màn hình chiến thắng/thua)
         if (_isVictory)
         {
-            //Debug.Log("You Win!");
-            //await _battleManager.ShowVictoryScreen(_cts.Token);
+            Debug.Log("You Win!");
+            foreach (var enemy in _battleManager.combatContext.Enemies)
+            {
+                _battleManager.playerController.coinRSO.onwnerCoins.Value += enemy.reward;
+            }
         }
         else
         {
-            //Debug.Log("You Lose!");
-            //await _battleManager.ShowDefeatScreen(_cts.Token);
+            Debug.Log("You Lose!");
+            foreach (var enemy in _battleManager.enemyList.enemies)
+            {
+                if (enemy.IsDead.Value)
+                {
+                    int coin = _battleManager.combatContext.Enemies
+                        .Find(x => x.Prefab.GetComponent<Enemy>().name == enemy.name).reward;
+                    _battleManager.playerController.coinRSO.onwnerCoins.Value += coin;
+                }
+                //Debug.Log("You Lose!");
+                //await _battleManager.ShowDefeatScreen(_cts.Token);
+            }
         }
-
         // 2. Dọn dẹp trận đấu
         _battleManager.ClearBattle();
 

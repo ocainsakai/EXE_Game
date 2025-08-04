@@ -9,6 +9,7 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] CardList hand;
     [SerializeField] PokerData HUD;
     public CardList Hand => hand;
+    public int Mult => HUD.PokerMult.Value;
     private PokerHandEvaluator pokerHandEvaluator = new PokerHandEvaluator();
     private int currentSortType = 1;
     public int HandSize = 8;
