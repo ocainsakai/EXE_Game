@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignment: 2
   totalWidth: 1500
-  spacing: 50
+  spacing: 100

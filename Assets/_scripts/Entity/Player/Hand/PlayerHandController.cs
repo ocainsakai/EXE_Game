@@ -8,6 +8,7 @@ public class PlayerHandController : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] CardList hand;
     [SerializeField] PokerData HUD;
+    [SerializeField] HorizontalGridLayoutAnimation _animation;
     public CardList Hand => hand;
     public int Mult => HUD.PokerMult.Value;
     private PokerHandEvaluator pokerHandEvaluator = new PokerHandEvaluator();
@@ -97,5 +98,6 @@ public class PlayerHandController : MonoBehaviour
             hand.cards = hand.cards.OrderBy(x => x.Data.Suit).ThenBy(x => x.Data.Rank).ToList();
         }
         hand.cards.ForEach(x => x.transform.SetSiblingIndex(hand.cards.Count - 1));
+        _ = _animation.RepositionChilds();
     }
 }

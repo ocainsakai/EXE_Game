@@ -1,36 +1,46 @@
 ﻿using Ain;
-using Unity.VisualScripting.Dependencies.NCalc;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 public class EnemyTurn : IState
 {
-    private BattleManager battleManager;
+    private BattleManager _battleManager;
     private EnemyManager enemyManager;
     public EnemyTurn(BattleManager battleManager, EnemyManager enemyManager)
     {
-        this.battleManager = battleManager;
+        _battleManager = battleManager;
         this.enemyManager = enemyManager;
     }
 
     public void OnEnter()
     {
         Debug.Log("EnemyTurn: OnEnter");
-        var enimies = enemyManager.GetEnemiesAlive();
-        foreach (var enemy in enimies)
-        {
-            enemy.Count();
-        }
-
-        enemyManager.EndTurn();
-        battleManager.PlayerTurn();
+        _ = HandleAttack();        
     }
 
     public void OnExit()
     {
         Debug.Log("EnemyTurn: OnExit");
-       
     }
 
     public void Tick()
     {
+    }
+    public async UniTask HandleAttack()
+    {
+        var sequence = DOTween.Sequence();
+        var enemies = enemyManager.GetEnemiesAlive();
+        var player = PlayerController.Instance;
+        foreach (var enemy in enemies)
+        {
+            
+            if (player.IsDead) continue;
+
+            enemy.Count();
+
+            await UniTask.Delay(1000);
+        }
+        Debug.Log("da");
+        _battleManager.CheckWinLose();
     }
 }

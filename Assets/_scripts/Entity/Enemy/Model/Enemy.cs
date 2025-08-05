@@ -10,6 +10,10 @@ public class Enemy : MonoBehaviour, IDisposable
     [SerializeField] private Animator _animator;
     [SerializeField] private HealthComponent _health;
     [SerializeField] private Counter counter;
+    [SerializeField] private CounterDisplay counterDisplay;
+
+    public EnemyState State => _sm.CurrentTypeState;
+    private EnemyStateMachine _sm;
     private CompositeDisposable _disposables = new CompositeDisposable();
     public Health healthCtrl;
     public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
@@ -24,14 +28,14 @@ public class Enemy : MonoBehaviour, IDisposable
         {
             _health = GetComponent<HealthComponent>();
         }
+        _sm = new(this, _animator, counter);
     }
 
     private void Start()
     {
+
         healthCtrl = new Health(_health);
         _health.Initialize(100f, 0f);
-        healthCtrl.OnDamageTaken.Subscribe(x => OnDameTaken()).AddTo(_disposables);
-        healthCtrl.OnDeath.Subscribe(async x => await OnDeath()).AddTo(_disposables);
 
         if (_animator != null)
         {
@@ -42,67 +46,39 @@ public class Enemy : MonoBehaviour, IDisposable
         counter.Initialize(
             initialCount: 1,
             initialMaxCount: 3,
-            onCurrentCountChanged: () => HandleCurrentCounterChanged(),
-            onCountReachedZero: () => HandleCountReachZero(),
-            onMaxCountChanged: () => HandleMaxCountChanged()
+            onCountReachedZero: () => HandleCountReachZero()
         );
+        _sm.ChangeState(EnemyState.Idle);
     }
 
-    public void Count() => counter.DecreaseCount();
-    private void HandleMaxCountChanged()
+    public void Count()
     {
-        // animation or other logic when max count changes
+        _sm.ChangeState(EnemyState.Counting);
     }
-
     private void HandleCountReachZero()
     {
-        PlayerController.Instance.PlayerHealth.TakeDamage(10, DamageType.Physical);
-        Debug.Log("Enemy has reached zero count.");
         counter.ResetCount();
+        Attack();
     }
     public void Attack()
     {
+        _sm.ChangeState(EnemyState.Attack);
+
+    }
+  
+    public void OnDeath()
+    {
         
+        _sm.ChangeState(EnemyState.Dead);
     }
-    private void HandleCurrentCounterChanged()
+
+    public void TakeDamage(float damage)
     {
-        // animation or other logic when current count changes
+        if (IsDead.Value) return;
+        healthCtrl.TakeDamage(damage, DamageType.Physical);
+        _sm.ChangeState(EnemyState.Hurt);
+
     }
-
-    private async UniTask OnDeath()
-    {
-        IsDead.Value = true;
-        if (_animator != null)
-        {
-            _animator.SetBool("Dead", IsDead.Value);
-        }
-
-        try
-        {
-            await UniTask.Delay(1000, cancellationToken: this.GetCancellationTokenOnDestroy());
-
-            if (_animator != null)
-            {
-                _animator.enabled = false;
-            }
-            GetComponentInChildren<Image>().color = Color.black;
-            if (EnemyManager.Instance.AllEnimiesDied())
-                BattleManager.Instance.WinBattle();
-        }
-        catch (OperationCanceledException)
-        {
-            Debug.Log("Enemy destroyed before death animation finished");
-        }
-    }
-
-    public void OnDameTaken()
-    {
-        if (_animator != null)
-        {
-            _animator.SetTrigger("Hurt");
-        }
-    }
-
     private void OnDestroy()
     {
         Dispose();
@@ -113,4 +89,5 @@ public class Enemy : MonoBehaviour, IDisposable
         _disposables?.Dispose();
         IsDead?.Dispose();
     }
+    
 }

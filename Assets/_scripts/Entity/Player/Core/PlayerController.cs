@@ -21,10 +21,10 @@ public class PlayerController : Singleton<PlayerController>
     private bool _isInitialized = false;
 
     // Properties
+    public bool IsDead => _healthComponent.CurrentHP.Value <= 0;
     public Health PlayerHealth => _health;
     public PlayerHandController HandController => handController;
     // action
-    public Action OnPlayerEndTurn;
     protected override void Awake()
     {
         base.Awake();
@@ -42,7 +42,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             Debug.Log("Player has died.");
             await UniTask.Delay(1000);
-            BattleManager.Instance.LoseBattle();
         }).AddTo(this);
         _healthComponent.Initialize(100, 0);
     }
@@ -155,7 +154,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         Debug.Log("End Turn");
         DisableAllActions();
-        OnPlayerEndTurn?.Invoke();
+        BattleManager.Instance.CheckWinLose();
     }
 
     internal bool IsPlayerDead()

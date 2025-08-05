@@ -4,6 +4,7 @@ public class StateMachine<TType,T> where T : IState
 {
     protected Dictionary<TType, T> States;
     public IState CurrentState { get; private set; }
+    public TType CurrentTypeState { get; private set; }
     public void ChangeState(IState newState)
     {
         if (CurrentState != null)
@@ -15,6 +16,7 @@ public class StateMachine<TType,T> where T : IState
     }
     public void ChangeState(TType newStateType)
     {
+        CurrentTypeState = newStateType;
         if (States.TryGetValue(newStateType, out T newState))
         {
             ChangeState(newState);

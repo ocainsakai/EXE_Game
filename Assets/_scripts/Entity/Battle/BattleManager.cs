@@ -14,12 +14,11 @@ public class BattleManager : Singleton<BattleManager>, IDisposable
     {
         base.Awake();
         _sm = new BattleStateMachine(this);
-        playerController.OnPlayerEndTurn += EnemyTurn;
     }
     private void Start()
     {
         _sm.ChangeState(BattleState.BattleStart);
-        PlayerTurn();
+        CheckWinLose();
 
     }
     public void Initialize()
@@ -28,18 +27,6 @@ public class BattleManager : Singleton<BattleManager>, IDisposable
         enemyManager.InitializeEnemies();
         playerController.Initialize();
     }
-    public void PlayerTurn()
-    {
-        _sm.ChangeState(BattleState.PlayerTurn);
-    }
-    public void WinBattle() =>
-            _sm.ChangeState(BattleState.WinBattle);
-    public void LoseBattle() =>
-            _sm.ChangeState(BattleState.LoseBattle);
-    public void EnemyTurn() =>    
-        _sm.ChangeState(BattleState.EnemyTurn);
-
-
     public void OnDestroy()
     {
         Dispose();
@@ -49,8 +36,24 @@ public class BattleManager : Singleton<BattleManager>, IDisposable
     {
         _disposables?.Dispose();
     }
-
-    internal void ClearBattle()
+    public void CheckWinLose()
     {
+        if (enemyManager.AllEnimiesDied())
+        {
+            _sm.ChangeState(BattleState.WinBattle);
+        } else
+        if (playerController.IsDead)
+        {
+            _sm.ChangeState(BattleState.LoseBattle);
+        } else
+        if (_sm.CurrentTypeState == BattleState.PlayerTurn)
+        {
+            _sm.ChangeState(BattleState.EnemyTurn);
+        } 
+        else if (_sm.CurrentTypeState != BattleState.EnemyTurn)
+        {
+            Debug.Log("eay eay");
+            _sm.ChangeState(BattleState.PlayerTurn);
+        }
     }
 }

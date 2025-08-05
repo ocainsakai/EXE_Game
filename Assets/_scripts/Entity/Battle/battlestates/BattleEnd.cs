@@ -1,72 +1,116 @@
 ﻿using Ain;
 using Cysharp.Threading.Tasks;
+using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BattleEnd : IState
 {
-   
     private readonly BattleManager _battleManager;
-    private readonly bool _isVictory; // Thắng hay thua?
+    private readonly bool _isVictory;
     private CancellationTokenSource _cts;
+    private UniTask _battleResultTask;
 
     public BattleEnd(BattleManager battleManager, bool isVictory)
     {
         _battleManager = battleManager;
         _isVictory = isVictory;
-        
     }
 
     public void OnEnter()
     {
-
         Debug.Log("BattleEnd.OnEnter() called");
         _cts = new CancellationTokenSource();
-        // Xử lý kết thúc trận đấu (thắng/thua)
-        HandleBattleResultAsync().Forget();
+        _battleResultTask = HandleBattleResultAsync(_cts.Token);
     }
 
-    public void OnExit()
+    public async void OnExit()
     {
         Debug.Log("BattleEnd.OnExit() called");
-        // Hủy token để tránh rò rỉ bộ nhớ
+
+        // Cancel ongoing operations
         _cts?.Cancel();
-        _cts?.Dispose();
-        _cts = null;
+
+        try
+        {
+            // Wait for the task to complete or be cancelled
+            await _battleResultTask.SuppressCancellationThrow();
+        }
+        finally
+        {
+            _cts?.Dispose();
+            _cts = null;
+        }
     }
 
-    public void Tick()
+    public void Tick() { }
+
+    private async UniTask HandleBattleResultAsync(CancellationToken ct)
     {
+        try
+        {
+            // 1. Show battle result effects
+            await ShowBattleResultEffects(ct);
+
+
+            // 3. Return to map after delay
+            await UniTask.Delay(500, cancellationToken: ct);
+
+            if (!ct.IsCancellationRequested)
+            {
+                ReturnToMap();
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("Battle result handling was cancelled");
+            throw;
+        }
     }
-    private async UniTaskVoid HandleBattleResultAsync()
+
+    private async UniTask ShowBattleResultEffects(CancellationToken ct)
     {
-        // 1. Hiệu ứng kết thúc (ví dụ: màn hình chiến thắng/thua)
         if (_isVictory)
         {
             Debug.Log("You Win!");
-            foreach (var enemy in EnemyManager.Instance.enemiesInCombat.Enemies)
-            {
-                _battleManager.playerController.coinRSO.onwnerCoins.Value += enemy.reward;
-            }
+            await ProcessVictoryRewards(ct);
         }
         else
         {
             Debug.Log("You Lose!");
-          
         }
-        // 2. Dọn dẹp trận đấu
-        _battleManager.ClearBattle();
-
-        // 3. Chuyển về Map_Demo sau delay
-        await UniTask.Delay(2000, cancellationToken: _cts.Token);
-        ReturnToMap();
     }
 
+    private async UniTask ProcessVictoryRewards(CancellationToken ct)
+    {
+        if (EnemyManager.Instance == null ||
+            EnemyManager.Instance.enemiesInCombat == null ||
+            _battleManager.playerController == null)
+        {
+            Debug.LogWarning("Missing references for victory rewards");
+            return;
+        }
+
+        foreach (var enemy in EnemyManager.Instance.enemiesInCombat.Enemies)
+        {
+            if (enemy != null)
+            {
+                _battleManager.playerController.coinRSO.onwnerCoins.Value += enemy.reward;
+                await UniTask.Yield(ct); // Allow cancellation between rewards
+            }
+        }
+    }
     private void ReturnToMap()
     {
-        // Đảm bảo hủy tất cả subscriptions trước khi chuyển scene
-        _battleManager.Dispose();
-        SceneManager.LoadScene("Map_Demo");
+        try
+        {
+            _battleManager.Dispose();
+            SceneManager.LoadScene("Map_Demo");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error returning to map: {e.Message}");
+        }
     }
 }

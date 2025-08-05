@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using Cysharp.Threading.Tasks;
 public class Card : MonoBehaviour
 {
     [SerializeField] public CardInputDecider inputDecider;
@@ -56,10 +57,9 @@ public class Card : MonoBehaviour
     }
     public void Attack(Enemy enemy, int mult)
     {
-        // Overloaded method to allow custom damage
         if (Data != null && enemy != null)
         {
-            enemy.healthCtrl.TakeDamage(Data.Rank * mult, Ain.DamageType.Physical);
+             enemy.TakeDamage(Data.Rank * mult);
         }
     }
 }

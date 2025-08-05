@@ -23,8 +23,9 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         return enemyList.enemies.TrueForAll(x => x.IsDead.Value);
     }
-    public void EndTurn()
+    public Enemy GetIdleEnemy()
     {
-        
+        return enemyList.enemies.FirstOrDefault(x => 
+        x.State == EnemyState.Idle);
     }
 }

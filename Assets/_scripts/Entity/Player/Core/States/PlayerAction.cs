@@ -10,13 +10,6 @@ public class PlayerAction : PlayerBaseState
     public override void OnEnter()
     {
         Debug.Log("PlayerAction: OnEnter");
-        if (EnemyManager.Instance.enemyList.enemies == null ||
-            EnemyManager.Instance.enemyList.enemies.Count == 0)
-        {
-            Debug.LogWarning("No enemies found in the database.");
-            BattleManager.Instance.WinBattle();
-            return;
-        }
         controller.EnableAllActions();
         // Logic for entering the action phase, if any
     }
