@@ -47,19 +47,19 @@ public class Card : MonoBehaviour
         GetComponentInChildren<Image>().sprite = sprite;
     }
 
-    public void Attack(Enemy enemy)
+    public async UniTask Attack(Enemy enemy)
     {
         // Assuming the card has an Attack method
         if (Data != null && enemy != null)
         {
-            enemy.healthCtrl.TakeDamage(Data.Rank, Ain.DamageType.Physical);
+            await enemy.TakeDamage(10);
         }
     }
-    public void Attack(Enemy enemy, int mult)
+    public async UniTask Attack(Enemy enemy, int mult)
     {
         if (Data != null && enemy != null)
         {
-             enemy.TakeDamage(Data.Rank * mult);
+            await enemy.TakeDamage(Data.Rank * mult);
         }
     }
 }

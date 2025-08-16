@@ -17,14 +17,14 @@ public class EnemySelectionUI : MonoBehaviour
         }
     }
 
-    private void OnEnemySelected(EnemyData selectedEnemy)
+    private void OnEnemySelected(Enemy selectedEnemy)
     {
-        if (_playerCoinRSO.onwnerCoins.Value < selectedEnemy.cost)
+        if (_playerCoinRSO.onwnerCoins.Value < selectedEnemy.Data.cost)
         {
             Debug.LogWarning("Not enough coins to select this enemy.");
             return;
         }
-        _playerCoinRSO.onwnerCoins.Value -= selectedEnemy.cost;
+        _playerCoinRSO.onwnerCoins.Value -= selectedEnemy.Data.cost;
         _enemySelectedUI.AddEnemySelected(selectedEnemy);
     }
 }

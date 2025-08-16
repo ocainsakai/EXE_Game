@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerCoin
   m_EditorClassIdentifier: 
   onwnerCoins:
-    value: 2300
+    value: 3000

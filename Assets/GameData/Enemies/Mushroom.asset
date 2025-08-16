@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
+  DisplayName: Mushroom
   Icon: {fileID: -654737500350741434, guid: 17e1a40da00030a4e91c20e27a65a013, type: 3}
+  Atk: 10
+  HP: 50
+  Count: 1
   cost: 100
   reward: 150
-  Prefab: {fileID: 631021066199428080, guid: 0fadd5132579e7b4d9057c7a517f3743, type: 3}

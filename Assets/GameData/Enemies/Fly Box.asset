@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Fly Box
   m_EditorClassIdentifier: 
+  DisplayName: Fly Box
   Icon: {fileID: -4331948892352828423, guid: 9fa6fdd60c83ecb4eb3d7289c746c775, type: 3}
+  Atk: 10
+  HP: 100
+  Count: 3
   cost: 150
   reward: 250
-  Prefab: {fileID: 4958306181277299653, guid: 99748bd765ed9c048930a7b7630e3de6, type: 3}

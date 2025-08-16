@@ -635,6 +635,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Enemy3-Die_16
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 14
+        width: 38
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d169e1a28270bb84aa72f2746ca7871e
+      internalID: -230955251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -657,6 +679,7 @@ TextureImporter:
       Enemy3-Die_13: 3408891426301796182
       Enemy3-Die_14: 1153381017663961975
       Enemy3-Die_15: 5150658302090646717
+      Enemy3-Die_16: -230955251
       Enemy3-Die_2: -7271908975891209729
       Enemy3-Die_3: 6582403810663315581
       Enemy3-Die_4: -4233480742366209014

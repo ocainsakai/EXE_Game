@@ -1,9 +1,8 @@
-﻿using Ain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class CardFactory : Singleton<CardFactory>
+public class CardFactory : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private GameObject _cardPrefab;
@@ -14,9 +13,9 @@ public class CardFactory : Singleton<CardFactory>
     private Dictionary<CardSDData, ObjectPool<Card>> _cardPools;
     private Dictionary<Card, CardSDData> _cardToDataMap;
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
+        
         InitializePools();
     }
 
@@ -103,15 +102,6 @@ public class CardFactory : Singleton<CardFactory>
 
     private void OnDestroy()
     {
-        //// Cleanup all pools
-        //foreach (var pool in _cardPools.Values)
-        //{
-        //    if (pool != null)
-        //    {
-        //        // Kiểm tra từng item trong Pool trước khi Clear
-        //        pool.Dispose();
-        //    }
-        //}
         _cardPools.Clear();
         _cardToDataMap.Clear();
     }

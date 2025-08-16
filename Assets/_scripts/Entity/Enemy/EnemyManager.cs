@@ -1,31 +1,53 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyManager : Singleton<EnemyManager>
+public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] public EnemyList enemyList;
-    [SerializeField] public EnemyDatabase enemiesInCombat;
-    [SerializeField] public EnemyDatabase allEnemies;
-    [SerializeField] public EnemyBattleUI battleUI;
-
+    [SerializeField] private EnemyDatabase enemiesSelected;
+    [SerializeField] private CoinRSO playerCoin;
+    [SerializeField] private EnemyBattleUI battleUI;
+    [SerializeField] public List<Enemy> enemiesRuntime = new();
     public void InitializeEnemies()
     {
-        var enemies = battleUI.InitializedEnemy(enemiesInCombat.Enemies);
-        enemyList.enemies.Clear();
-        enemyList.enemies.AddRange(enemies);
+        enemiesRuntime = battleUI.InitializedEnemy(enemiesSelected.Enemies);
     }
-    public IEnumerable<Enemy> GetEnemiesAlive()
+    public Enemy GetTargetEnemy()
     {
-        return enemyList.enemies.Where(x => !x.IsDead.Value);
+        Debug.Log(enemiesRuntime.Count);
+        return enemiesRuntime.FirstOrDefault(x => x.IsAlive);
     }
     public bool AllEnimiesDied()
     {
-        return enemyList.enemies.TrueForAll(x => x.IsDead.Value);
+        return enemiesRuntime.TrueForAll(x => !x.IsAlive);
     }
-    public Enemy GetIdleEnemy()
+    public async UniTask BattleStart()
     {
-        return enemyList.enemies.FirstOrDefault(x => 
-        x.State == EnemyState.Idle);
+        InitializeEnemies();
+        await UniTask.CompletedTask;
+    }
+    public async UniTask EnemyTurn()
+    {
+        foreach (var enemy in enemiesRuntime)
+        {
+            await enemy.Action();
+            await UniTask.Delay(300);
+        }
+        await UniTask.Delay(1000);
+        await BattleManager.Instance.CheckCondition();
+    }
+    public void GameWin()
+    {
+        Debug.Log("Gain Reward");
+        int reward = 0;
+        enemiesSelected.Enemies.ForEach(x => reward += x.Data.reward);
+        playerCoin.onwnerCoins.Value += reward;
+        enemiesSelected.Clear();
+    }
+
+    public void GameLose()
+    {
+        enemiesSelected.Clear();
     }
 }

@@ -18,11 +18,16 @@ public class EnemySelectedUI : MonoBehaviour
             Debug.LogError("No slots assigned for enemy selection.");
             return;
         }
-        combatContext.Clear(); // Clear the combat context to start fresh
-        // Initialize enemyDataList with the same length as slots
+        combatContext.Clear();
+        currentSlotIndex = -1;
     }
-    public void AddEnemySelected(EnemyData enemyData)
+    public void AddEnemySelected(Enemy enemyData)
     {
+        if (enemyData == null)
+        {
+            Debug.Log("error here");
+            return;
+        }
         currentSlotIndex++;
         if (currentSlotIndex >= slots.Length)
         {
@@ -31,9 +36,8 @@ public class EnemySelectedUI : MonoBehaviour
         }
         combatContext.Enemies.Add(enemyData);
         Transform slot = slots[currentSlotIndex];
-        var enemyEntity = Instantiate(enemyData.Prefab);
+        var enemyEntity = Instantiate(enemyData);
         enemyEntity.transform.localPosition = Vector3.zero;
         enemyEntity.transform.SetParent(slot, false);
-        enemyEntity.GetComponentInChildren<HealthDisplay>().gameObject.SetActive(false);
     }
 }

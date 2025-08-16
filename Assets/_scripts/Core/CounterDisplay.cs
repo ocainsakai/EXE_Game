@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 using System.Threading;
@@ -9,39 +9,26 @@ using UnityEngine;
 public class CounterDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI counterText;
-    [SerializeField] private Counter counter;
     [SerializeField] private float textUpdateDuration = 0.5f;
     [SerializeField] private float punchScaleAmount = 0.2f;
 
+    
     private Tweener _textTweener;
     private Tweener _scaleTweener;
     private CancellationTokenSource _cts;
 
+    public int CountTime => (int) ((textUpdateDuration + punchScaleAmount) * 1000);
     private void Awake()
     {
         _cts = new CancellationTokenSource();
-        counter = counter ?? GetComponent<Counter>();
-        counterText = counterText ?? GetComponent<TextMeshProUGUI>();
     }
-
-    private void Start()
+    string GetProgressBar(int current, int max, string completed = "■", string remaining = "□")
     {
-        if (counter != null)
-        {
-            counter.CurrentCount.Subscribe(_ => UpdateCounterTextAsync().Forget());
-            counter.MaxCount.Subscribe(_ => UpdateCounterTextAsync().Forget());
-            UpdateCounterTextAsync().Forget();
-        }
+        return new string(completed[0], current) + new string(remaining[0], max - current);
     }
-
-    public async UniTask UpdateCounterTextAsync()
+    public async UniTask UpdateCounterTextAsync(int currentCount, int maxCount)
     {
-        if (counterText == null || counter == null)
-        {
-            Debug.LogWarning("Counter or CounterText is not set.");
-            return;
-        }
-
+       
         // Kill any existing tweens
         _textTweener?.Kill();
         _scaleTweener?.Kill();
@@ -49,7 +36,7 @@ public class CounterDisplay : MonoBehaviour
         try
         {
             // Create the new text value
-            string targetText = $"{counter.CurrentCount.Value} / {counter.MaxCount.Value}";
+            string targetText = $"{GetProgressBar(currentCount, maxCount)} ({currentCount}/{maxCount})"; 
 
             // Animation sequence
             var sequence = DOTween.Sequence();
@@ -69,10 +56,11 @@ public class CounterDisplay : MonoBehaviour
                 textUpdateDuration));
 
             // 3. Color flash (optional)
-            if (counter.CurrentCount.Value < counter.MaxCount.Value)
+            if (currentCount < maxCount)
             {
                 sequence.Join(counterText.DOColor(Color.red, textUpdateDuration / 4)
-                    .SetLoops(2, LoopType.Yoyo));
+                    .SetLoops(2, LoopType.Yoyo))
+                    .OnComplete(() => counterText.color = Color.white);
             }
 
             await sequence.AsyncWaitForCompletion();
@@ -83,10 +71,6 @@ public class CounterDisplay : MonoBehaviour
         }
     }
 
-    public async UniTask PlayCountChangeAnimation()
-    {
-        await UpdateCounterTextAsync();
-    }
 
     private void OnDestroy()
     {

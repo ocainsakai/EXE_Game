@@ -1,31 +1,26 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyBattleUI : MonoBehaviour
 {
-    private List<Transform> _slots = new List<Transform>();
-    private void Awake()
+    [SerializeField] Transform slotPrf;  
+    public List<Enemy> InitializedEnemy(IEnumerable<Enemy> enemies)
     {
-        _slots.Clear();
-        foreach (Transform child in transform)
+        var enemyList = new List<Enemy>();  
+        if (enemies == null || enemies.Count() == 0)
         {
-            _slots.Add(child);
+            Debug.Log("Error here");
+            return enemyList;
         }
-        // Initialize any necessary components or references here
-    }
-    public List<Enemy> InitializedEnemy(IEnumerable<EnemyData> enemies)
-    {
-        List<Enemy> enemyList = new List<Enemy>();
-        int i = 0;
         foreach (var enemyData in enemies)
         {
-            Transform slot = _slots[i];
-    
-            var enemyEntity = Instantiate(enemyData.Prefab);
+            var slot = Instantiate(slotPrf);
+            var enemyEntity = Instantiate(enemyData);
+            slot.SetParent(transform);
+            enemyEntity.transform.SetParent(slot);
             enemyEntity.transform.localPosition = Vector3.zero;
-            enemyEntity.transform.SetParent(slot, false);
-            enemyList.Add(enemyEntity.GetComponent<Enemy>());
-            i++;
+            enemyList.Add(enemyEntity);
         }
         return enemyList;
     }

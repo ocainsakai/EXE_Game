@@ -1,16 +1,27 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class HandEvaluator : MonoBehaviour
+
+public class HandEvaluator 
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private PokerData HUD;
+
+    private PokerHandEvaluator pokerHandEvaluator;
+
+    public HandEvaluator(PokerData hUD)
     {
-        
+        HUD = hUD;
+        pokerHandEvaluator = new PokerHandEvaluator();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHUD(IEnumerable<Card> selectedCards)
     {
-        
+        Debug.Log("update UI");
+        var rankList = selectedCards.Select(x => x.Data.Rank).ToArray();
+        var suitList = selectedCards.Select(x => x.Data.Suit).ToArray();
+        var type = pokerHandEvaluator.EvaluateHand(rankList, suitList);
+
+        HUD.PokerType.Value = type;
     }
 }

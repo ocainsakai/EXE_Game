@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
+    [SerializeField] CounterDisplay _display;
     [Tooltip("Current count value")]
     private ReactiveProperty<int> _currentCount;
 
     [Tooltip("Maximum count value")]
     private ReactiveProperty<int> _maxCount;
 
+
     public IReadOnlyReactiveProperty<int> CurrentCount => _currentCount;
     public IReadOnlyReactiveProperty<int> MaxCount => _maxCount;
     public bool IsEmpty => _currentCount.Value <= 0;
-
+    public int CountTime => _display.CountTime;
     public void Initialize(
         int initialCount,
         int initialMaxCount,
@@ -26,8 +28,8 @@ public class Counter : MonoBehaviour
 
         _currentCount.Subscribe(newCount =>
         {
+            _ = _display.UpdateCounterTextAsync(_currentCount.Value, _maxCount.Value);
             onCurrentCountChanged?.Invoke();
-
             if (IsEmpty)
             {
                 onCountReachedZero?.Invoke();
@@ -36,7 +38,9 @@ public class Counter : MonoBehaviour
 
         _maxCount.Subscribe(newMaxCount =>
         {
+            _ = _display.UpdateCounterTextAsync(_currentCount.Value, _maxCount.Value);
             onMaxCountChanged?.Invoke();
+
             ClampCurrentCount();
         }).AddTo(this);
     }
@@ -62,7 +66,6 @@ public class Counter : MonoBehaviour
 
         _currentCount.Value = Mathf.Max(_currentCount.Value - amount, 0);
     }
-
     public void ResetCount()
     {
         _currentCount.Value = MaxCount.Value;
