@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_android_client_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://mij-studio-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">1003971093115</string>
+  <string name="google_storage_bucket" translatable="false">mij-studio.firebasestorage.app</string>
+  <string name="project_id" translatable="false">mij-studio</string>
+  <string name="google_api_key" translatable="false">AIzaSyB7cW20azgHUN7ffojW0Y1UxbgODncYpW8</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB7cW20azgHUN7ffojW0Y1UxbgODncYpW8</string>
+  <string name="google_app_id" translatable="false">1:1003971093115:android:d1b283ee020f192e8638de</string>
+  <string name="default_android_client_id" translatable="false">1003971093115-kub10gh1jn02nl46o3od7bh1npdb2k13.apps.googleusercontent.com</string>
+  <string name="default_web_client_id" translatable="false">1003971093115-1deuoh1q6v2j5lp53s20kant827p9h45.apps.googleusercontent.com</string>
+</resources>
