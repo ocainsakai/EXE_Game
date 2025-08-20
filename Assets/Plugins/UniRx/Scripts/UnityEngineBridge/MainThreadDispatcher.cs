@@ -449,7 +449,7 @@ namespace UniRx
 
                 try
                 {
-                    dispatcher = GameObject.FindFirstObjectByType<MainThreadDispatcher>();
+                    dispatcher = GameObject.FindObjectOfType<MainThreadDispatcher>();
                 }
                 catch
                 {
@@ -577,7 +577,7 @@ namespace UniRx
 
         public static void CullAllExcessDispatchers()
         {
-            var dispatchers = GameObject.FindObjectsByType<MainThreadDispatcher>(FindObjectsSortMode.None);
+            var dispatchers = GameObject.FindObjectsOfType<MainThreadDispatcher>();
             for (int i = 0; i < dispatchers.Length; i++)
             {
                 DestroyDispatcher(dispatchers[i]);
@@ -588,7 +588,7 @@ namespace UniRx
         {
             if (instance == this)
             {
-                instance = GameObject.FindFirstObjectByType<MainThreadDispatcher>();
+                instance = GameObject.FindObjectOfType<MainThreadDispatcher>();
                 initialized = instance != null;
 
                 /*
