@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1003971093115",
+    "firebase_url": "https://mij-studio-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mij-studio",
+    "storage_bucket": "mij-studio.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003971093115:android:d1b283ee020f192e8638de",
+        "android_client_info": {
+          "package_name": "com.mijstudio.nhangianhoiky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003971093115-kub10gh1jn02nl46o3od7bh1npdb2k13.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mijstudio.nhangianhoiky",
+            "certificate_hash": "e01154ee814d9be06c15f6dda06ccde28e20560e"
+          }
+        },
+        {
+          "client_id": "1003971093115-1deuoh1q6v2j5lp53s20kant827p9h45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7cW20azgHUN7ffojW0Y1UxbgODncYpW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003971093115-1deuoh1q6v2j5lp53s20kant827p9h45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
