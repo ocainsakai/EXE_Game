@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 
 public class MainMenuController : MonoBehaviour
 {
     private IGameManager gameManager;
-
+    private ISceneLoader sceneLoader;
+    [SerializeField]
+    private Button start;
+    [SerializeField]
+    private Button exit;
     [Inject]
-    public void Construct(IGameManager gameManager)
+    public void Construct(IGameManager gameManager, ISceneLoader sceneLoader)
     {
         this.gameManager = gameManager;
+        this.sceneLoader = sceneLoader;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        Debug.Log($"[MainMenu] GameManager hash: {gameManager.GetHashCode()}");
-        Debug.Log($"[MainMenu] Current State: {gameManager}");
+        start.onClick.RemoveAllListeners();
+        start.onClick.AddListener(() => sceneLoader.LoadScene("Map"));
+        exit.onClick.RemoveAllListeners();
+        exit.onClick.AddListener(() => gameManager.QuitGame());
     }
 }
