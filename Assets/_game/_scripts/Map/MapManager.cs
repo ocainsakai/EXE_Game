@@ -116,7 +116,7 @@ namespace Map
 
         private void OnExcutive()
         {
-            GameManager.Instance.ChangeScenceToCombat();
+            //GameManager.Instance.ChangeScenceToCombat();
         }
 
         private void OnEnter()

@@ -15,7 +15,7 @@ namespace Game
         }
         private void Start()
         {
-            stateMachine.SetState(new BattleStart(this, GameManager.Instance.enemies, GameManager.Instance.playerConfig));   
+            //stateMachine.SetState(new BattleStart(this, GameManager.Instance.enemies, GameManager.Instance.playerConfig));   
         }
 
         private void Update()
@@ -30,7 +30,7 @@ namespace Game
         public void StartBattle()
         {
 
-            stateMachine.ChangeState(new BattleStart(this, GameManager.Instance.enemies, GameManager.Instance.playerConfig));
+            //stateMachine.ChangeState(new BattleStart(this, GameManager.Instance.enemies, GameManager.Instance.playerConfig));
         }
     }
 }

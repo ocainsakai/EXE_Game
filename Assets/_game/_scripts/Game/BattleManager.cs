@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
+        //gameManager = GameManager.Instance;
         StartNewBattle();
     }
 
@@ -44,7 +44,7 @@ public class BattleManager : MonoBehaviour
     }
     public void Clamp()
     {
-        GameManager.Instance.ChangeScenceToMap();
+        //GameManager.Instance.ChangeScenceToMap();
     }
 
     #region Battle Lifecycle
@@ -53,10 +53,10 @@ public class BattleManager : MonoBehaviour
         //UIManager.Instance.CloseAll();
 
 
-        playerController.LoadPlayerConfig(gameManager.playerConfig);
+        //playerController.LoadPlayerConfig(gameManager.playerConfig);
         playerController.BuidDeck();
 
-        enemyManager.LoadEnemy(gameManager.enemies);
+        //enemyManager.LoadEnemy(gameManager.enemies);
 
        
 
@@ -113,7 +113,7 @@ public class BattleManager : MonoBehaviour
         gold: 50,
         exp: 10
         );
-        GameManager.Instance.BattleResult = result;
+        //GameManager.Instance.BattleResult = result;
 
         //OnBattleFinished?.Invoke(result);
         EndBattle("Battle Win!", true);
