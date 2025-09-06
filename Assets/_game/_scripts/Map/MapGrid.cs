@@ -25,7 +25,7 @@ namespace Map
         [SerializeField] private List<GameObject> initObjects;
 
         public Dictionary<Vector2Int ,HexController> hexObjects = new();
-        public SerializableDictionary<Vector2Int, HexState> mapStates = new();
+        public Dictionary<Vector2Int, HexState> mapStates = new();
 
         public readonly List<Vector2Int> mapPosition = new()
 {
