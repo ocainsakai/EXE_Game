@@ -1,99 +1,128 @@
-using UnityEngine;
-using TMPro;
-using Map;
+﻿using Map;
 using System;
+using TMPro;
+using UnityEngine;
+using UnityUtils;
 
-
-public class BattleManager : ManualSingleton<BattleManager>
+public class BattleManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private TextMeshProUGUI battleText;
     [SerializeField] private EnemyManager enemyManager;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private TurnManager turnManager;
-    private BattleState battleState;
-    GameManager gameManager;
-    //public BattleContext battleContext;
 
-    [SerializeField] bool isTestMode = false;
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+    private GameManager gameManager;
+
+    [SerializeField] private bool isTestMode = false;
+
+    public event Action OnBattleWin;
+    public event Action OnBattleLose;
+
     private void Start()
     {
         gameManager = GameManager.Instance;
         StartNewBattle();
     }
+
     private void OnEnable()
     {
-        playerController.PlayerHealth.onDeath += GameLose;
-        playerController.onPlayerEndTurn += PlayerEndHandle;
-        enemyManager.Health.onDeath += GameWin;
-        enemyManager.onEnemyEndTurn += EnemyEndHandle;
-    }
+        playerController.PlayerHealth.onDeath += HandleGameLose;
+        playerController.onPlayerEndTurn += HandlePlayerEndTurn;
 
-    private void EnemyEndHandle()
-    {
-        // resolve
-        Debug.Log("enemy end");
-        turnManager.NextRound();
-    }
-
-    private void PlayerEndHandle()
-    {
-        enemyManager.Action();
+        enemyManager.Health.onDeath += HandleGameWin;
+        enemyManager.onEnemyEndTurn += HandleEnemyEndTurn;
     }
 
     private void OnDisable()
     {
-        playerController.PlayerHealth.onDeath -= GameLose;
-        playerController.onPlayerEndTurn -= PlayerEndHandle;
-        enemyManager.Health.onDeath -= GameWin;
-        enemyManager.onEnemyEndTurn -= EnemyEndHandle;
+        playerController.PlayerHealth.onDeath -= HandleGameLose;
+        playerController.onPlayerEndTurn -= HandlePlayerEndTurn;
+
+        enemyManager.Health.onDeath -= HandleGameWin;
+        enemyManager.onEnemyEndTurn -= HandleEnemyEndTurn;
+    }
+    public void Clamp()
+    {
+        GameManager.Instance.ChangeScenceToMap();
     }
 
+    #region Battle Lifecycle
     public void StartNewBattle()
     {
+        //UIManager.Instance.CloseAll();
 
-        // clear previous
-        BattleClear();
-        // load player
+
         playerController.LoadPlayerConfig(gameManager.playerConfig);
-        // load enemies
-        enemyManager.LoadEnemy(gameManager.enemies);
-        // build deck
         playerController.BuidDeck();
-        // init orther state
-        battleState = new BattleState()
-        {
-            Player = playerController.playerState,
-            Enemy = enemyManager.enemyState,
-            TurnNumber = 0,
-        };
+
+        enemyManager.LoadEnemy(gameManager.enemies);
+
+       
+
         turnManager.SetTurnOnRound(2);
         turnManager.Initialze();
         turnManager.NextRound();
-        //option save initial
 
     }
 
     public void BattleClear()
     {
-
+        //UIManager.Instance.CloseAll();
+        playerController.ClearState();
+        enemyManager.ClearState();
     }
-    private void GameWin()
+
+    private void EndBattle(string message, bool isWin)
     {
-        // update ui and give rewards
-        battleText.text = "Battle Win!";
-        UIManager.Instance.OnWin();
-    }
+        battleText.text = message;
 
-    private void GameLose()
+        if (isWin)
+        {
+            //UIManager.Instance.OnWin();
+            OnBattleWin?.Invoke();
+
+        }
+        else
+        {
+            //UIManager.Instance.OnLose();
+            OnBattleLose?.Invoke();
+        }
+        BattleClear();
+
+    }
+    #endregion
+
+    #region Event Handlers
+    private void HandleEnemyEndTurn()
     {
-        // update ui and restart
-        battleText.text = "Battle Lose!";
-        UIManager.Instance.OnLose();
+        Debug.Log("Enemy End Turn");
+        turnManager.NextRound();
     }
 
+    private void HandlePlayerEndTurn()
+    {
+        Debug.Log("Player End Turn");
+        enemyManager.Action();
+    }
+
+    private void HandleGameWin()
+    {
+        var result = new BattleResult(
+        true,
+        gold: 50,
+        exp: 10
+        );
+        GameManager.Instance.BattleResult = result;
+
+        //OnBattleFinished?.Invoke(result);
+        EndBattle("Battle Win!", true);
+    }
+
+    private void HandleGameLose()
+    {
+        EndBattle("Battle Lose!", false);
+    }
+    #endregion
 
 }

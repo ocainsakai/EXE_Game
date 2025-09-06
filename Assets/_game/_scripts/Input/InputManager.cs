@@ -4,22 +4,22 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 
 [DefaultExecutionOrder(-1)]
-public class InputManager : ManualSingleton<InputManager>
+public class InputManager : MonoBehaviour
 {
     private TouchControl touchControl;
     public delegate void TouchEvent(Vector2 position, float time);
     public event TouchEvent OnStartTouch;
     public event TouchEvent OnEndTouch;
     public event TouchEvent OnTouch;
-    protected override void Awake()
+    protected  void Awake()
     {
-        base.Awake();
+
         touchControl = new TouchControl();
     }
 
     private void OnEnable()
     {
-        touchControl.Enable();
+        //touchControl.Enable();
         TouchSimulation.Enable();
     }
 
@@ -27,7 +27,7 @@ public class InputManager : ManualSingleton<InputManager>
 
     private void OnDisable()
     {
-        touchControl.Disable();
+        //touchControl.Disable();
         TouchSimulation.Disable();
 
     }

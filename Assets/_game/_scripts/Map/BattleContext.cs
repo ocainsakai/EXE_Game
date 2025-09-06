@@ -10,4 +10,5 @@ namespace Map
             this.enemyData = enemyData;
         }
     }
+
 }

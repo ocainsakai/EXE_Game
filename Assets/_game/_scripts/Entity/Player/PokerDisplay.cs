@@ -1,5 +1,5 @@
-using System;
-using TMPro;
+
+using CardSystem.PokerSystem;
 using UnityEngine;
 
 public class PokerDisplay : MonoBehaviour
@@ -17,7 +17,6 @@ public class PokerDisplay : MonoBehaviour
     {
         string content = type switch
         {
-            PokerHandType.None => "POKER Type",
             PokerHandType.HighCard => "High Card",
             PokerHandType.OnePair => "One Pair",
             PokerHandType.TwoPair => "Two Pair",
@@ -28,7 +27,7 @@ public class PokerDisplay : MonoBehaviour
             PokerHandType.FourOfAKind => "Four of a Kind",
             PokerHandType.StraightFlush => "Straight Flush",
             PokerHandType.RoyalFlush => "Royal Flush",
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            _ => "POKER Type",
         };
         pokerType.UpdateContent(content.ToUpper());
     }

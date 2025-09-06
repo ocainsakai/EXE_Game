@@ -1,23 +1,57 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 using UnityEngine;
 
 public class CardsDisplay : MonoBehaviour
 {
-    [SerializeField] HandController controller;
+    [SerializeField] DeckManager deckManager;
     [SerializeField] CardLayoutSettings settings;
-
-    public async UniTask OnCountChangedHandle()
+    private HandController controller;
+    private Action onCountChangeHandler;
+    private void OnEnable()
     {
-        for (int i = 0; i < controller.Count; i++) {
+        onCountChangeHandler += async () => await OnCountChangedHandle(true);
+        deckManager.OnCountChange += onCountChangeHandler;
+    }
+    private void OnDisable()
+    {
+        deckManager.OnCountChange -= onCountChangeHandler;
+    }
+    public async UniTask OnCountChangedHandle(bool isSort = false)
+    {
+        if (controller == null)
+        {
+            controller = deckManager.handController;
+        }
+        Debug.Log("update card");
+        for (int i = 0; i < controller.Count; i++)
+        {
             var card = controller[i];
             card.transform.SetParent(transform, false);
             card.transform.SetSiblingIndex(i);
         }
-        await RepositionChilds();
+        if (isSort)
+        {
+            await RepositionX();
+        }
+        else
+        {
+            await RepositionChilds();
+        }
     }
-
+    private async UniTask RepositionX()
+    {
+        var tasks = new UniTask[transform.childCount];
+        var positions = CalculatePosition();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            Vector3 targetPosition = positions[i];
+            tasks[i] = child.DOLocalMoveX(targetPosition.x, 0.25f).SetEase(Ease.Linear).AsyncWaitForCompletion().AsUniTask();
+        }
+        await UniTask.WhenAll(tasks);
+    }
     public async UniTask RepositionChilds()
     {
         var tasks = new UniTask[transform.childCount];
@@ -45,4 +79,5 @@ public class CardsDisplay : MonoBehaviour
         }
         return positions;
     }
+
 }

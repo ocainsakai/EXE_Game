@@ -1,4 +1,8 @@
+using CardSystem;
+using CardSystem.PokerSystem;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,43 +10,61 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    [SerializeField] CardFactory cardFactory;
-    [SerializeField] CardsDisplay handDisplay;
-    [SerializeField] HandController handController;
-    [SerializeField] PokerManager pokerManager;
+    [SerializeField] Card cardPref;
+    [SerializeField] Transform CardTransform;
+    [SerializeField] Transform deckTransform;
+    [SerializeField] TextDisplay pokerText;
+    [SerializeField] TextDisplay multText;
+    private List<Card> deck = new();
+    private List<Card> discardsPile = new();
+    private List<Card> cards = new();
 
-    public DeckState DeckState;
-    private Dictionary<SerializableGuid, Card> cards = new Dictionary<SerializableGuid, Card>();
-
+    public HandController handController;
+    public Action OnCountChange;
     private int _currentSortType = 0;
-    private void OnEnable()
-    {
-        handController.onSelectedChanged += OnSelectHandle;
-    }
-    private void OnDisable()
-    {
-        handController.onSelectedChanged -= OnSelectHandle;
-    }
-
     private void OnSelectHandle()
     {
-        var ranks = handController.GetSelectedCards().Select(x => x.State.CardSDData.Rank).ToArray();
-        var suits = handController.GetSelectedCards().Select(x => x.State.CardSDData.Suit).ToArray();
-        pokerManager.OnSelectChangedHandle(ranks, suits);
+        var ranks = handController.GetSelectedCards().Select(x => x.Data.Rank).ToArray();
+        var suits = handController.GetSelectedCards().Select(x => x.Data.Suit).ToArray();
+        var cardMask = handController.GetSelectedCards().Select(x => x.Data.Mask).ToArray();
+        var cardResult = PokerEvaluator.Evaluate(cardMask);
+        pokerText.UpdateContent("Poker Type: " + cardResult.HandType);
+        
+        //multText.UpdateContent("Mult: " + cardResult.);
     }
 
-    public void BuidDeck(IEnumerable<CardSDData> datas)
+    public void BuidDeck(List<CardData> datas)
     {
-        var cards = cardFactory.CreateCards(datas);
-        foreach (var card in cards) {
-            this.cards.Add(card.State.CardStateId, card);
+        NewHand();
+
+        foreach (var card in datas)
+        {
+            var cardGO = Instantiate(cardPref, deckTransform);
+
+            var cardState = cardGO.GetComponent<Card>();
+            cardState.SetData(card);
+            cards.Add(cardState);
+            deck.Add(cardState);
         }
-        DeckState.DeckOrder = cards.Select(x => x.State.CardStateId).ToList();
         ShuffleDeck();
     }
+
+    private void NewHand()
+    {
+        handController = new();
+        handController.onSelectedChanged += OnSelectHandle;
+        Card.onCardClicked += handController.OnCardClickHandle;
+    }
+
     public Card GetCard(SerializableGuid cardId)
     {
-        return cards[cardId];
+        Debug.Log($"Looking for: {cardId.ToHexString()}");
+        foreach (var c in cards)
+        {
+            Debug.Log($"Has: {c.ID.ToHexString()}");
+        }
+
+        return cards.FirstOrDefault(x => x.ID.Equals(cardId.ToHexString()));
     }
     public IEnumerable<Card> GetCards(IEnumerable<SerializableGuid> cardId)
     {
@@ -54,87 +76,110 @@ public class DeckManager : MonoBehaviour
     }
     private void ShuffleDeck()
     {
-        DeckState.DeckOrder = DeckState.DeckOrder.OrderBy(x => UnityEngine.Random.value).ToList();
+        deck = deck.OrderBy(x => UnityEngine.Random.value).ToList();
     }
-    public async UniTask Sort(bool toggle = false)
+    public void Sort(bool toggle = false)
     {
         //Debug.Log("soorrtttt");
         if (toggle) _currentSortType++;
         switch (_currentSortType % 2)
         {
             case 0:
-                await SortByRank();
+                SortByRank();
                 break;
             case 1:
-                await SortBySuit();
+                SortBySuit();
                 break;
         }
     }
-    private async UniTask SortByRank()
+    private void SortByRank()
     {
-        var sorted = handController.OrderBy(x => x.State.CardSDData.Rank).ThenBy(x => x.State.CardSDData.Suit).ToList();
+        var sorted = handController.OrderBy(x => x.Data.Rank).ThenBy(x => x.Data.Suit).ToList();
         handController.Clear();
         foreach (var card in sorted)
         {
             handController.Add(card);
         }
-        DeckState.Hand = handController.Select(x => x.State.CardStateId).ToList();
-        await handDisplay.OnCountChangedHandle();
+        //DeckState.Hand = handController.Select(x => x.ID).ToList();
+        OnCountChange?.Invoke();
     }
-    private async UniTask SortBySuit()
+    private void SortBySuit()
     {
-        var sorted = handController.OrderBy(x => x.State.CardSDData.Suit).ThenBy(x => x.State.CardSDData.Rank).ToList();
+        var sorted = handController.OrderBy(x => x.Data.Suit).ThenBy(x => x.Data.Rank).ToList();
         handController.Clear();
         foreach (var card in sorted)
         {
             handController.Add(card);
         }
-        DeckState.Hand = handController.Select(x => x.State.CardStateId).ToList();
-        await handDisplay.OnCountChangedHandle();
+        //DeckState.Hand = handController.Select(x => x.ID).ToList();
+        OnCountChange?.Invoke();
     }
     public async UniTask DrawCards()
     {
         // update state
         int amount = handController.AmountToDraw;
 
-        if (amount > DeckState.DeckOrder.Count)
+        var cardsDrawn = new List<Card>();
+        if (amount > deck.Count)
         {
-
-            DeckState.DeckOrder.AddRange(DeckState.DiscardPile);
-            DeckState.DiscardPile.Clear();
-            ShuffleDeck();
+            amount -= deck.Count;
+            cardsDrawn.AddRange(deck);
+            deck.Clear();
+            await RestoreFormDiscards();
         }
-
-        var cardsDrawn = DeckState.DeckOrder.Take(amount).ToList();
-        DeckState.Hand.AddRange(cardsDrawn);
-        DeckState.DeckOrder.RemoveRange(0, amount);
+        cardsDrawn.AddRange(deck.Take(amount));
+        deck.RemoveRange(0, amount);
 
 
         // update ui
         foreach (var card in cardsDrawn)
         {
-            handController.Add(GetCard(card));
+            handController.Add(card);
         }
-        await Sort();
+        Sort();
+    }
+
+    private async UniTask RestoreFormDiscards()
+    {
+        List<UniTask> tasks = new List<UniTask>();
+        deck.AddRange(discardsPile);
+        foreach (var card in discardsPile)
+        {
+            card.gameObject.SetActive(true);
+            card.transform.SetParent(deckTransform);
+            var task = card.transform.DOLocalMove(Vector3.zero, 0.5f).AsyncWaitForCompletion().AsUniTask();
+            tasks.Add(task);
+        }
+        await UniTask.WhenAll(tasks);
+        discardsPile.Clear();
+        ShuffleDeck();
     }
 
     public async UniTask Discards()
     {
-
+        List<UniTask> tasks = new();
         // update state
         var cardSelected = handController.GetSelectedCards().ToList();
-        Debug.Log(cardSelected.Count());
-        var cardsID = cardSelected.Select(x => x.State.CardStateId).ToList();
-        DeckState.DiscardPile.AddRange(cardsID);
-        DeckState.Hand.RemoveAll(card => cardsID.Contains(card));
-
-        foreach (var item in cardsID)
+        //var cardsID = cardSelected.Select(x => x.ID).ToList();
+        discardsPile.AddRange(cardSelected);
+        foreach (var item in cardSelected)
         {
-            var card = GetCard(item);
-            handController.Remove(card);
-            cardFactory.ReturnCard(card);
+            handController.Remove(item);
+            item.transform.SetParent(CardTransform);
+            var task = item.transform.DOLocalMove(Vector3.zero, 0.5f).AsyncWaitForCompletion().AsUniTask();
+            //item.gameObject.SetActive(false);
+            tasks.Add(task);
         }
-        await handDisplay.OnCountChangedHandle() ;
+        await UniTask.WhenAll(tasks);
+        //await handDisplay.OnCountChangedHandle() ;
 
+    }
+    public void ClearState()
+    {
+        deck.Clear();
+        discardsPile.Clear();
+        handController.Clear();
+        cards.Clear();
+        Card.onCardClicked -= handController.OnCardClickHandle;
     }
 }

@@ -1,23 +1,23 @@
+using CardSystem;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class Card : MonoBehaviour, IPointerClickHandler, IDragHandler, IDropHandler
 {
-    public CardState State { get; private set; }
+
+    public SerializableGuid ID;
+    public CardData Data;
     public static Action<Card> onCardClicked;
     public static Action<Card> onCardDrag;
     public static Action<Card> onCardDrop;
+    public bool IsSelected;
 
-    public void Init(CardSDData data)
+    public void SetData(CardData Data)
     {
-        this.State = new CardState(data);
-        UpdateImage(data.Art);
-    }
-
-    public void UpdateImage(Sprite Art)
-    {
-        GetComponentInChildren<Image>().sprite = Art;
+        this.Data = Data;
+        ID = SerializableGuid.NewGuid();
+        GetComponentInChildren<Image>().sprite = Data.Art;
     }
 
     public void OnPointerClick(PointerEventData eventData)

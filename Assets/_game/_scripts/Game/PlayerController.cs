@@ -1,14 +1,11 @@
 
 using System;
 using UnityEngine;
-public class PlayerController : ManualSingleton<PlayerController>, ICanTakeDamege
+public class PlayerController : MonoBehaviour, ICanTakeDamege
 {
     [SerializeField] private PlayerButton input;
     [SerializeField] private Health playerHealth;
     [SerializeField] private DeckManager deckManager;
-
-
-    private PokerHandEvaluator evaluator = new PokerHandEvaluator();
     private PlayerConfig playerConfig;  
     public Health PlayerHealth => playerHealth;
     public PlayerState playerState { get; private set; }
@@ -50,18 +47,16 @@ public class PlayerController : ManualSingleton<PlayerController>, ICanTakeDameg
         await deckManager.DrawCards();
     }
    
-    private async void Sort()
+    private void Sort()
     {
-        await deckManager.Sort(true);
+         deckManager.Sort(true);
     }
 
     private void Play()
     {
         // resolve attack
         Debug.Log("Attack");
-        EnemyManager.Instance.TakeDamege(50);
-        // end
-        EndTurn();
+        
 
     }
 
@@ -83,5 +78,10 @@ public class PlayerController : ManualSingleton<PlayerController>, ICanTakeDameg
     public void EndTurn()
     {
         onPlayerEndTurn?.Invoke();
+    }
+
+    internal void ClearState()
+    {
+        deckManager.ClearState();
     }
 }

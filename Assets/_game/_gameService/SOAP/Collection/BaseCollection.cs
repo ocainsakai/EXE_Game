@@ -15,6 +15,7 @@ public abstract class BaseCollection : SOABaseObject, IEnumerable
         }
     }
 
+
     public int Count { get { return List.Count; } }
 
     public abstract IList List { get; }

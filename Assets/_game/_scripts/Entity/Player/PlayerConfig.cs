@@ -1,3 +1,4 @@
+using CardSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class PlayerConfig : ScriptableObject, IData
     public int ApMax;
     public int ApRegenPerTurn;
     public int HandSize;
-    public List<CardSDData> StartingDeck;
+    public List<CardData> StartingDeck;
 
     public SerializableGuid ID => Id;
 }

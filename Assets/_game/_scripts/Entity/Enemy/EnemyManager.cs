@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyManager : ManualSingleton<EnemyManager>, ICanTakeDamege
+public class EnemyManager : MonoBehaviour, ICanTakeDamege
 {
     [SerializeField] EnemyData startingEnemyData;
     [SerializeField] EnemyAction enemyAction;
@@ -59,5 +59,10 @@ public class EnemyManager : ManualSingleton<EnemyManager>, ICanTakeDamege
     {
         enemyAction.CountToAction();
         onEnemyEndTurn?.Invoke();
+    }
+
+    public void ClearState()
+    {
+
     }
 }

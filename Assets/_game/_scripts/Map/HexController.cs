@@ -1,26 +1,16 @@
-using Map;
-using System;
+﻿using System;
 using UnityEngine;
 
-public class HexController : MonoBehaviour
+namespace Map
 {
-    public static Action<HexRuntime> OnHexClicked;
-    private HexDataHolder _dataHolder;
-    public HexRuntime Data => _dataHolder.Data;
+    public class HexController : MonoBehaviour
+    {
+        public static Action<Vector2Int> OnHexClicked;
 
-    private void Awake()
-    {
-        _dataHolder = GetComponent<HexDataHolder>();
-        if (_dataHolder == null)
+        public Vector2Int position;
+        public void OnMouseDown()
         {
-            Debug.LogError("HexController requires a HexDataHolder component.");
+            OnHexClicked?.Invoke(position);
         }
-    }
-    private void OnMouseDown()
-    {
-        Debug.Log("Hex Clicked");
-        if (UIState.IsBlocking) return;
-        
-        OnHexClicked?.Invoke(Data);
     }
 }

@@ -318,7 +318,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b38a78469da4e4f9403ab0511c3bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneLoader: {fileID: 5567403869499255147}
   inputManager: {fileID: 8676136506147477744}
+  enemies: {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
+  playerConfig: {fileID: 11400000, guid: bcabc5897e47f03448881effd0a28922, type: 2}
 --- !u!1 &9032234368693123416
 GameObject:
   m_ObjectHideFlags: 0
