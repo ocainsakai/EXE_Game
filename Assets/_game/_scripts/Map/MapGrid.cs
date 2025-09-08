@@ -89,7 +89,7 @@ namespace Map
                 tilemap = FindFirstObjectByType<Tilemap>();
             }
         }
-        public void RenderMap(List<HexState> states)
+        public void RenderMap(List<HexState> states, MapManager mapManager)
         {
             ClearMap();
             foreach (var state in states)
@@ -97,7 +97,7 @@ namespace Map
                 mapStates.Add(state.position, state);
                 // Vẽ tile
                 tilemap.SetTile((Vector3Int)state.position, state.Type == HexType.None ? null : hexTile);
-                CreateState(state);
+                CreateHex(state, mapManager);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Map
             return mapPosition.Where(x => x.y == col).ToList();
         }
 
-        private HexController CreateState(HexState state)
+        private HexController CreateHex(HexState state, MapManager mapManager)
         {
             var prefab = initObjects.Find(x => x.name == state.Type.ToString());
             if (prefab == null) return null;
@@ -145,6 +145,7 @@ namespace Map
             var controller = go.GetComponent<HexController>();
             hexObjects.Add(state.position,controller);
             controller.position = state.position;
+            controller.mapManager = mapManager;
             return controller;
         }
         public void SetNothing(Vector2Int position)

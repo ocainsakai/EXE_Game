@@ -2,44 +2,33 @@
 using DG.Tweening;
 using System.Linq;
 using UnityEngine;
-using System.Collections.Generic;
-using UnityServiceLocator;
+using VContainer;
+
 namespace Map
 {
     public class MapManager : MonoBehaviour
     {
-        [SerializeField] List<Object> services = new List<Object>();
-        private MapGrid mapGrid;
-        private MapUI uiManager;
-        private GameStates mapState;
-        [SerializeField]
-        private Player playerPrf;
-        [SerializeField]
-        private UIPopupManager popupManager;
+        [SerializeField] private MapGrid mapGrid;
+        [SerializeField] private MapUI mapUI;
+        [SerializeField] private GameStates mapState;
+        [SerializeField] private Player playerPrf;
+
+        private IGameManager gameManager;
+        private ISceneLoader sceneLoader;
         private Player player;
         public Vector2Int playerPosition { get; private set; } = new Vector2Int(0, 0);
         private Vector2Int lastPosition = new Vector2Int(0, 0);
         private  Vector2Int startPos = Vector2Int.zero;
         public bool IsTestMode = false;
 
-        private void Awake()
+        [Inject]
+        public void Construct(IGameManager gameManager, ISceneLoader sceneLoader)
         {
-            ServiceLocator sl = ServiceLocator.For(this);
-            {
-                foreach (var service in services)
-                {
-                    sl.Register(service.GetType(), service);
-                }
-            }
-           
+            this.gameManager = gameManager; 
+            this.sceneLoader = sceneLoader;
         }
         private void Start()
         {
-            ServiceLocator.For(this)
-               .Get(out mapGrid)
-               .Get(out mapState)
-               .Get(out uiManager);
-            HexController.OnHexClicked += OnHexClicked;
             NewGame();
         }
       
@@ -47,7 +36,7 @@ namespace Map
         {
 
             var defaultStates = MapFactory.CreateDefaultMap(mapGrid.mapPosition, mapGrid.mapInitTypes);
-            mapGrid.RenderMap(defaultStates);
+            mapGrid.RenderMap(defaultStates, this);
             mapState.mapStates = mapGrid.mapStates;
             if (player == null)
             {
@@ -72,7 +61,7 @@ namespace Map
                 NewGame();
                 return;
             }
-            mapGrid.RenderMap(loadedStates);
+            mapGrid.RenderMap(loadedStates, this);
             mapGrid.mapStates = mapState.mapStates;
             playerPosition = mapState.playerPostion;
             lastPosition = mapState.lastClickPostion;
@@ -82,12 +71,12 @@ namespace Map
             }
         }
 
-        private void OnHexClicked(Vector2Int position)
+        public void OnHexClicked(Vector2Int position)
         {
             lastPosition = position;
             var hex = mapGrid.GetState(position);
             bool isValue = playerPosition.HasRight(position);
-            uiManager.OpenPopupUI(hex, isValue);
+            mapUI.OpenPopupUI(hex, isValue ? ()=> GoToHexHandle() : null);
         }
 
         public async void HandleBattleResult(BattleResult result)
@@ -116,7 +105,8 @@ namespace Map
 
         private void OnExcutive()
         {
-            //GameManager.Instance.ChangeScenceToCombat();
+
+            sceneLoader.LoadScene("Battle");
         }
 
         private void OnEnter()

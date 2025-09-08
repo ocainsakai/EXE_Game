@@ -5,12 +5,14 @@ namespace Map
 {
     public class HexController : MonoBehaviour
     {
-        public static Action<Vector2Int> OnHexClicked;
-
+        public MapManager mapManager;
         public Vector2Int position;
         public void OnMouseDown()
         {
-            OnHexClicked?.Invoke(position);
+            if (!MapUI.IsBlocking)
+            {
+                mapManager.OnHexClicked(position);
+            }
         }
     }
 }

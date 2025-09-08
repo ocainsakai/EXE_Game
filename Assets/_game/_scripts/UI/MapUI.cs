@@ -1,19 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityServiceLocator;
 
 namespace Map
 {
     public class MapUI : MonoBehaviour
     {
         public static bool IsBlocking { get; set; } = false;
-        public UnityEvent OnCloseAll;
         public GameObject HUD;
-        public GameObject ChoosingUI;
-        private void Awake()
-        {
-            ServiceLocator.ForSceneOf(this).Register(typeof(MapUI),this);
-        }
+        public MapPopup PopupUI;
         private void Start()
         {
 
@@ -23,14 +18,14 @@ namespace Map
         public void CloseAll()
         {
             IsBlocking = false;
-            ChoosingUI.SetActive(false);
-            OnCloseAll?.Invoke();
+            PopupUI.gameObject.SetActive(false);
         }
 
-        public void OpenPopupUI(HexState runtimeData, bool isValue)
+        public void OpenPopupUI(HexState runtimeData, Action action)
         {
             CloseAll();
-            ChoosingUI.SetActive(true);
+            PopupUI.gameObject.SetActive(true);
+            PopupUI.Show(runtimeData, action, ui => IsBlocking = false );
             IsBlocking = true;
 
         }
