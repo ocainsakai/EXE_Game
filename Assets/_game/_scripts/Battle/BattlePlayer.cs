@@ -1,7 +1,7 @@
 
 using System;
 using UnityEngine;
-public class PlayerController : MonoBehaviour, ICanTakeDamege
+public class BattlePlayer : MonoBehaviour, ICanTakeDamege
 {
     [SerializeField] private PlayerButton input;
     [SerializeField] private Health playerHealth;

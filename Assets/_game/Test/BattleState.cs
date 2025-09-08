@@ -6,8 +6,8 @@ namespace Game
     public abstract class BattleState : BaseState
     {
         protected readonly BattleController controller;
-        protected readonly PlayerController playerController;
-        protected readonly EnemyManager enemyManager;
+        protected readonly BattlePlayer playerController;
+        protected readonly BattleEnemy enemyManager;
         public BattleState(BattleController controller)
         {
             this.controller = controller;

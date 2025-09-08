@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour, ICanTakeDamege
+public class BattleEnemy : MonoBehaviour, ICanTakeDamege
 {
     [SerializeField] EnemyData startingEnemyData;
     [SerializeField] EnemyAction enemyAction;

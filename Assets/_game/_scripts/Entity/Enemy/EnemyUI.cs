@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyUI : MonoBehaviour
 {
     [SerializeField] private HealthDisplay enemyHealth;
-    [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] private BattleEnemy enemyManager;
     [SerializeField] private Image Image;
     [SerializeField] private TextMeshProUGUI NameText;
     private void OnEnable()

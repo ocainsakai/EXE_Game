@@ -5,8 +5,8 @@ namespace Game
 {
     public class BattleController : MonoBehaviour
     {
-        public PlayerController playerController;
-        public EnemyManager enemyManager;
+        public BattlePlayer playerController;
+        public BattleEnemy enemyManager;
         
         StateMachine stateMachine;
         private void Awake()

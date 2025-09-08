@@ -1,120 +1,47 @@
-﻿using Map;
-using System;
-using TMPro;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityUtils;
-
-public class BattleManager : MonoBehaviour
+using VContainer;
+public class BattleManager : MonoBehaviour, ITurnBasedBattleManager<IBattleActor, IBattleAction, IBattleResult>
 {
-    [Header("References")]
-    [SerializeField] private TextMeshProUGUI battleText;
-    [SerializeField] private EnemyManager enemyManager;
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private TurnManager turnManager;
-
-    private GameManager gameManager;
 
     [SerializeField] private bool isTestMode = false;
 
-    public event Action OnBattleWin;
-    public event Action OnBattleLose;
-
-    private void Start()
+    public void EndBattle()
     {
-        //gameManager = GameManager.Instance;
-        StartNewBattle();
     }
 
-    private void OnEnable()
+    public void EndTurn()
     {
-        playerController.PlayerHealth.onDeath += HandleGameLose;
-        playerController.onPlayerEndTurn += HandlePlayerEndTurn;
-
-        enemyManager.Health.onDeath += HandleGameWin;
-        enemyManager.onEnemyEndTurn += HandleEnemyEndTurn;
     }
 
-    private void OnDisable()
+    public IBattleResult ExecuteAction(IBattleAction action)
     {
-        playerController.PlayerHealth.onDeath -= HandleGameLose;
-        playerController.onPlayerEndTurn -= HandlePlayerEndTurn;
-
-        enemyManager.Health.onDeath -= HandleGameWin;
-        enemyManager.onEnemyEndTurn -= HandleEnemyEndTurn;
-    }
-    public void Clamp()
-    {
-        //GameManager.Instance.ChangeScenceToMap();
+        throw new NotImplementedException();
     }
 
-    #region Battle Lifecycle
-    public void StartNewBattle()
+    public IBattleResult GetBattleResult()
     {
-        //UIManager.Instance.CloseAll();
-
-
-        //playerController.LoadPlayerConfig(gameManager.playerConfig);
-        playerController.BuidDeck();
-
-        //enemyManager.LoadEnemy(gameManager.enemies);
-
-       
-
-        turnManager.SetTurnOnRound(2);
-        turnManager.Initialze();
-        turnManager.NextRound();
-
+        throw new NotImplementedException();
     }
 
-    public void BattleClear()
+    public void InitializeBattle(IEnumerable<IBattleActor> actors)
     {
-        //UIManager.Instance.CloseAll();
-        playerController.ClearState();
-        enemyManager.ClearState();
+        throw new NotImplementedException();
     }
 
-    private void EndBattle(string message, bool isWin)
+    public bool IsBattleOver()
     {
-        battleText.text = message;
-
-        if (isWin)
-        {
-            //UIManager.Instance.OnWin();
-            OnBattleWin?.Invoke();
-
-        }
-        else
-        {
-            //UIManager.Instance.OnLose();
-            OnBattleLose?.Invoke();
-        }
-        BattleClear();
-
-    }
-    #endregion
-
-    #region Event Handlers
-    private void HandleEnemyEndTurn()
-    {
-        Debug.Log("Enemy End Turn");
-        turnManager.NextRound();
+        throw new NotImplementedException();
     }
 
-    private void HandlePlayerEndTurn()
+    public void StartBattle()
     {
-        Debug.Log("Player End Turn");
-        enemyManager.Action();
+        throw new NotImplementedException();
     }
 
-    private void HandleGameWin()
+    public IBattleActor StartTurn()
     {
-        EndBattle("Battle Win!", true);
+        throw new NotImplementedException();
     }
-
-    private void HandleGameLose()
-    {
-        EndBattle("Battle Lose!", false);
-    }
-    #endregion
-
 }
