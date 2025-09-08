@@ -108,14 +108,6 @@ public class BattleManager : MonoBehaviour
 
     private void HandleGameWin()
     {
-        var result = new BattleResult(
-        true,
-        gold: 50,
-        exp: 10
-        );
-        //GameManager.Instance.BattleResult = result;
-
-        //OnBattleFinished?.Invoke(result);
         EndBattle("Battle Win!", true);
     }
 

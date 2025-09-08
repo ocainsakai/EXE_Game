@@ -44,7 +44,7 @@ public class BootstrapEntryPoint : IStartable
         }
 
         // Chuyển sang MainMenu
-        await sceneLoader.LoadSceneAsync("MainMenu");
+        sceneLoader.LoadScene("MainMenu");
         loadingUI.Hide();
     }
 }

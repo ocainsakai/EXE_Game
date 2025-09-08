@@ -42,7 +42,6 @@ namespace Map
             {
                 CreatePlayer(startPos);
             }
-            //popupManager.ShowPopup(UIPopupName.MessageBox);
 
         }
         private void SaveState()
@@ -79,18 +78,18 @@ namespace Map
             mapUI.OpenPopupUI(hex, isValue ? ()=> GoToHexHandle() : null);
         }
 
-        public async void HandleBattleResult(BattleResult result)
-        {
-            if (result.IsWin)
-            {
-                LoadFromSave();
-                Debug.Log(playerPosition);
-                await UniTask.Delay(1000);  
-                await OnExit();
-                Debug.Log(playerPosition);
+        //public async void HandleBattleResult(BattleResult result)
+        //{
+        //    if (result.IsWin)
+        //    {
+        //        LoadFromSave();
+        //        Debug.Log(playerPosition);
+        //        await UniTask.Delay(1000);  
+        //        await OnExit();
+        //        Debug.Log(playerPosition);
 
-            }
-        }
+        //    }
+        //}
 
         private async void GoToHexHandle()
         {
@@ -105,8 +104,7 @@ namespace Map
 
         private void OnExcutive()
         {
-
-            sceneLoader.LoadScene("Battle");
+            sceneLoader.LoadScene("Battle").WithData(1);
         }
 
         private void OnEnter()
