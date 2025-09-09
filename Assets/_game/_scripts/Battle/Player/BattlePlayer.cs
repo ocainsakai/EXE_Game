@@ -41,15 +41,10 @@ public class BattlePlayer : MonoBehaviour, ICanTakeDamege
         this.playerConfig = playerConfig;
         playerHealth.Init(playerConfig.MaxHp, playerConfig.MaxHp);
     }
-    public async void BuidDeck()
-    {
-        deckManager.BuidDeck(playerConfig.StartingDeck);
-        await deckManager.DrawCards();
-    }
+   
    
     private void Sort()
     {
-         deckManager.Sort(true);
     }
 
     private void Play()
@@ -62,9 +57,7 @@ public class BattlePlayer : MonoBehaviour, ICanTakeDamege
 
     private async void Discard()
     {
-        Debug.Log("DISCARD");
-        await deckManager.Discards();
-        await deckManager.DrawCards();
+
     }
 
 
@@ -80,8 +73,5 @@ public class BattlePlayer : MonoBehaviour, ICanTakeDamege
         onPlayerEndTurn?.Invoke();
     }
 
-    internal void ClearState()
-    {
-        deckManager.ClearState();
-    }
+  
 }

@@ -16,8 +16,6 @@
 
 
             playerController.LoadPlayerConfig(playerConfig);
-            playerController.BuidDeck();
-
             enemyManager.LoadEnemy(enemy);
 
         }

@@ -7,39 +7,16 @@ public class CardsDisplay : MonoBehaviour
 {
     [SerializeField] DeckManager deckManager;
     [SerializeField] CardLayoutSettings settings;
-    private HandController controller;
     private Action onCountChangeHandler;
     private void OnEnable()
     {
-        onCountChangeHandler += async () => await OnCountChangedHandle(true);
         deckManager.OnCountChange += onCountChangeHandler;
     }
     private void OnDisable()
     {
         deckManager.OnCountChange -= onCountChangeHandler;
     }
-    public async UniTask OnCountChangedHandle(bool isSort = false)
-    {
-        if (controller == null)
-        {
-            controller = deckManager.handController;
-        }
-        Debug.Log("update card");
-        for (int i = 0; i < controller.Count; i++)
-        {
-            var card = controller[i];
-            card.transform.SetParent(transform, false);
-            card.transform.SetSiblingIndex(i);
-        }
-        if (isSort)
-        {
-            await RepositionX();
-        }
-        else
-        {
-            await RepositionChilds();
-        }
-    }
+ 
     private async UniTask RepositionX()
     {
         var tasks = new UniTask[transform.childCount];
