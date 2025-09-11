@@ -20,7 +20,7 @@ public class MainMenuController : MonoBehaviour
     private void OnEnable()
     {
         start.onClick.RemoveAllListeners();
-        start.onClick.AddListener(() => sceneLoader.LoadScene("Map"));
+        start.onClick.AddListener(() => sceneLoader.LoadSceneName("Map"));
         exit.onClick.RemoveAllListeners();
         exit.onClick.AddListener(() => gameManager.QuitGame());
     }

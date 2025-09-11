@@ -8,14 +8,7 @@ public class CardsDisplay : MonoBehaviour
     [SerializeField] DeckManager deckManager;
     [SerializeField] CardLayoutSettings settings;
     private Action onCountChangeHandler;
-    private void OnEnable()
-    {
-        deckManager.OnCountChange += onCountChangeHandler;
-    }
-    private void OnDisable()
-    {
-        deckManager.OnCountChange -= onCountChangeHandler;
-    }
+
  
     private async UniTask RepositionX()
     {

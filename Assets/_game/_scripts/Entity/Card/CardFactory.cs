@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class CardFactory : MonoBehaviour
 {
-    [SerializeField] private CardView cardPrefab; // prefab UI
+    [SerializeField] private CardController cardPrefab; // prefab UI
     [SerializeField] private Transform parent;
 
-    public CardView CreateCard(CardData data)
+    public CardController CreateCard(CardData data)
     {
-        CardView card = Instantiate(cardPrefab, parent);
+        CardController card = Instantiate(cardPrefab, parent);
 
         card.SetData(data);
 

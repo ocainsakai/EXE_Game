@@ -104,7 +104,7 @@ namespace Map
 
         private void OnExcutive()
         {
-            sceneLoader.LoadScene("Battle").WithData(1);
+            sceneLoader.LoadSceneName("Battle").WithData(1);
         }
 
         private void OnEnter()

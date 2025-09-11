@@ -1,35 +1,27 @@
 using CardSystem;
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-public class CardView : MonoBehaviour, IPointerClickHandler, IDragHandler, IDropHandler
+public class CardView : MonoBehaviour
 {
-    private CardData _cardData;
-    public CardData cardData => _cardData;
-    public static Action<CardView> onCardClicked;
-    public static Action<CardView> onCardDrag;
-    public static Action<CardView> onCardDrop;
-
-    public void OnPointerClick(PointerEventData eventData)
+    [SerializeField]
+    private CardColliderHandler cardColliderHandler;
+    [SerializeField] 
+    private SpriteRenderer spriteRenderer;
+    internal void SetArt(Sprite Art)
     {
-        Debug.Log("clicked");
-        onCardClicked?.Invoke(this);
+        spriteRenderer.sprite = Art;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    private void OnEnable()
     {
-        Debug.Log("darg");
-        onCardDrag?.Invoke(this);
+        cardColliderHandler.onCardClicked += CardClickHandle;
+    }
+    private void OnDisable()
+    {
+        cardColliderHandler.onCardClicked -= CardClickHandle;        
     }
 
-    public void OnDrop(PointerEventData eventData)
+    private void CardClickHandle()
     {
-        Debug.Log("drop");
-        onCardDrop?.Invoke(this);
     }
 
-    internal void SetData(CardData data)
-    {
-        _cardData = data;
-    }
 }

@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -10,13 +9,14 @@ public class BootstrapEntryPoint : IStartable
     [Inject]
     public BootstrapEntryPoint(ISceneLoader sceneLoader)
     {
+        Debug.Log(sceneLoader);
         this.sceneLoader = sceneLoader;
     }
 
     public void Start()
     {
-        sceneLoader.LoadScene("MainMenu");
-
+        Debug.Log("bootrap exe");
+        sceneLoader.LoadSceneName("MainMenu").Execute();
     }
 
 }

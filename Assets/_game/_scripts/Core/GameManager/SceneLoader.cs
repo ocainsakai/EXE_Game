@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public interface ISceneLoader
 {
-    SceneLoadRequest LoadScene(string sceneName);
+    SceneLoadRequest LoadSceneName(string sceneName);
     void ReloadCurrentScene(Action onLoaded = null);
     ITransitionDataService GetTransitionDataService();
 }
@@ -21,8 +21,9 @@ public class SceneLoader : MonoBehaviour, ISceneLoader
         transitionDataService = new TransitionDataService();
     }
 
-    public SceneLoadRequest LoadScene(string sceneName)
+    public SceneLoadRequest LoadSceneName(string sceneName)
     {
+        Debug.Log("on loading...");  
         return new SceneLoadRequest(sceneName, this);
     }
 
@@ -64,5 +65,6 @@ public class SceneLoader : MonoBehaviour, ISceneLoader
     }
 
     public ITransitionDataService GetTransitionDataService() => transitionDataService;
+
 }
 
