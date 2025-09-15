@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -26,7 +25,7 @@ namespace Map
 
         public Dictionary<Vector2Int ,HexController> hexObjects = new();
         public Dictionary<Vector2Int, HexState> mapStates = new();
-
+        #region DATA
         public readonly List<Vector2Int> mapPosition = new()
 {
     new Vector2Int(0, 0),    // Player start
@@ -82,12 +81,18 @@ namespace Map
     HexType.Fight,
     HexType.Boss,   // Boss end
 };
+        #endregion
         private void Awake()
         {
             if (tilemap == null)
             {
                 tilemap = FindFirstObjectByType<Tilemap>();
             }
+        }
+
+        public Vector3 GetWorldPos(Vector2Int pos)
+        {
+            return tilemap.GetCellCenterWorld((Vector3Int)pos);
         }
         public void RenderMap(List<HexState> states, MapManager mapManager)
         {
@@ -145,7 +150,6 @@ namespace Map
             var controller = go.GetComponent<HexController>();
             hexObjects.Add(state.position,controller);
             controller.position = state.position;
-            controller.mapManager = mapManager;
             return controller;
         }
         public void SetNothing(Vector2Int position)

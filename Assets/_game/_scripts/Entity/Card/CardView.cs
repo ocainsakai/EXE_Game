@@ -1,14 +1,19 @@
-using CardSystem;
+using DG.Tweening;
 using UnityEngine;
-public class CardView : MonoBehaviour
+public class CardView : MonoBehaviour, ICardClickable
 {
     [SerializeField]
     private CardColliderHandler cardColliderHandler;
+    [SerializeField]
+    private CardAnimation cardAnimation;
+    
     [SerializeField] 
     private SpriteRenderer spriteRenderer;
-    internal void SetArt(Sprite Art)
+    private CardController cardController;
+    public void SetArt(Sprite Art, CardController cardController)
     {
         spriteRenderer.sprite = Art;
+        this.cardController = cardController;
     }
 
     private void OnEnable()
@@ -20,8 +25,19 @@ public class CardView : MonoBehaviour
         cardColliderHandler.onCardClicked -= CardClickHandle;        
     }
 
-    private void CardClickHandle()
+    public void CardClickHandle()
     {
+        if (!cardController.IsSelecting && !CardController.CanSelect) return;
+
+        else if (!cardController.IsSelecting && CardController.CanSelect)
+        {
+            cardColliderHandler.transform.DOLocalMoveY(0.5f, 0.25f);
+            cardController.Select();
+        }
+        else if (cardController.IsSelecting) {
+            cardColliderHandler.transform.DOLocalMoveY(0f, 0.25f);
+            cardController.Unselect();
+        }
     }
 
 }

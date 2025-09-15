@@ -68,7 +68,7 @@ public abstract class UIPopup : UIBase
 
         OnHiding();
 
-        State = VisibilityState.Hidden;
+        //State = VisibilityState.Hidden;
         OnHidden();
     }
 

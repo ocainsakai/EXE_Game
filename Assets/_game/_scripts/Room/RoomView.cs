@@ -6,7 +6,7 @@ public class RoomView : MonoBehaviour
     [SerializeField] private Transform activeCardContainer;
     private Room room;
 
-    public readonly float ROOM_WIDTH = 20;
+    public readonly float ROOM_WIDTH = 10;
     public readonly float CARD_WIDTH = 1;
     public void Bind(Room room)
     {
@@ -37,7 +37,7 @@ public class RoomView : MonoBehaviour
     private Vector3 GetPositionAtIndex(int index, int Handsize)
     {
         var startX = -(ROOM_WIDTH - CARD_WIDTH) / 2;
-        var dictant = (ROOM_WIDTH - CARD_WIDTH) / Handsize;
+        var dictant = (ROOM_WIDTH) / (Handsize+1);
         var x = startX + dictant * index;
         return new Vector3(x, 0);
     }

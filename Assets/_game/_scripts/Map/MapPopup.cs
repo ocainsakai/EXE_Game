@@ -1,28 +1,43 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapPopup : UIPopup
+public class MapPopup : MonoBehaviour
 {
-    [SerializeField] Button action;
-    [SerializeField] Button close;
+    [Header("UI Buttons")]
+    [SerializeField] private Button action;
+    [SerializeField] private Button close;
+
+    private Action<UIBase> onClose;   // callback khi popup đóng
+    private object parameter;         // data truyền vào popup
 
     private void Awake()
     {
-        close.onClick.RemoveAllListeners();
-        close.onClick.AddListener(Hide);
+        if (close != null)
+        {
+            close.onClick.RemoveAllListeners();
+            close.onClick.AddListener(Hide);
+        }
     }
-    public void Show(object data = null, Action callback = null, Action<UIBase> onClose = null)
+
+    /// <summary>
+    /// Hiển thị popup.
+    /// </summary>
+    public void Show(object data = null, Action<UIBase> onClose = null, Action actionCallback = null)
     {
+        this.parameter = data;
+        this.onClose = onClose;
+
         if (action != null)
         {
             action.onClick.RemoveAllListeners();
 
-            if (callback != null)
+            if (actionCallback != null)
             {
-                action.onClick.AddListener(() => {
-                    callback.Invoke();
-                    Hide();
+                action.onClick.AddListener(() =>
+                {
+                    actionCallback.Invoke();
+                    Hide(); // ẩn popup sau khi action chạy
                 });
                 action.gameObject.SetActive(true);
             }
@@ -31,8 +46,37 @@ public class MapPopup : UIPopup
                 action.gameObject.SetActive(false);
             }
         }
-        base.Show(data, onClose);
-        
+
+        gameObject.SetActive(true); // bật popup
+        OnShow();
     }
 
+    /// <summary>
+    /// Ẩn popup.
+    /// </summary>
+    public void Hide()
+    {
+        gameObject.SetActive(false); // tắt popup
+        OnHide();
+
+        // gọi callback nếu có
+        onClose?.Invoke(null);
+        onClose = null;
+    }
+
+    /// <summary>
+    /// Gọi khi popup hiển thị (override nếu cần).
+    /// </summary>
+    protected virtual void OnShow()
+    {
+        // override trong class con (nếu có)
+    }
+
+    /// <summary>
+    /// Gọi khi popup ẩn (override nếu cần).
+    /// </summary>
+    protected virtual void OnHide()
+    {
+        // override trong class con (nếu có)
+    }
 }

@@ -1,4 +1,5 @@
 using CardSystem;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -9,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private RoomController roomController;
     [SerializeField] private PlayerStateLoader playerStateLoader;
     [SerializeField] private List<CardData> startingCards;
-
+    [SerializeField] private PlayerButton PlayerButton;
 
     private IGameManager gameManager;
     private ISceneLoader sceneLoader;
@@ -20,29 +21,81 @@ public class PlayerManager : MonoBehaviour
         this.gameManager = gameManager;
         this.sceneLoader = sceneLoader;
     }
-    private PlayerState _currentState;
-    public PlayerState CurrentState => _currentState;
 
-    public void StartRun()
+    private void OnEnable()
     {
-        // if temp logic
-        _currentState = playerStateLoader.basic.state;
-        Debug.Log("Start run exe");
-        sceneLoader.LoadSceneName("Map").Execute();
+        PlayerButton.onDiscardButtonClicked += DiscardHandle;
+        PlayerButton.onPlayButtonClicked += PlayHandle;
+        PlayerButton.onSortButtonClicked += SortHandle;
+    }
+
+  
+    private void OnDisable()
+    {
+        PlayerButton.onDiscardButtonClicked -= DiscardHandle;
+        PlayerButton.onPlayButtonClicked -= PlayHandle;
+        PlayerButton.onSortButtonClicked -= SortHandle;
+    }
+
+
+
+    private PlayerState _currentState;
+    public PlayerState CurrentState
+    {
+        get => _currentState;
+        set
+        {
+            _currentState = value;
+        }
     }
     [ContextMenu("test create cards")]
-    private void TestCreateCards()
+    public void TestCreateCards()
     {
         deckManager.CreateCards(startingCards);
+        playerStateLoader.LoadConfig();
         StartRoom();
     }
     private void StartRoom()
     {
-        deckManager.ShuffeDeck();
-        var cards = deckManager.DrawCards(CurrentState.HandSize);
         roomController.StartRoom();
-        cards.ForEach(card => roomController.AddCardView(card));
-        Debug.Log(cards.Count);
+        deckManager.ShuffeDeck();
+
+        DrawCards();
         roomController.UpdateView(CurrentState.HandSize);
     }
+
+    //private void DrawCards(int amount)
+    //{
+    //    var cards = deckManager.DrawCards(amount);
+    //    cards.ForEach(card => roomController.AddCardView(card));
+    //}
+    private void DrawCards()
+    {
+        while (roomController.ActiveCards.Count < CurrentState.HandSize)
+        {
+            roomController.AddCardView(deckManager.DrawCard());
+        }
+    }
+    private void SortHandle()
+    {
+        if (roomController == null) return;
+
+    }
+
+    private void PlayHandle()
+    {
+        if (roomController == null) return;
+
+    }
+
+    private void DiscardHandle()
+    {
+        if(roomController == null || roomController.ActiveCards.Count <= 0) return;
+        roomController.Discards();
+        DrawCards();
+        roomController.UpdateView(CurrentState.HandSize);
+
+    }
+
+
 }

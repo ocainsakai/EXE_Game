@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Room
 {
@@ -12,6 +13,7 @@ public class Room
     public event Action OnRoomScored;
     public event Action OnRoomCleared;
 
+    public int SelectCount => cards.Where(x => x.IsSelecting).Count();
     public void StartRoom()
     {
         cards.Clear();

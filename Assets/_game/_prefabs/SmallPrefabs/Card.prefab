@@ -156,9 +156,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 452501365673003539}
+  - component: {fileID: 8878075109092438536}
   - component: {fileID: 2546057215347778583}
   - component: {fileID: 6273200429271749922}
-  - component: {fileID: 8878075109092438536}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -182,6 +182,19 @@ Transform:
   - {fileID: 4403173215868932701}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8878075109092438536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523467150638846523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42b4d4a733bc9e47849a6856292a5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardView: {fileID: 2546057215347778583}
 --- !u!114 &2546057215347778583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardColliderHandler: {fileID: 7320936703419758726}
+  cardAnimation: {fileID: 6273200429271749922}
   spriteRenderer: {fileID: 698749320003371970}
 --- !u!114 &6273200429271749922
 MonoBehaviour:
@@ -209,17 +223,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 4403173215868932701}
---- !u!114 &8878075109092438536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6523467150638846523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e42b4d4a733bc9e47849a6856292a5a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardView: {fileID: 2546057215347778583}
-  cardAnimation: {fileID: 6273200429271749922}
