@@ -1,39 +1,30 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityUtils;
 using VContainer;
 
 namespace Map
 {
-    public class MapManager : MonoBehaviour
+    public class MapManager :  BaseManager
     {
         [SerializeField] private GameStates mapState;
-        private MapGrid mapGrid;
-        private MapUI mapUI;
-        private MapMoving mapMoving;
+        [SerializeField] private Transform container;
+        [SerializeField] private MapGrid mapGrid;
+        [SerializeField] private MapUI mapUI;
+        [SerializeField] private MapMoving mapMoving;
         [Inject] private EnemyManager enemyManager;
         public bool IsTestMode = false;
       
-        private void InitMapService()
-        {
-            if (mapGrid.OrNull() == null)
-                mapGrid = GetComponentInChildren<MapGrid>(true);
-
-            if (mapUI.OrNull() == null)
-                mapUI = GetComponentInChildren<MapUI>(true);
-
-            if (mapMoving.OrNull() == null)
-                mapMoving = GetComponentInChildren<MapMoving>(true);
-        }
         [ContextMenu("Init New Game")]
-        public void InitNew()
+        public override void Init()
         {
-            InitMapService();
+            Debug.Log("Init Map Container" + (container.OrNull() == null) + (container));
+            Debug.Log("Init Map Grip" + (mapGrid.OrNull() == null) + (mapGrid));
+            //InitMapService();
             var defaultStates = MapFactory.CreateDefaultMap(mapGrid.mapPosition, mapGrid.mapInitTypes);
-            mapGrid.RenderMap(defaultStates, this);
+            mapGrid.RenderMap(defaultStates, this, container);
             mapState.mapStates = mapGrid.mapStates;
-            mapMoving.SetPlayerPosition(Vector2Int.zero, mapGrid.GetWorldPos(Vector2Int.zero));
+            mapMoving.SetPlayerPosition(Vector2Int.zero, mapGrid.GetWorldPos(Vector2Int.zero), container);
             
             // register
             HexController.OnHexClicked += HexClickHandle;
@@ -60,16 +51,15 @@ namespace Map
             var loadedStates = MapFactory.CreateFromState(mapState.mapStates.Values.ToList());
             if (loadedStates.Count == 0)
             {
-                InitNew();
+                Init();
                 return;
             }
-            mapGrid.RenderMap(loadedStates, this);
+            mapGrid.RenderMap(loadedStates, this, container);
             mapGrid.mapStates = mapState.mapStates;
         }
-
-        internal void Close()
+        private void OnDestroy()
         {
-            throw new NotImplementedException();
+            HexController.OnHexClicked -= HexClickHandle;
         }
     }
 }

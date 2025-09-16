@@ -10,7 +10,7 @@ public class MapMoving : MonoBehaviour
     public Vector2Int playerPosition { get; private set; } = new Vector2Int(0, 0);
     public Vector2Int lastPosition = new Vector2Int(0, 0);
    
-    public void SetPlayerPosition(Vector2Int playerPosition, Vector3 worldPos)
+    public void SetPlayerPosition(Vector2Int playerPosition, Vector3 worldPos, Transform conatainer)
     {
         this.playerPosition = playerPosition;
         if (player == null)
@@ -21,7 +21,7 @@ public class MapMoving : MonoBehaviour
         {
             player.transform.position = worldPos;
         }
-
+        player.SetParent(conatainer);
     }
     public bool OnHexClicked(Vector2Int position)
     {

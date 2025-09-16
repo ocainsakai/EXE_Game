@@ -1,16 +1,6 @@
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : BaseManager
 {
     [SerializeField] private EnemyDataLoader loader;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

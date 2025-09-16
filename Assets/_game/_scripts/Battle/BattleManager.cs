@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer;
-public class BattleManager : MonoBehaviour, ITurnBasedBattleManager<IBattleActor, IBattleAction, IBattleResult>
-{
+public class BattleManager : BaseManager
+{ 
 
     [SerializeField] private bool isTestMode = false;
-
     public void EndBattle()
     {
     }
@@ -14,39 +11,5 @@ public class BattleManager : MonoBehaviour, ITurnBasedBattleManager<IBattleActor
     public void EndTurn()
     {
     }
-
-    public IBattleResult ExecuteAction(IBattleAction action)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IBattleResult GetBattleResult()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void InitializeBattle(IEnumerable<IBattleActor> actors)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool IsBattleOver()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void StartBattle()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IBattleActor StartTurn()
-    {
-        throw new NotImplementedException();
-    }
-
-    internal void InitNew()
-    {
-        throw new NotImplementedException();
-    }
+ 
 }

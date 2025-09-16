@@ -3,28 +3,53 @@ using UnityEngine;
 using UnityUtils;
 using VContainer;
 
-public class RunManager : Singleton<RunManager>
+public class RunManager : Singleton<RunManager>, IManager
 {
     [Inject]
     private PlayerManager playerManager;
     [Inject]    
     private BattleManager battleManager;
     [Inject]
-    private EnemyManager gameManager;
+    private EnemyManager enemyManager;
     [Inject]
     private MapManager mapManager;
 
     private void Start()
     {
-        InitNew();
+        Init();
     }
-    public void InitNew()
+    public void Init()
     {
-        mapManager.InitNew();
+        mapManager.Init();
+        playerManager.Init();
+        enemyManager.Init();
+        battleManager.Init();
     }
     public void Battle()
     {
-        mapManager.Close();
-        battleManager.InitNew();
+        Hide();
+        battleManager.Show();
+        playerManager.Show();
+        enemyManager.Show();
+    }
+    public void Map()
+    {
+        Hide();
+        mapManager.Show();
+    }
+    public void Hide()
+    {
+        mapManager.Hide();
+        battleManager.Hide();
+        enemyManager.Hide();
+        playerManager.Hide();
+    }
+
+    public void Show()
+    {
+        mapManager.Show();
+        battleManager.Show();
+        enemyManager.Show();
+        playerManager.Show();
     }
 }

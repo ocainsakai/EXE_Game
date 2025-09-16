@@ -16,6 +16,6 @@ public class RunEntryPoint : IStartable
     public void Start()
     {
         gameManager.Init();
-        manager.InitNew();
+        manager.Init();
     }
 }

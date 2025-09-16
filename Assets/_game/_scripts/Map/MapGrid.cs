@@ -22,7 +22,6 @@ namespace Map
         [SerializeField] public Tilemap tilemap;
         [SerializeField] private Tile hexTile;
         [SerializeField] private List<GameObject> initObjects;
-
         public Dictionary<Vector2Int ,HexController> hexObjects = new();
         public Dictionary<Vector2Int, HexState> mapStates = new();
         #region DATA
@@ -94,7 +93,7 @@ namespace Map
         {
             return tilemap.GetCellCenterWorld((Vector3Int)pos);
         }
-        public void RenderMap(List<HexState> states, MapManager mapManager)
+        public void RenderMap(List<HexState> states, MapManager mapManager, Transform container)
         {
             ClearMap();
             foreach (var state in states)
@@ -102,7 +101,7 @@ namespace Map
                 mapStates.Add(state.position, state);
                 // Vẽ tile
                 tilemap.SetTile((Vector3Int)state.position, state.Type == HexType.None ? null : hexTile);
-                CreateHex(state, mapManager);
+                CreateHex(state, mapManager)?.transform.SetParent(container);
             }
         }
 

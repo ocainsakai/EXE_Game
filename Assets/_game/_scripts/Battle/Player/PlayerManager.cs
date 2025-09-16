@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : BaseManager
 {
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private RoomController roomController;
@@ -12,15 +12,10 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private List<CardData> startingCards;
     [SerializeField] private PlayerButton PlayerButton;
 
-    private IGameManager gameManager;
-    private ISceneLoader sceneLoader;
-
     [Inject]
-    public void Construct(IGameManager gameManager, ISceneLoader sceneLoader)
-    {
-        this.gameManager = gameManager;
-        this.sceneLoader = sceneLoader;
-    }
+    private IGameManager gameManager;
+    [Inject]
+    private ISceneLoader sceneLoader;
 
     private void OnEnable()
     {
@@ -96,6 +91,4 @@ public class PlayerManager : MonoBehaviour
         roomController.UpdateView(CurrentState.HandSize);
 
     }
-
-
 }
