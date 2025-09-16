@@ -1,8 +1,9 @@
 using Map;
 using UnityEngine;
+using UnityUtils;
 using VContainer;
 
-public class RunManager : MonoBehaviour
+public class RunManager : Singleton<RunManager>
 {
     [Inject]
     private PlayerManager playerManager;
@@ -12,8 +13,18 @@ public class RunManager : MonoBehaviour
     private EnemyManager gameManager;
     [Inject]
     private MapManager mapManager;
+
+    private void Start()
+    {
+        InitNew();
+    }
     public void InitNew()
     {
         mapManager.InitNew();
+    }
+    public void Battle()
+    {
+        mapManager.Close();
+        battleManager.InitNew();
     }
 }

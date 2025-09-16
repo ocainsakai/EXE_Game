@@ -14,7 +14,7 @@ public class RoomView : MonoBehaviour
         room.OnCardAdded += HandleCardAdded;
         //room.OnCardRemoved += 
     }
-    private void HandleCardAdded(CardController card)
+    private void HandleCardAdded(Card card)
     {
         // Đưa card vào UI container
         card.transform.SetParent(activeCardContainer, false);

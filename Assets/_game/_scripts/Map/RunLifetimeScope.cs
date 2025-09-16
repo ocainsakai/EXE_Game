@@ -10,7 +10,5 @@ public class RunLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<BattleManager>();
         builder.RegisterComponentInHierarchy<EnemyManager>();
         builder.RegisterComponentInHierarchy<MapManager>();
-        builder.RegisterComponentInHierarchy<RunManager>();
-        builder.RegisterEntryPoint<RunEntryPoint>();
     }
 }

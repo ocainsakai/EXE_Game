@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class CardFactory : MonoBehaviour
 {
-    [SerializeField] private CardController cardPrefab; // prefab UI
+    [SerializeField] private Card cardPrefab; // prefab UI
     [SerializeField] private Transform parent;
     [SerializeField] private Transform discardPile;
 
-    public CardController CreateCard(CardData data)
+    public Card CreateCard(CardData data)
     {
-        CardController card = Instantiate(cardPrefab, parent);
+        Card card = Instantiate(cardPrefab, parent);
 
-        card.SetData(data, discardPile);
+        card.SetData(data);
 
         return card;
     }

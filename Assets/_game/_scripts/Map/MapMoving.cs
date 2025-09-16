@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Map;
-using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class MapMoving : MonoBehaviour
@@ -40,7 +38,6 @@ public class MapMoving : MonoBehaviour
             if (hex == lastPosition) continue;
             mapGrid.SetNothing(hex);
         }
-        //SaveState();
     }
     private async UniTask OnExit(MapGrid mapGrid)
     {
@@ -80,6 +77,6 @@ public class MapMoving : MonoBehaviour
     public void MoveTo(Vector2Int position, MapGrid mapGrid)
     {
         OnEnter(mapGrid);
-        _ = OnExit(mapGrid);
+        RunManager.Instance.Battle();
     }
 }

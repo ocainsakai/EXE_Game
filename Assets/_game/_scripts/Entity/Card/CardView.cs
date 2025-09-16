@@ -4,13 +4,11 @@ public class CardView : MonoBehaviour, ICardClickable
 {
     [SerializeField]
     private CardColliderHandler cardColliderHandler;
-    [SerializeField]
-    private CardAnimation cardAnimation;
     
     [SerializeField] 
     private SpriteRenderer spriteRenderer;
-    private CardController cardController;
-    public void SetArt(Sprite Art, CardController cardController)
+    private Card cardController;
+    public void SetArt(Sprite Art, Card cardController)
     {
         spriteRenderer.sprite = Art;
         this.cardController = cardController;
@@ -27,9 +25,9 @@ public class CardView : MonoBehaviour, ICardClickable
 
     public void CardClickHandle()
     {
-        if (!cardController.IsSelecting && !CardController.CanSelect) return;
+        if (!cardController.IsSelecting && !Card.CanSelect) return;
 
-        else if (!cardController.IsSelecting && CardController.CanSelect)
+        else if (!cardController.IsSelecting && Card.CanSelect)
         {
             cardColliderHandler.transform.DOLocalMoveY(0.5f, 0.25f);
             cardController.Select();

@@ -1,12 +1,13 @@
-﻿using VContainer;
+﻿using Map;
+using VContainer;
 using VContainer.Unity;
 
 public class RunEntryPoint : IStartable
 {
     private readonly IGameManager gameManager;
-    private RunManager manager;
+    private MapManager manager;
     [Inject]
-    public RunEntryPoint(IGameManager gameManager, RunManager playerManager)
+    public RunEntryPoint(IGameManager gameManager, MapManager playerManager)
     {
         this.gameManager = gameManager;
         this.manager = playerManager;

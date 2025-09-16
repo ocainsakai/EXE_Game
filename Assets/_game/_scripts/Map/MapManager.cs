@@ -1,21 +1,35 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityUtils;
 using VContainer;
 
 namespace Map
 {
     public class MapManager : MonoBehaviour
     {
-        [SerializeField] private MapGrid mapGrid;
-        [SerializeField] private MapUI mapUI;
-        [SerializeField] private MapMoving mapMoving;
         [SerializeField] private GameStates mapState;
+        private MapGrid mapGrid;
+        private MapUI mapUI;
+        private MapMoving mapMoving;
         [Inject] private EnemyManager enemyManager;
         public bool IsTestMode = false;
       
+        private void InitMapService()
+        {
+            if (mapGrid.OrNull() == null)
+                mapGrid = GetComponentInChildren<MapGrid>(true);
+
+            if (mapUI.OrNull() == null)
+                mapUI = GetComponentInChildren<MapUI>(true);
+
+            if (mapMoving.OrNull() == null)
+                mapMoving = GetComponentInChildren<MapMoving>(true);
+        }
+        [ContextMenu("Init New Game")]
         public void InitNew()
         {
+            InitMapService();
             var defaultStates = MapFactory.CreateDefaultMap(mapGrid.mapPosition, mapGrid.mapInitTypes);
             mapGrid.RenderMap(defaultStates, this);
             mapState.mapStates = mapGrid.mapStates;
@@ -53,8 +67,10 @@ namespace Map
             mapGrid.mapStates = mapState.mapStates;
         }
 
-
-       
+        internal void Close()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

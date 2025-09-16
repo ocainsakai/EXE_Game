@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityUtils;
 
 namespace Map
 {
@@ -9,14 +10,19 @@ namespace Map
 
         [Header("UI Elements")]
         public GameObject HUD;
-        public MapPopup PopupUI;
+        private MapPopup _popupUI;
+        //public MapPopup PopupUI;
 
         private void Awake()
         {
             // Lấy popup kể cả khi bị disable
-            if (PopupUI == null)
-                PopupUI = GetComponentInChildren<MapPopup>(true);
+
+            if (_popupUI.OrNull() == null)
+            {
+                _popupUI = GetComponentInChildren<MapPopup>(true); // true để lấy cả inactive
+            }
         }
+        
 
         private void Start()
         {
@@ -27,24 +33,28 @@ namespace Map
         {
             IsBlocking = false;
 
-            if (PopupUI != null && PopupUI.gameObject != null)
+            if (_popupUI != null && _popupUI.gameObject != null)
             {
-                PopupUI.gameObject.SetActive(false);
+                _popupUI.gameObject.SetActive(false);
             }
         }
 
         public void ShowPopup(object message, Action action = null)
         {
-            if (PopupUI == null)
+            if (_popupUI.OrNull() == null)
+            {
+                _popupUI = GetComponentInChildren<MapPopup>(true);
+            }
+
+            if (_popupUI == null)
             {
                 Debug.LogError("PopupUI chưa được gán hoặc đã bị destroy!");
                 return;
             }
-
             CloseAll();
 
-            PopupUI.gameObject.SetActive(true);
-            PopupUI.Show(message, ui => IsBlocking = false, action);
+            _popupUI.gameObject.SetActive(true);
+            _popupUI    .Show(message, ui => IsBlocking = false, action);
 
             IsBlocking = true;
         }

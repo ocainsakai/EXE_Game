@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 698749320003371970}
   - component: {fileID: 689875733183931911}
   - component: {fileID: 7320936703419758726}
+  - component: {fileID: 6453021658705213600}
   m_Layer: 0
   m_Name: Art
   m_TagString: Untagged
@@ -147,6 +148,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2717119dd75650e458b1f17c61e5d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6453021658705213600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53519309192437905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa58e1a52d8e9294d85834cb9760d7c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardColliderHandler: {fileID: 7320936703419758726}
+  spriteRenderer: {fileID: 698749320003371970}
 --- !u!1 &6523467150638846523
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,9 +171,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 452501365673003539}
-  - component: {fileID: 8878075109092438536}
-  - component: {fileID: 2546057215347778583}
   - component: {fileID: 6273200429271749922}
+  - component: {fileID: 4023530937437657264}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -182,34 +196,6 @@ Transform:
   - {fileID: 4403173215868932701}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8878075109092438536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6523467150638846523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e42b4d4a733bc9e47849a6856292a5a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardView: {fileID: 2546057215347778583}
---- !u!114 &2546057215347778583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6523467150638846523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa58e1a52d8e9294d85834cb9760d7c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardColliderHandler: {fileID: 7320936703419758726}
-  cardAnimation: {fileID: 6273200429271749922}
-  spriteRenderer: {fileID: 698749320003371970}
 --- !u!114 &6273200429271749922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,4 +208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2b37396f74d554e8e92f36c206b451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 4403173215868932701}
+  cardView: {fileID: 6453021658705213600}
+--- !u!114 &4023530937437657264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523467150638846523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00d3a519cb9b344eb0ce84622959377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

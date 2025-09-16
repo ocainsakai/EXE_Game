@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +7,7 @@ public class RoomController : MonoBehaviour
     [SerializeField] private RoomView roomView;
     private Room room = new Room();
 
-    public IReadOnlyList<CardController> ActiveCards => room.Cards;
+    public IReadOnlyList<Card> ActiveCards => room.Cards;
 
     public void StartRoom()
     {
@@ -21,7 +20,7 @@ public class RoomController : MonoBehaviour
 
     }
 
-    public void AddCardView(CardController cardController)
+    public void AddCardView(Card cardController)
     {
         if (cardController == null) return;
         room.AddCard(cardController);
@@ -33,7 +32,7 @@ public class RoomController : MonoBehaviour
     private void SelectHandle()
     {
         // update can select
-        CardController.CanSelect = room.SelectCount < 5;
+        Card.CanSelect = room.SelectCount < 5;
         // update poker hand
     }
 
@@ -48,7 +47,7 @@ public class RoomController : MonoBehaviour
         foreach (var card in cards)
         {
             room.RemoveCard(card); 
-            card.Discard();
+            //card.Discard();
         }
     }
 }

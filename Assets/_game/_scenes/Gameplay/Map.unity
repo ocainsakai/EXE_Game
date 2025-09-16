@@ -473,9 +473,9 @@ MonoBehaviour:
     TypeName: GameLifetimeScope
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 9195682577785002156}
-  - {fileID: 1375752988}
-  - {fileID: 294078939}
+  - {fileID: 661684865112235965}
+  - {fileID: 1279398008}
+  - {fileID: 593556631}
 --- !u!4 &294078941
 Transform:
   m_ObjectHideFlags: 0
@@ -887,7 +887,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1779128268}
-  m_Father: {fileID: 4379464196228984957}
+  m_Father: {fileID: 4536266482142800594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &449603004
 MonoBehaviour:
@@ -902,7 +902,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HUD: {fileID: 0}
-  PopupUI: {fileID: 1779128269}
 --- !u!1 &474871715
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +932,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4379464196228984957}
+  m_Father: {fileID: 4536266482142800594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &474871717
 MonoBehaviour:
@@ -3424,10 +3423,10 @@ RectTransform:
   - {fileID: 1917600895}
   m_Father: {fileID: 702086240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 376.25, y: -50}
+  m_SizeDelta: {x: 142.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093138567
 MonoBehaviour:
@@ -4130,10 +4129,10 @@ RectTransform:
   - {fileID: 1863909285}
   m_Father: {fileID: 702086240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 223.75, y: -50}
+  m_SizeDelta: {x: 142.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1261893799
 MonoBehaviour:
@@ -4804,7 +4803,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1375752989
 Transform:
   m_ObjectHideFlags: 0
@@ -5716,10 +5715,10 @@ RectTransform:
   - {fileID: 315010231}
   m_Father: {fileID: 702086240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 71.25, y: -50}
+  m_SizeDelta: {x: 142.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1808548320
 MonoBehaviour:
@@ -6080,10 +6079,10 @@ RectTransform:
   - {fileID: 968060520}
   m_Father: {fileID: 702086240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 528.75, y: -50}
+  m_SizeDelta: {x: 142.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1927681568
 MonoBehaviour:
@@ -6636,9 +6635,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4536266482142800594}
-  - {fileID: 6043984320817502332}
-  - {fileID: 474871716}
-  - {fileID: 449603003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4536266482142800594
@@ -6653,7 +6649,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6043984320817502332}
+  - {fileID: 474871716}
+  - {fileID: 449603003}
   m_Father: {fileID: 4379464196228984957}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4536266482142800595
@@ -6668,9 +6667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31cc9dc9b2fa4a04dadec7bfd84986e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapGrid: {fileID: 6043984320817502333}
-  mapUI: {fileID: 449603004}
-  mapMoving: {fileID: 474871717}
   mapState: {fileID: 11400000, guid: 3a5130a126d48dc4989e25af913c99af, type: 2}
   IsTestMode: 0
 --- !u!483693784 &5577178863956581266
@@ -6757,7 +6753,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 326505806363313291}
-  m_Father: {fileID: 4379464196228984957}
+  m_Father: {fileID: 4536266482142800594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6043984320817502333
 MonoBehaviour:

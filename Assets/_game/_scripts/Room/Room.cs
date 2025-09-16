@@ -4,12 +4,12 @@ using System.Linq;
 
 public class Room
 {
-    private readonly List<CardController> cards = new();
+    private readonly List<Card> cards = new();
 
-    public IReadOnlyList<CardController> Cards => cards;
+    public IReadOnlyList<Card> Cards => cards;
 
-    public event Action<CardController> OnCardAdded;
-    public event Action<CardController> OnCardRemoved;
+    public event Action<Card> OnCardAdded;
+    public event Action<Card> OnCardRemoved;
     public event Action OnRoomScored;
     public event Action OnRoomCleared;
 
@@ -19,13 +19,13 @@ public class Room
         cards.Clear();
     }
 
-    public void AddCard(CardController card)
+    public void AddCard(Card card)
     {
         cards.Add(card);
         OnCardAdded?.Invoke(card);
     }
 
-    public void RemoveCard(CardController card)
+    public void RemoveCard(Card card)
     {
         if (cards.Remove(card))
             OnCardRemoved?.Invoke(card);

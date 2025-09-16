@@ -44,4 +44,9 @@ public class BattleManager : MonoBehaviour, ITurnBasedBattleManager<IBattleActor
     {
         throw new NotImplementedException();
     }
+
+    internal void InitNew()
+    {
+        throw new NotImplementedException();
+    }
 }
