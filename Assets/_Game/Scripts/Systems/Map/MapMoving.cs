@@ -30,14 +30,13 @@ public class MapMoving : MonoBehaviour
     }
     private void OnEnter(MapGrid mapGrid)
     {
-        Debug.Log("on enter");
-        var hexes = mapGrid.GetColumnsPos(lastPosition.y);
-        Debug.Log(hexes.Count);
-        foreach (var hex in hexes)
-        {
-            if (hex == lastPosition) continue;
-            mapGrid.SetNothing(hex);
-        }
+        //Debug.Log("on enter");
+        //Debug.Log(hexes.Count);
+        //foreach (var hex in hexes)
+        //{
+        //    if (hex == lastPosition) continue;
+        //    mapGrid.SetNothing(hex);
+        //}
     }
     private async UniTask OnExit(MapGrid mapGrid)
     {
@@ -48,26 +47,26 @@ public class MapMoving : MonoBehaviour
 
     private async UniTask ClearColumns(MapGrid mapGrid)
     {
-        var hexes = mapGrid.GetColumnsPos(lastPosition.y);
-        foreach (var hexpos in hexes)
-        {
-            if (hexpos == lastPosition)
-            {
-                mapGrid.SetNothing(hexpos);
-            }
-            else
-            {
-                mapGrid.SetNone(hexpos);
-            }
-        }
-        await UniTask.Delay(1500);
+        //var hexes = mapGrid.GetColumnsPos(lastPosition.y);
+        //foreach (var hexpos in hexes)
+        //{
+        //    if (hexpos == lastPosition)
+        //    {
+        //        mapGrid.SetNothing(hexpos);
+        //    }
+        //    else
+        //    {
+        //        mapGrid.SetNone(hexpos);
+        //    }
+        //}
+        //await UniTask.Delay(1500);
     }
 
     private async UniTask PlayerMove(Vector2Int position, MapGrid mapGrid)
     {
-        playerPosition = position;
-        var worldPosition = mapGrid.tilemap.GetCellCenterWorld((Vector3Int)position);
-        await player.transform.DOMove(worldPosition, 0.5f).AsyncWaitForCompletion();
+        //playerPosition = position;
+        //var worldPosition = mapGrid.tilemap.GetCellCenterWorld((Vector3Int)position);
+        //await player.transform.DOMove(worldPosition, 0.5f).AsyncWaitForCompletion();
     }
     private void CreatePlayer(Vector2Int position, Vector3 worldPos)
     {

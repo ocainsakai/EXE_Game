@@ -9,23 +9,17 @@ namespace Map
     {
         [SerializeField] private GameStates mapState;
         [SerializeField] private Transform container;
-        [SerializeField] private MapGrid mapGrid;
+        [SerializeField] private HexManager mapGrid;
         [SerializeField] private MapUI mapUI;
         [SerializeField] private MapMoving mapMoving;
+        [SerializeField] private MapData mapData;
         [Inject] private EnemyManager enemyManager;
         public bool IsTestMode = false;
       
         [ContextMenu("Init New Game")]
         public override void Init()
         {
-            Debug.Log("Init Map Container" + (container.OrNull() == null) + (container));
-            Debug.Log("Init Map Grip" + (mapGrid.OrNull() == null) + (mapGrid));
-            //InitMapService();
-            var defaultStates = MapFactory.CreateDefaultMap(mapGrid.mapPosition, mapGrid.mapInitTypes);
-            mapGrid.RenderMap(defaultStates, this, container);
-            mapState.mapStates = mapGrid.mapStates;
-            mapMoving.SetPlayerPosition(Vector2Int.zero, mapGrid.GetWorldPos(Vector2Int.zero), container);
-            
+            mapGrid.GenerateGrid(HexLayout.DataDriven(mapData.Positions));
             // register
             HexController.OnHexClicked += HexClickHandle;
         }
@@ -36,7 +30,7 @@ namespace Map
             if (isValue)
             {
                 // show pop up
-                mapUI.ShowPopup(isValue,() => mapMoving.MoveTo(position, mapGrid));
+                //mapUI.ShowPopup(isValue,() => mapMoving.MoveTo(position, mapGrid));
             }
             else
             {
@@ -54,8 +48,8 @@ namespace Map
                 Init();
                 return;
             }
-            mapGrid.RenderMap(loadedStates, this, container);
-            mapGrid.mapStates = mapState.mapStates;
+            //mapGrid.RenderMap(loadedStates, this, container);
+            //mapGrid.mapStates = mapState.mapStates;
         }
         private void OnDestroy()
         {
