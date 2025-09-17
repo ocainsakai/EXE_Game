@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0327b6b9aba9756438ebd7296e3a6df3, type: 3}
+  m_Name: Game States
+  m_EditorClassIdentifier: 
+  isInitMap: 1
+  mapStates:
+    SerializedKeys: []
+    SerializedValues: []
+  playerPostion: {x: 0, y: 0}
+  lastClickPostion: {x: 0, y: 0}
+  enemyData: {fileID: 0}
+  lastBattleResult: 0

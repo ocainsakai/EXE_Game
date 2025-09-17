@@ -1,0 +1,16 @@
+{
+    "name": "DBRE.Domain.DungeonStructure",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5f8e38643ddbab14ea00da5c9cfc8cf4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

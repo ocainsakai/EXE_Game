@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
+  m_Name: Ace_of_Spades
+  m_EditorClassIdentifier: 
+  CardID:
+    Part1: 3110221149
+    Part2: 1280994930
+    Part3: 747468692
+    Part4: 1540905920
+  Rank: 14
+  Suit: 3
+  Cost: 0
+  Name: Ace of Spades
+  Description: This is the Ace of Spades.
+  Art: {fileID: -5498659744019066566, guid: 1316217a9257dd64d8e1229b84e7169c, type: 3}
