@@ -12,11 +12,6 @@ public class PlayerManager : BaseManager
     [SerializeField] private List<CardData> startingCards;
     [SerializeField] private PlayerButton PlayerButton;
 
-    [Inject]
-    private IGameManager gameManager;
-    [Inject]
-    private ISceneLoader sceneLoader;
-
     private void OnEnable()
     {
         PlayerButton.onDiscardButtonClicked += DiscardHandle;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Game.Service;
+using UnityUtils;
 
 public interface IGameManager
 {
@@ -10,7 +11,7 @@ public interface IGameManager
     void QuitGame();
 }
 
-public class GameManager : MonoBehaviour, IGameManager
+public class GameManager : Singleton<GameManager>, IGameManager
 {
     public static event Action OnGameStarted;
     public static event Action OnGamePaused;

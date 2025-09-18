@@ -97,9 +97,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6815985817186989185}
   - component: {fileID: 1398031461595800001}
-  - component: {fileID: -7001811210968112575}
+  - component: {fileID: 2780050321843789464}
   m_Layer: 0
-  m_Name: Fight
+  m_Name: enemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &-7001811210968112575
+--- !u!114 &2780050321843789464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6143950428365768598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53d0f94684646514a9b8c4384e0f2e30, type: 3}
+  m_Script: {fileID: 11500000, guid: 1236738277b8a144da55394b8dcb8ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}

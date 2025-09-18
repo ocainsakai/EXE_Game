@@ -4,15 +4,7 @@ using VContainer.Unity;
 
 public class BootstrapEntryPoint : IStartable
 {
-    private readonly ISceneLoader sceneLoader;
-
-    [Inject]
-    public BootstrapEntryPoint(ISceneLoader sceneLoader)
-    {
-        Debug.Log(sceneLoader);
-        this.sceneLoader = sceneLoader;
-    }
-
+    private ISceneLoader sceneLoader => SceneLoader.Instance;
     public void Start()
     {
         Debug.Log("bootrap exe");

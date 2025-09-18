@@ -10,7 +10,7 @@ public class MapData : ScriptableObject
     public class HexEntry
     {
         public Vector2Int position;
-        public HexType type;
+        public HexContentType type;
     }
 
     [SerializeField] private List<HexEntry> entries = new();
@@ -27,9 +27,21 @@ public class MapData : ScriptableObject
             return positions;
         }
     }
-    public Dictionary<Vector2Int, HexType> ToDictionary()
+    public IReadOnlyList<HexContentType> Types
     {
-        var dict = new Dictionary<Vector2Int, HexType>();
+        get
+        {
+            var types = new List<HexContentType>();
+            foreach (var entry in entries)
+            {
+                types.Add(entry.type);
+            }
+            return types;
+        }
+    }
+    public Dictionary<Vector2Int, HexContentType> ToDictionary()
+    {
+        var dict = new Dictionary<Vector2Int, HexContentType>();
         foreach (var entry in entries)
         {
             if (!dict.ContainsKey(entry.position))
@@ -53,14 +65,14 @@ public class MapData : ScriptableObject
             new(-1,8), new(0,8), new(1,8), new(0,9), new(-1,9), new(0,10)
         };
 
-        HexType[] types =
+        HexContentType[] types =
         {
-            HexType.Nothing, HexType.Fight, HexType.Shop, HexType.Fight,
-            HexType.Treasure, HexType.Fight, HexType.Heal, HexType.Fight,
-            HexType.Shop, HexType.Fight, HexType.Treasure, HexType.Fight,
-            HexType.Heal, HexType.Fight, HexType.Shop, HexType.Fight,
-            HexType.Treasure, HexType.Fight, HexType.Heal, HexType.Fight,
-            HexType.Shop, HexType.Fight, HexType.Fight, HexType.Boss
+            HexContentType.Player, HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy,
+            HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy,
+            HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy,
+            HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy,
+            HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy,
+            HexContentType.Enemy, HexContentType.Enemy, HexContentType.Enemy, HexContentType.Boss
         };
 
         for (int i = 0; i < positions.Length; i++)

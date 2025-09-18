@@ -32,195 +32,190 @@ public interface IHexMapRenderer<T> where T : IHex<T>
     void RenderMap(IHexMap<T> map);
     void ClearMap();
 }
-public interface IHexTile<T> where T : IHex<T>
-{
-    T Hex { get; }
-    void SetHex(T hex);
-}
 public interface IHexTileRenderer<T> where T : IHex<T>
 {
-    void RenderTile(IHexTile<T> tile);
-    void ClearTile(IHexTile<T> tile);
+    void RenderTile(IHexOccupant<T> tile);
+    void ClearTile(IHexOccupant<T> tile);
 }
 public interface IHexTileSelector<T> where T : IHex<T>
 {
-    void SelectTile(IHexTile<T> tile);
-    void DeselectTile(IHexTile<T> tile);
+    void SelectTile(IHexOccupant<T> tile);
+    void DeselectTile(IHexOccupant<T> tile);
 }
 public interface IHexTileHighlighter<T> where T : IHex<T>
 {
-    void HighlightTile(IHexTile<T> tile);
-    void ClearHighlight(IHexTile<T> tile);
+    void HighlightTile(IHexOccupant<T> tile);
+    void ClearHighlight(IHexOccupant<T> tile);
 }
 public interface IHexTileAnimator<T> where T : IHex<T>
 {
-    void AnimateTile(IHexTile<T> tile);
-    void StopAnimation(IHexTile<T> tile);
+    void AnimateTile(IHexOccupant<T> tile);
+    void StopAnimation(IHexOccupant<T> tile);
 }
 public interface IHexTileEventHandler<T> where T : IHex<T>
 {
-    void OnTileClicked(IHexTile<T> tile);
-    void OnTileHovered(IHexTile<T> tile);
+    void OnTileClicked(IHexOccupant<T> tile);
+    void OnTileHovered(IHexOccupant<T> tile);
 }
 public interface IHexTileDataProvider<T> where T : IHex<T>
 {
-    object GetData(IHexTile<T> tile);
-    void SetData(IHexTile<T> tile, object data);
+    object GetData(IHexOccupant<T> tile);
+    void SetData(IHexOccupant<T> tile, object data);
 }
 public interface IHexTileModifier<T> where T : IHex<T>
 {
-    void ModifyTile(IHexTile<T> tile, object modification);
+    void ModifyTile(IHexOccupant<T> tile, object modification);
 }
 public interface IHexTileFactory<T> where T : IHex<T>
 {
-    IHexTile<T> CreateTile(T hex);
-    void DestroyTile(IHexTile<T> tile);
+    IHexOccupant<T> CreateTile(T hex);
+    void DestroyTile(IHexOccupant<T> tile);
 }
 public interface IHexTileCache<T> where T : IHex<T>
 {
-    IHexTile<T> GetTile(T hex);
-    void AddTile(IHexTile<T> tile);
-    void RemoveTile(IHexTile<T> tile);
+    IHexOccupant<T> GetTile(T hex);
+    void AddTile(IHexOccupant<T> tile);
+    void RemoveTile(IHexOccupant<T> tile);
 }
 public interface IHexTileNeighborProvider<T> where T : IHex<T>
 {
-    IEnumerable<IHexTile<T>> GetNeighbors(IHexTile<T> tile);
+    IEnumerable<IHexOccupant<T>> GetNeighbors(IHexOccupant<T> tile);
 }
 public interface IHexTilePathfinder<T> where T : IHex<T>
 {
-    List<IHexTile<T>> FindPath(IHexTile<T> start, IHexTile<T> goal);
+    List<IHexOccupant<T>> FindPath(IHexOccupant<T> start, IHexOccupant<T> goal);
 }
 public interface IHexTileClusterer<T> where T : IHex<T>
 {
-    IEnumerable<IEnumerable<IHexTile<T>>> ClusterTiles(IEnumerable<IHexTile<T>> tiles);
+    IEnumerable<IEnumerable<IHexOccupant<T>>> ClusterTiles(IEnumerable<IHexOccupant<T>> tiles);
 }
 public interface IHexTileSorter<T> where T : IHex<T>
 {
-    IEnumerable<IHexTile<T>> SortTiles(IEnumerable<IHexTile<T>> tiles, System.Comparison<IHexTile<T>> comparison);
+    IEnumerable<IHexOccupant<T>> SortTiles(IEnumerable<IHexOccupant<T>> tiles, System.Comparison<IHexOccupant<T>> comparison);
 }
 public interface IHexTileFilter<T> where T : IHex<T>
 {
-    IEnumerable<IHexTile<T>> FilterTiles(IEnumerable<IHexTile<T>> tiles, System.Predicate<IHexTile<T>> predicate);
+    IEnumerable<IHexOccupant<T>> FilterTiles(IEnumerable<IHexOccupant<T>> tiles, System.Predicate<IHexOccupant<T>> predicate);
 }
 public interface IHexTileTransformer<T> where T : IHex<T>
 {
-    void TransformTile(IHexTile<T> tile, System.Func<IHexTile<T>, IHexTile<T>> transformer);
+    void TransformTile(IHexOccupant<T> tile, System.Func<IHexOccupant<T>, IHexOccupant<T>> transformer);
 }
 public interface IHexTileVisualizer<T> where T : IHex<T>
 {
-    void VisualizeTile(IHexTile<T> tile);
-    void ClearVisualization(IHexTile<T> tile);
+    void VisualizeTile(IHexOccupant<T> tile);
+    void ClearVisualization(IHexOccupant<T> tile);
 }
 public interface IHexTileUpdater<T> where T : IHex<T>
 {
-    void UpdateTile(IHexTile<T> tile);
+    void UpdateTile(IHexOccupant<T> tile);
 }
 public interface IHexTileLoader<T> where T : IHex<T>
 {
-    IHexTile<T> LoadTile(Vector2Int position);
-    void UnloadTile(IHexTile<T> tile);
+    IHexOccupant<T> LoadTile(Vector2Int position);
+    void UnloadTile(IHexOccupant<T> tile);
 }
 public interface IHexTileSaver<T> where T : IHex<T>
 {
-    void SaveTile(IHexTile<T> tile);
-    IHexTile<T> LoadTile(Vector2Int position);
+    void SaveTile(IHexOccupant<T> tile);
+    IHexOccupant<T> LoadTile(Vector2Int position);
 }
 public interface IHexTileManager<T> where T : IHex<T>
 {
-    IHexTile<T> GetTileAt(Vector2Int position);
-    void AddTile(IHexTile<T> tile);
-    void RemoveTile(IHexTile<T> tile);
+    IHexOccupant<T> GetTileAt(Vector2Int position);
+    void AddTile(IHexOccupant<T> tile);
+    void RemoveTile(IHexOccupant<T> tile);
 }
 public interface IHexTileCoordinator<T> where T : IHex<T>
 {
-    void CoordinateTiles(IEnumerable<IHexTile<T>> tiles);
+    void CoordinateTiles(IEnumerable<IHexOccupant<T>> tiles);
 }
 public interface IHexTileObserver<T> where T : IHex<T>
 {
-    void OnTileChanged(IHexTile<T> tile);
+    void OnTileChanged(IHexOccupant<T> tile);
 }
 public interface IHexTileMediator<T> where T : IHex<T>
 {
-    void MediateTile(IHexTile<T> tile);
+    void MediateTile(IHexOccupant<T> tile);
 }
 public interface IHexTileStrategy<T> where T : IHex<T>
 {
-    void ExecuteStrategy(IHexTile<T> tile);
+    void ExecuteStrategy(IHexOccupant<T> tile);
 }
 public interface IHexTileCommand<T> where T : IHex<T>
 {
-    void ExecuteCommand(IHexTile<T> tile);
+    void ExecuteCommand(IHexOccupant<T> tile);
 }
 public interface IHexTileVisitor<T> where T : IHex<T>
 {
-    void VisitTile(IHexTile<T> tile);
+    void VisitTile(IHexOccupant<T> tile);
 }
 public interface IHexTileDecorator<T> where T : IHex<T>
 {
-    void DecorateTile(IHexTile<T> tile);
+    void DecorateTile(IHexOccupant<T> tile);
 }
 public interface IHexTileAdapter<T> where T : IHex<T>
 {
-    IHexTile<T> AdaptTile(object obj);
+    IHexOccupant<T> AdaptTile(object obj);
 }
 public interface IHexTileProxy<T> where T : IHex<T>
 {
-    IHexTile<T> GetTile();
+    IHexOccupant<T> GetTile();
 }
 public interface IHexTileBuilder<T> where T : IHex<T>
 {
-    IHexTile<T> BuildTile(T hex);
+    IHexOccupant<T> BuildTile(T hex);
 }
 public interface IHexTileDirector<T> where T : IHex<T>
 {
-    IHexTile<T> ConstructTile(IHexTileBuilder<T> builder, T hex);
+    IHexOccupant<T> ConstructTile(IHexTileBuilder<T> builder, T hex);
 }
 public interface IHexTileFacade<T> where T : IHex<T>
 {
-    void PerformOperation(IHexTile<T> tile);
+    void PerformOperation(IHexOccupant<T> tile);
 }
 public interface IHexTileBridge<T> where T : IHex<T>
 {
-    void BridgeTile(IHexTile<T> tile);
+    void BridgeTile(IHexOccupant<T> tile);
 }
 public interface IHexTileComposite<T> where T : IHex<T>
 {
-    void AddTile(IHexTile<T> tile);
-    void RemoveTile(IHexTile<T> tile);
-    IEnumerable<IHexTile<T>> GetTiles();
+    void AddTile(IHexOccupant<T> tile);
+    void RemoveTile(IHexOccupant<T> tile);
+    IEnumerable<IHexOccupant<T>> GetTiles();
 }
 public interface IHexTileFlyweight<T> where T : IHex<T>
 {
-    IHexTile<T> GetSharedTile(T hex);
+    IHexOccupant<T> GetSharedTile(T hex);
 }
 public interface IHexTileChainOfResponsibility<T> where T : IHex<T>
 {
-    void HandleTile(IHexTile<T> tile);
+    void HandleTile(IHexOccupant<T> tile);
 }
 public interface IHexTileState<T> where T : IHex<T>
 {
-    void HandleState(IHexTile<T> tile);
+    void HandleState(IHexOccupant<T> tile);
 }
 public interface IHexTileMemento<T> where T : IHex<T>
 {
-    object SaveState(IHexTile<T> tile);
-    void RestoreState(IHexTile<T> tile, object state);
+    object SaveState(IHexOccupant<T> tile);
+    void RestoreState(IHexOccupant<T> tile, object state);
 }
 public interface IHexTileIterator<T> where T : IHex<T>
 {
-    IEnumerator<IHexTile<T>> GetEnumerator(IEnumerable<IHexTile<T>> tiles);
+    IEnumerator<IHexOccupant<T>> GetEnumerator(IEnumerable<IHexOccupant<T>> tiles);
 }
 public interface IHexTileObservable<T> where T : IHex<T>
 {
     void Subscribe(IHexTileObserver<T> observer);
     void Unsubscribe(IHexTileObserver<T> observer);
-    void NotifyObservers(IHexTile<T> tile);
+    void NotifyObservers(IHexOccupant<T> tile);
 }
 public interface IHexTileEvent<T> where T : IHex<T>
 {
-    void TriggerEvent(IHexTile<T> tile);
+    void TriggerEvent(IHexOccupant<T> tile);
 }
 public interface IHexTileService<T> where T : IHex<T>
 {
-    void PerformService(IHexTile<T> tile);
+    void PerformService(IHexOccupant<T> tile);
 }

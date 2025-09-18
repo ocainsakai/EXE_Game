@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5100056314945384155}
   - component: {fileID: 3566657537003068346}
-  - component: {fileID: -876414827079138409}
+  - component: {fileID: 6274610250669248191}
   m_Layer: 0
-  m_Name: Shop
+  m_Name: enemy 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &-876414827079138409
+--- !u!114 &6274610250669248191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,9 +89,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2164957235844471375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53d0f94684646514a9b8c4384e0f2e30, type: 3}
+  m_Script: {fileID: 11500000, guid: 1236738277b8a144da55394b8dcb8ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
 --- !u!1 &9085016557486724097
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +169,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6580220746971659571, guid: c13793e000a25674eb32cfeb408b6c82, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 668a3f0bf978f194680d03c83d77ec4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

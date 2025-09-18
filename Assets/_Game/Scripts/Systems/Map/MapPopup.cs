@@ -1,23 +1,27 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapPopup : MonoBehaviour
+public class MapPopup : UIBase
 {
     [Header("UI Buttons")]
+    [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private Button action;
     [SerializeField] private Button close;
 
     private Action<UIBase> onClose;   // callback khi popup đóng
     private object parameter;         // data truyền vào popup
-
+    public static bool IsShowing;
     private void Awake()
     {
+        UIManager.Instance.Register(this);
         if (close != null)
         {
             close.onClick.RemoveAllListeners();
             close.onClick.AddListener(Hide);
         }
+        Hide(); // ẩn popup lúc đầu
     }
 
     /// <summary>
@@ -27,7 +31,8 @@ public class MapPopup : MonoBehaviour
     {
         this.parameter = data;
         this.onClose = onClose;
-
+        title.text = data != null ? data.ToString() : "Popup Title"; // đặt tiêu đề nếu có data
+        IsShowing = true;
         if (action != null)
         {
             action.onClick.RemoveAllListeners();
@@ -54,8 +59,9 @@ public class MapPopup : MonoBehaviour
     /// <summary>
     /// Ẩn popup.
     /// </summary>
-    public void Hide()
+    public override void Hide()
     {
+        IsShowing = false;
         gameObject.SetActive(false); // tắt popup
         OnHide();
 

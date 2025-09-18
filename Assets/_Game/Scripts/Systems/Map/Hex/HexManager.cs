@@ -13,7 +13,8 @@ public class HexManager : MonoBehaviour
         {
             if (hexes.ContainsKey(pos)) continue; 
             var worldPos = CalcWorldPosition(pos);
-            var tile = Instantiate(hexPrefab, worldPos, Quaternion.identity, transform);
+            var tile = Instantiate(hexPrefab, transform);
+            tile.transform.SetLocalPositionAndRotation(worldPos, Quaternion.identity);
             tile.Initialize(pos, this);
             hexes[pos] = tile;
         }

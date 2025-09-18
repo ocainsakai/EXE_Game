@@ -4,18 +4,13 @@ using VContainer;
 
 public class MainMenuController : MonoBehaviour
 {
-    private IGameManager gameManager;
-    private ISceneLoader sceneLoader;
+   
+    private IGameManager gameManager => GameManager.Instance;
+    private ISceneLoader sceneLoader => SceneLoader.Instance;
     [SerializeField]
     private Button start;
     [SerializeField]
     private Button exit;
-    [Inject]
-    public void Construct(IGameManager gameManager, ISceneLoader sceneLoader)
-    {
-        this.gameManager = gameManager;
-        this.sceneLoader = sceneLoader;
-    }
 
     private void OnEnable()
     {

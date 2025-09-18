@@ -27,4 +27,6 @@ public class Hex : MonoBehaviour, IHex<Hex>
         hexPosition = pos;
         manager = hexManager;
     }
+
+    
 }

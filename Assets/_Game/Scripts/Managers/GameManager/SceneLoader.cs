@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityUtils;
 
 public interface ISceneLoader
 {
@@ -9,15 +10,16 @@ public interface ISceneLoader
     void ReloadCurrentScene(Action onLoaded = null);
     ITransitionDataService GetTransitionDataService();
 }
-public class SceneLoader : MonoBehaviour, ISceneLoader
+public class SceneLoader : Singleton<SceneLoader>, ISceneLoader
 {
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private float minLoadingTime = 0.5f;
 
     private ITransitionDataService transitionDataService;
 
-    private void Awake()
+    protected  override void Awake()
     {
+        base.Awake();
         transitionDataService = new TransitionDataService();
     }
 

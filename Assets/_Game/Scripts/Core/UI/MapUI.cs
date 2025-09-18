@@ -4,19 +4,16 @@ using UnityUtils;
 
 namespace Map
 {
-    public class MapUI : MonoBehaviour
+    public class MapUI : UIBase
     {
         public static bool IsBlocking { get; private set; } = false;
-
-        [Header("UI Elements")]
-        public GameObject HUD;
         private MapPopup _popupUI;
         //public MapPopup PopupUI;
 
         private void Awake()
         {
             // Lấy popup kể cả khi bị disable
-
+            UIManager.Instance.Register(this);
             if (_popupUI.OrNull() == null)
             {
                 _popupUI = GetComponentInChildren<MapPopup>(true); // true để lấy cả inactive
