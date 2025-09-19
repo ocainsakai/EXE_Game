@@ -26,6 +26,8 @@ public class EnemyHex : MonoBehaviour, IHexTileSelector<Hex>, IHexOccupant<Hex>
     public void SelectTile(IHexOccupant<Hex> tile)
     {
         Debug.Log($"Selected Enemy Hex at {CurrentHex.HexPosition} with Enemy: {EnemyData.name}");
+        MapManager.Instance.OnClickHandle(CurrentHex.HexPosition, EnemyData);
+        
     }
 
     public void OnEnter()
@@ -40,6 +42,5 @@ public class EnemyHex : MonoBehaviour, IHexTileSelector<Hex>, IHexOccupant<Hex>
     {
         if (MapPopup.IsShowing) return;  // neu dang hien popup thi khong lam gi ca
         SelectTile(this);
-        UIManager.Instance.GetType<MapPopup>().Show(enemyData);
     }
 }

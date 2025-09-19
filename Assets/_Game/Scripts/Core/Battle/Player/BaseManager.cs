@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityUtils;
 
-public abstract class BaseManager : MonoBehaviour, IManager
+public abstract class BaseManager<T> : Singleton<T>, IManager where T : BaseManager<T>
 {
     public virtual void Init()
     {

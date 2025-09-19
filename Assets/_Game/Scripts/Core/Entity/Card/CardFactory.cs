@@ -5,7 +5,7 @@ public class CardFactory : MonoBehaviour
 {
     [SerializeField] private Card cardPrefab; // prefab UI
     [SerializeField] private Transform parent;
-    [SerializeField] private Transform discardPile;
+    [SerializeField] public Transform discardPile;
 
     public Card CreateCard(CardData data)
     {

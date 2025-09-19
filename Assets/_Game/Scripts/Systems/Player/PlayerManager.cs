@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
-public class PlayerManager : BaseManager
+public class PlayerManager : BaseManager<PlayerManager>
 {
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private RoomController roomController;
@@ -38,14 +38,13 @@ public class PlayerManager : BaseManager
             _currentState = value;
         }
     }
-    [ContextMenu("test create cards")]
-    public void TestCreateCards()
+    public override void Init()
     {
+        base.Init();
         deckManager.CreateCards(startingCards);
         playerStateLoader.LoadConfig();
-        StartRoom();
     }
-    private void StartRoom()
+    public void StartRoom()
     {
         roomController.StartRoom();
         deckManager.ShuffeDeck();

@@ -47,7 +47,7 @@ public class RoomController : MonoBehaviour
         foreach (var card in cards)
         {
             room.RemoveCard(card); 
-            //card.Discard();
+            card.MoveTo(Card.discardPile);
         }
     }
 }

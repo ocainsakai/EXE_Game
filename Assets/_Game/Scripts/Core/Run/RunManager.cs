@@ -25,11 +25,12 @@ public class RunManager : Singleton<RunManager>, IManager
         enemyManager.Init();
         battleManager.Init();
     }
-    public void Battle()
+    public void StartBattle()
     {
         Hide();
         battleManager.Show();
         playerManager.Show();
+        playerManager.StartRoom();
         enemyManager.Show();
     }
     public void Map()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyManager : BaseManager
+public class EnemyManager : BaseManager<EnemyManager>
 {
     [SerializeField] private EnemyDataLoader loader;
 }

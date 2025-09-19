@@ -6,6 +6,7 @@ using UnityEngine;
 public class Card : MonoBehaviour, ICard
 {
     public static bool CanSelect;
+    public static Vector3 discardPile;
     private CardData cardData;
     public CardData CardData => cardData;
     private CardAnimationManager _cardAnimation;
@@ -34,7 +35,10 @@ public class Card : MonoBehaviour, ICard
         transform.DOMove(target.position, 0.25f);
 
     }
-
+    public void MoveTo(Vector3 target)
+    {
+        transform.DOMove(target, 0.25f);
+    }
     public void Select()
     {
         IsSelecting = true;

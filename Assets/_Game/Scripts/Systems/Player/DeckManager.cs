@@ -11,6 +11,7 @@ public class DeckManager : MonoBehaviour
     private List<Card> deck = new List<Card>();
     public void CreateCards(IEnumerable<CardData> cards)
     {
+        Card.discardPile = cardFactory.discardPile.position;
         foreach (CardData card in cards)
         {
             CreateCard(card);

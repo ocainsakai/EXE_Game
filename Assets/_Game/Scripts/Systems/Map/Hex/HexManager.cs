@@ -24,7 +24,56 @@ public class HexManager : MonoBehaviour
     {
         return hexes.TryGetValue(pos, out var hex) ? hex : null;
     }
-
+    public bool IsRightOfHex(Vector2Int from, Vector2Int to)
+    {
+        return to.y > from.y;
+    }
+    public bool IsNeighbor(Vector2Int a, Vector2Int b)
+    {
+        var directions = new Vector2Int[]
+        {
+            new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1, 1),
+            new Vector2Int(-1, 0), new Vector2Int(0, -1), new Vector2Int(1, -1)
+        };
+        foreach (var dir in directions)
+        {
+            if (a + dir == b)
+                return true;
+        }
+        return false;
+    }
+    public bool IsNeighbor(Hex a, Hex b)
+    {
+        return IsNeighbor(a.HexPosition, b.HexPosition);
+    }
+    public bool IsNeighbor(Hex a, Vector2Int b)
+    {
+        return IsNeighbor(a.HexPosition, b);
+    }
+    public bool IsNeighborRightOf(Hex from, Hex to)
+    {
+        return IsRightOfHex(from.HexPosition, to.HexPosition) && IsNeighbor(from, to);
+    }
+    public bool IsNeighborRightOf(Hex from, Vector2Int to)
+    {
+        return IsRightOfHex(from.HexPosition, to) && IsNeighbor(from.HexPosition, to);
+    }
+    public bool IsNeighborRightOf(Vector2Int from, Vector2Int to)
+    {
+        return IsRightOfHex(from, to) && IsNeighbor(from, to);
+    }
+    public bool IsNeighborLeftOf(Hex from, Hex to)
+    {
+        return !IsRightOfHex(from.HexPosition, to.HexPosition) && IsNeighbor(from, to);
+    }
+    public bool IsNeighborLeftOf(Hex from, Vector2Int to)
+    {
+        return !IsRightOfHex(from.HexPosition, to) && IsNeighbor(from.HexPosition, to);
+    }
+    public IEnumerable<Hex> GetAllHexes()
+    {
+        return hexes.Values;
+    }
     private Vector3 CalcWorldPosition(Vector2Int gridPos)
     {
         float hexWidth = Mathf.Sqrt(3f) * hexSize;
