@@ -38,6 +38,7 @@ public class RoomController : MonoBehaviour
 
     public void UpdateView(int handSize)
     {
+        Debug.Log("asd");
         roomView.UpdateView(handSize);
     }
 
@@ -49,5 +50,6 @@ public class RoomController : MonoBehaviour
             room.RemoveCard(card); 
             card.MoveTo(Card.discardPile);
         }
+        SelectHandle();
     }
 }

@@ -53,17 +53,15 @@ public class PlayerManager : BaseManager<PlayerManager>
         roomController.UpdateView(CurrentState.HandSize);
     }
 
-    //private void DrawCards(int amount)
-    //{
-    //    var cards = deckManager.DrawCards(amount);
-    //    cards.ForEach(card => roomController.AddCardView(card));
-    //}
+    private void DrawCards(int amount)
+    {
+        var cards = deckManager.DrawCards(amount);
+        cards.ForEach(card => roomController.AddCardView(card));
+    }
     private void DrawCards()
     {
-        while (roomController.ActiveCards.Count < CurrentState.HandSize)
-        {
-            roomController.AddCardView(deckManager.DrawCard());
-        }
+        int amount = CurrentState.HandSize - roomController.ActiveCards.Count;
+        DrawCards(amount);
     }
     private void SortHandle()
     {

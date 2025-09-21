@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &135715698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1007,8 +1007,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -663.47266}
-  m_SizeDelta: {x: 460, y: 237.38907}
+  m_AnchoredPosition: {x: 250, y: -663.507}
+  m_SizeDelta: {x: 460, y: 237.4028}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &637902332
 MonoBehaviour:
@@ -1541,8 +1541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -168.69453}
-  m_SizeDelta: {x: 460, y: 237.38907}
+  m_AnchoredPosition: {x: 250, y: -168.7014}
+  m_SizeDelta: {x: 460, y: 237.4028}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &849361495
 MonoBehaviour:
@@ -1618,8 +1618,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -910.86176}
-  m_SizeDelta: {x: 460, y: 237.38907}
+  m_AnchoredPosition: {x: 250, y: -910.9098}
+  m_SizeDelta: {x: 460, y: 237.4028}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &869768412
 MonoBehaviour:
@@ -2612,8 +2612,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -416.08362}
-  m_SizeDelta: {x: 460, y: 237.38907}
+  m_AnchoredPosition: {x: 250, y: -416.1042}
+  m_SizeDelta: {x: 460, y: 237.4028}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1276258354
 MonoBehaviour:
@@ -3718,6 +3718,10 @@ PrefabInstance:
     - target: {fileID: 6254131603596954097, guid: 05fa70205314d9041ba4c39125e0c91b, type: 3}
       propertyPath: m_Name
       value: '@Battle'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6254131603596954097, guid: 05fa70205314d9041ba4c39125e0c91b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8723853828711595471, guid: 05fa70205314d9041ba4c39125e0c91b, type: 3}
       propertyPath: roundText
