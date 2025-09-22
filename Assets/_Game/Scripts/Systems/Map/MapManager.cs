@@ -6,7 +6,7 @@ namespace Map
     {
         [SerializeField] private HexManager grid;
         [SerializeField] private OccupantFactory occupantFactory;
-        [SerializeField] private MapData mapData;
+        private MapData mapData;
         public bool IsTestMode = false;
       
 
@@ -15,6 +15,8 @@ namespace Map
         [ContextMenu("Init New Game")]
         public override void Init()
         {
+
+            mapData = GameInstance.Singleton.GetMapData();
             grid.GenerateGrid(HexLayout.DataDriven(mapData.Positions));
             foreach (var occupant in mapData.Entries)
             {
@@ -45,7 +47,6 @@ namespace Map
 
         public void EnterTheBattle()
         {
-            RunManager.Instance.StartBattle();
         }
     }
 }

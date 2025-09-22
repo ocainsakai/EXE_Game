@@ -8,20 +8,11 @@ public interface ISceneLoader
 {
     SceneLoadRequest LoadSceneName(string sceneName);
     void ReloadCurrentScene(Action onLoaded = null);
-    ITransitionDataService GetTransitionDataService();
 }
 public class SceneLoader : Singleton<SceneLoader>, ISceneLoader
 {
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private float minLoadingTime = 0.5f;
-
-    private ITransitionDataService transitionDataService;
-
-    protected  override void Awake()
-    {
-        base.Awake();
-        transitionDataService = new TransitionDataService();
-    }
 
     public SceneLoadRequest LoadSceneName(string sceneName)
     {
@@ -42,9 +33,7 @@ public class SceneLoader : Singleton<SceneLoader>, ISceneLoader
 
     private IEnumerator LoadSceneAsync(string sceneName, object data = null, Action onLoaded = null)
     {
-        if (data != null)
-            transitionDataService.SetData(data);
-
+        
         if (loadingScreen != null)
             loadingScreen.SetActive(true);
 
@@ -66,7 +55,24 @@ public class SceneLoader : Singleton<SceneLoader>, ISceneLoader
         onLoaded?.Invoke();
     }
 
-    public ITransitionDataService GetTransitionDataService() => transitionDataService;
-
+    protected override void Awake()
+    {
+        base.Awake();
+        if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+    void Start()
+    {
+        if (loadingScreen != null)
+            loadingScreen.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "Entry")
+        {
+            LoadScene("MainMenu");  
+        }
+    }
 }
 

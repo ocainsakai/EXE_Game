@@ -9,6 +9,15 @@ public class DeckManager : MonoBehaviour
 {
     [SerializeField] private CardFactory cardFactory;
     private List<Card> deck = new List<Card>();
+
+    private void Awake()
+    {
+        if (cardFactory == null)
+            cardFactory = GetComponent<CardFactory>();
+
+        var deckData = GameInstance.Singleton.GetDeckData(PlayerSave.GetSelectedDeck());
+        deckData.Cards.ForEach(card => CreateCard(card));
+    }
     public void CreateCards(IEnumerable<CardData> cards)
     {
         Card.discardPile = cardFactory.discardPile.position;

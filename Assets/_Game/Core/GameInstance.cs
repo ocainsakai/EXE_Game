@@ -1,13 +1,17 @@
 ﻿using CardSystem;
+using System.Linq;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class GameInstance : MonoBehaviour
 {
-
+    public DeckData[] deckDatas;
     public CardData[] cardsData;
 
     public EnemyData[] enemyData;
+    public MapData[] mapsData;
 
+    public PlayerData[] playerData;
 
     public static GameInstance Singleton;
     private bool isInitialized;
@@ -31,5 +35,61 @@ public class GameInstance : MonoBehaviour
     public bool IsInitialized()
     {
         return isInitialized;
+    }
+    public DeckData GetDeckData(int id)
+    {
+        foreach (var deck in deckDatas)
+        {
+            if (deck.DeckID == id)
+            {
+                return deck;
+            }
+        }
+        Debug.LogError($"DeckData with ID {id} not found");
+        return null;
+    }
+    public DeckData GetDeckData()
+    {
+        int selectedId = PlayerSave.GetSelectedDeck();
+        var character = deckDatas.FirstOrDefault(c => c.DeckID == selectedId);
+        if (character == null)
+            Debug.LogWarning($"CharacterData with ID '{selectedId}' not found.");
+        return character;
+    }
+
+    public MapData GetMapData(int index = 0)
+    {
+        if (index < 0 || index >= mapsData.Length)
+        {
+            Debug.LogError("MapData index out of range");
+            return null;
+        }
+        return mapsData[index];
+    }
+    public CardData GetCardData(CardMask cardMask)
+    {
+        foreach (var card in cardsData)
+        {
+            if (card.Mask.Equals(cardMask))
+            {
+                return card;
+            }
+        }
+        Debug.LogError($"CardData with ID {cardMask} not found");
+        return null;
+
+    }
+
+    public EnemyData GetEnemyData(int id)
+    {
+        foreach (var enemy in enemyData)
+        {
+            if (enemy.EnemyID == id)
+            {
+                return enemy;
+            }
+        }
+        Debug.LogError($"EnemyData with ID {id} not found");
+        return null;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Game/PlayerConfig")]
 
-public class PlayerConfig : ScriptableObject, IData
+public class PlayerConfig : ScriptableObject
 {
     public SerializableGuid Id;
     public int MaxHp;
@@ -12,6 +12,4 @@ public class PlayerConfig : ScriptableObject, IData
     public int ApRegenPerTurn;
     public int HandSize;
     public List<CardData> StartingDeck;
-
-    public SerializableGuid ID => Id;
 }

@@ -1,15 +1,10 @@
-using CardSystem;
-using System;
-using System.Collections.Generic;
+
 using UnityEngine;
-using VContainer;
 
 public class PlayerManager : BaseManager<PlayerManager>
 {
     [SerializeField] private DeckManager deckManager;
     [SerializeField] private RoomController roomController;
-    [SerializeField] private PlayerStateLoader playerStateLoader;
-    [SerializeField] private List<CardData> startingCards;
     [SerializeField] private PlayerButton PlayerButton;
 
     private void OnEnable()
@@ -38,12 +33,7 @@ public class PlayerManager : BaseManager<PlayerManager>
             _currentState = value;
         }
     }
-    public override void Init()
-    {
-        base.Init();
-        deckManager.CreateCards(startingCards);
-        playerStateLoader.LoadConfig();
-    }
+
     public void StartRoom()
     {
         roomController.StartRoom();

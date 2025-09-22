@@ -95,7 +95,7 @@ namespace CardSystem
             EditorGUILayout.EndHorizontal();
             if (id)
             {
-                EditorGUILayout.LabelField($"ID: {card.CardID.ToHexString()}");
+                EditorGUILayout.LabelField($"ID: {card.CardID}");
             }
             EditorGUILayout.EndVertical();
         }

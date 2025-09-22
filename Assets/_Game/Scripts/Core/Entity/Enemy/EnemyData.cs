@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 [System.Serializable]
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Objects/EnemyData")]
-public class EnemyData : ScriptableObject, IData
+public class EnemyData : ScriptableObject
 {
-    public SerializableGuid EnemyID = SerializableGuid.NewGuid();
+    public int EnemyID;
     public string DisplayName;
     public Sprite Icon;
     public int Atk;
@@ -11,6 +11,4 @@ public class EnemyData : ScriptableObject, IData
     public int Count;
     public int cost;
     public int reward;
-
-    public SerializableGuid ID => EnemyID;
 }
