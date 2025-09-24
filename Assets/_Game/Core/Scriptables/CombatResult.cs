@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CombatResult", menuName = "Scriptable Objects/CombatResult")]
+[CreateAssetMenu(fileName = "CombatResult", menuName = "ScriptableObjects/CombatResult")]
 public class CombatResult : ScriptableObject
 {
     

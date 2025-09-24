@@ -1226,8 +1226,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
   - {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}
   - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
-  mapsData:
-  - {fileID: 11400000, guid: 667300b3dfdc9154092cee1e5fc1ea71, type: 2}
   playerData:
   - {fileID: 11400000, guid: 52a15d4d4dec16f4883b36aac760ac93, type: 2}
 --- !u!1 &1936247614
