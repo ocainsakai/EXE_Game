@@ -62,7 +62,7 @@ public class UIDeckSelection : MonoBehaviour
         {
             deckView.SetDeckName(deck.DeckName);
             if (deck.CheckUnlocked)
-                deckView.SetCardBack(deck.CardBack != null ? deck.CardBack : defaultCardBack);
+                deckView.SetCardBack(deck.DeckCover != null ? deck.DeckCover : defaultCardBack);
             else
                 deckView.SetCardBack(lockedCardBack);
         }

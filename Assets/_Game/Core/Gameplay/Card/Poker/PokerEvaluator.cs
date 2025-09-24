@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,20 +9,22 @@ namespace CardSystem.PokerSystem
         {
             int mask = 0;
             foreach (var c in cards)
-                mask |= 1 << c.Rank - 2; // bit 0 = rank 2, bit 12 = Ace
+                mask |= 1 << (c.Rank - 2); // bit 0 = rank 2, bit 12 = Ace
             return mask;
         }
 
         private static Dictionary<CardRank, int> CountByRank(IEnumerable<CardMask> cards)
         {
-            return cards.GroupBy(c => c.ERank)
-                        .ToDictionary(g =>  g.Key, g => g.Count());
+            return cards
+                .GroupBy(c => c.ERank)
+                .ToDictionary(g => g.Key, g => g.Count());
         }
 
         private static Dictionary<CardSuit, List<CardMask>> GroupBySuit(IEnumerable<CardMask> cards)
         {
-            return cards.GroupBy(c => c.ESuit)
-                        .ToDictionary(g => g.Key, g => g.ToList());
+            return cards
+                .GroupBy(c => c.ESuit)
+                .ToDictionary(g => g.Key, g => g.ToList());
         }
 
         private static List<CardMask> GetFlush(IEnumerable<CardMask> cards)
@@ -35,7 +36,6 @@ namespace CardSystem.PokerSystem
             return null;
         }
 
-        // Check Straight
         private static List<CardMask> GetStraight(IEnumerable<CardMask> cards)
         {
             int mask = GetRankMask(cards);
@@ -43,17 +43,17 @@ namespace CardSystem.PokerSystem
             // Wheel straight (A-2-3-4-5)
             if ((mask & 0b1000000001111) == 0b1000000001111)
             {
-                return cards.Where(c => c.ERank == CardRank.Ace || c.Rank >= 2 && c.Rank <= 5)
+                return cards.Where(c => c.ERank == CardRank.Ace || (c.Rank >= 2 && c.Rank <= 5))
                             .OrderByDescending(c => c.ERank == CardRank.Ace ? 1 : c.Rank)
                             .Take(5).ToList();
             }
 
             for (int i = 12; i >= 4; i--)
             {
-                int pattern = 0b11111 << i - 4;
+                int pattern = 0b11111 << (i - 4);
                 if ((mask & pattern) == pattern)
                 {
-                    int highRank = i + 2; // rank cao nh?t
+                    int highRank = i + 2;
                     return cards.Where(c => c.Rank <= highRank && c.Rank > highRank - 5)
                                 .OrderByDescending(c => c.Rank)
                                 .Take(5).ToList();
@@ -76,21 +76,21 @@ namespace CardSystem.PokerSystem
             return null;
         }
 
-        // Ðánh giá hand
         public static PokerHandResult Evaluate(IEnumerable<CardMask> cards)
         {
-            if (cards == null || cards.Count() == 0)
+            if (cards == null || !cards.Any())
             {
                 return new PokerHandResult
                 {
                     HandType = PokerHandType.None,
-                    BestCards = null
+                    BestCards = new List<CardMask>()
                 };
             }
+
             var hand = cards.ToList();
             var counts = CountByRank(hand);
 
-            // Check Straight Flush
+            // Straight Flush
             var straightFlush = GetStraightFlush(hand);
             if (straightFlush != null)
             {
@@ -103,8 +103,9 @@ namespace CardSystem.PokerSystem
             if (counts.Any(c => c.Value == 4))
             {
                 var four = counts.First(c => c.Value == 4).Key;
-                var best = hand.Where(c => c.ERank == four).ToList();
-                best.Add(hand.Where(c => c.ERank != four).OrderByDescending(c => c.Rank).First());
+                var best = hand.Where(c => c.ERank == four).Take(4).ToList();
+                //var kicker = hand.Where(c => c.ERank != four).OrderByDescending(c => c.Rank).FirstOrDefault();
+                //if (kicker != null) best.Add(kicker);
                 return new PokerHandResult { HandType = PokerHandType.FourOfAKind, BestCards = best };
             }
 
@@ -144,8 +145,12 @@ namespace CardSystem.PokerSystem
             {
                 var best = hand.Where(c => c.ERank == pairs[0].Key).Take(2).ToList();
                 best.AddRange(hand.Where(c => c.ERank == pairs[1].Key).Take(2));
-                best.Add(hand.Where(c => c.ERank != pairs[0].Key && c.ERank != pairs[1].Key)
-                             .OrderByDescending(c => c.Rank).First());
+
+                //var kicker = hand.Where(c => c.ERank != pairs[0].Key && c.ERank != pairs[1].Key)
+                //                 .OrderByDescending(c => c.Rank)
+                //                 .FirstOrDefault();
+                //if (kicker != null) best.Add(kicker);
+
                 return new PokerHandResult { HandType = PokerHandType.TwoPair, BestCards = best };
             }
 
@@ -166,5 +171,4 @@ namespace CardSystem.PokerSystem
             };
         }
     }
-
 }

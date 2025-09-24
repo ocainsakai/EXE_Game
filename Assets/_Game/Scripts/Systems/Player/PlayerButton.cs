@@ -1,15 +1,17 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerButton : MonoBehaviour
 {
     [SerializeField] private Button[] actionButtons;
 
-    public Action onPlayButtonClicked;
-    public Action onDiscardButtonClicked;
-    public Action onSortButtonClicked;
+    
+    public UnityEvent onPlayButtonClicked;
+    public UnityEvent onDiscardButtonClicked;
+    public UnityEvent onSortButtonClicked;
 
     private void Start()
     {

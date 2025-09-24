@@ -18,6 +18,6 @@ public class UIMainMenu : MonoBehaviour
         start.onClick.AddListener(() => sceneLoader.LoadSceneName("Map").Execute());
         exit.onClick.RemoveAllListeners();
         exit.onClick.AddListener(() => Application.Quit());
-        deckButton.GetComponent<Image>().sprite = GameInstance.Singleton.GetDeckData().CardBack;
+        deckButton.GetComponent<Image>().sprite = GameInstance.Singleton.GetDeckData().DeckCover;
     }
 }

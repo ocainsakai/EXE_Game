@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeckID: 1
   DeckName: Red
-  CardBack: {fileID: -1438021533542915631, guid: 6f03c43474a0db64994c0d6d2ea085c2, type: 3}
+  DeckCover: {fileID: -1438021533542915631, guid: 6f03c43474a0db64994c0d6d2ea085c2, type: 3}
   Cards:
   - {fileID: 11400000, guid: b16b3bb83a2eec143bb66be8ba8ac20a, type: 2}
   - {fileID: 11400000, guid: 0eabfe0713c9bd1468e00f9c841a45b9, type: 2}

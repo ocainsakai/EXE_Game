@@ -8,7 +8,7 @@ namespace CardSystem
     {
         public int DeckID;
         public string DeckName;
-        public Sprite CardBack;
+        public Sprite DeckCover;
         public List<CardData> Cards = new List<CardData>();
 
         [SerializeField]

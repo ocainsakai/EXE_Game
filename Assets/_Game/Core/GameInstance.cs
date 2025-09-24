@@ -9,7 +9,6 @@ public class GameInstance : MonoBehaviour
     public CardData[] cardsData;
 
     public EnemyData[] enemyData;
-    public MapData[] mapsData;
 
     public PlayerData[] playerData;
 
@@ -57,15 +56,6 @@ public class GameInstance : MonoBehaviour
         return character;
     }
 
-    public MapData GetMapData(int index = 0)
-    {
-        if (index < 0 || index >= mapsData.Length)
-        {
-            Debug.LogError("MapData index out of range");
-            return null;
-        }
-        return mapsData[index];
-    }
     public CardData GetCardData(CardMask cardMask)
     {
         foreach (var card in cardsData)

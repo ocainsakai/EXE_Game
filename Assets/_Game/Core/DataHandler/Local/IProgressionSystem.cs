@@ -7,10 +7,10 @@ public interface IProgressionSystem
     void UpdatePlayerData(PlayerData data);
 
     // Save run state
-    void SaveProgress(string saveId, PlayerData player, MapData map);
+    void SaveProgress(string saveId, PlayerData player);
 
     // Load run state
-    (PlayerData, MapData) LoadProgress(string saveId);
+    PlayerData LoadProgress(string saveId);
 
     // Reset run (Game Over / Restart)
     void ResetProgress();
