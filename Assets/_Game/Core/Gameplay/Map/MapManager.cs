@@ -20,7 +20,6 @@ public class MapManager : MonoBehaviour
 
 
     private GridMap map;
-    private SimplePathfinder pathfinder;
     private UITileEntry[,] tileObjects;
 
 
@@ -30,7 +29,7 @@ public class MapManager : MonoBehaviour
         CreateMap();
         CreateTileType();
         CreateOccupants();
-        UpdateWalkableTile();
+        UpdatePlayerTile(new Vector2Int(0, 0));
         RenderMap();
     }
 
@@ -61,17 +60,11 @@ public class MapManager : MonoBehaviour
                 tile.Type = TileType.Enemy;
             }
         }
-        playerPosition = new Vector2Int(0, 0);
-        map.GetTile(0, 0).Type = TileType.Player;
         map.GetTile(mapWidth-1, mapHeight-1).Type = TileType.Boss;
     }
     void CreateOccupant(Tile tile)
     {
-        if (tile.Type == TileType.Player)
-        {
-            tile.Icon = playerIcon;
-        }
-        else if (tile.Type == TileType.Enemy)
+        if (tile.Type == TileType.Enemy)
         {
             var enemy = GameInstance.Singleton.GetRandomEnemy();
             tile.OccupantID = enemy.EnemyID;
@@ -103,7 +96,10 @@ public class MapManager : MonoBehaviour
             Debug.LogError("Container is not assigned!");
             return;
         }
-
+        foreach(Transform child in containter)
+        {
+            DestroyImmediate(child.gameObject);
+        }
         tileObjects = new UITileEntry[mapWidth, mapHeight];
         UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
         float tileSize = 100f;
@@ -163,23 +159,50 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    void UpdateWalkableTile()
+    void UpdatePlayerTile(Vector2Int position)
     {
         map.ResetWalkable();
+        playerPosition = position;
         var playerTile = map.GetTile(playerPosition.x, playerPosition.y);
+        playerTile.Icon = playerIcon;
+        playerTile.Type = TileType.Player;
         var walkableTiles = map.GetNeighbors(playerTile);
         foreach (var tileObj in walkableTiles)
         {
+            if (tileObj.Type == TileType.Nothing) continue;
             tileObj.IsWalkable = true;
         }
+        RenderMap();
+    }
+    void ClearTile(Vector2Int position)
+    {
+        var tile = map.GetTile(position.x, position.y);
+        tile.Icon = null;
+        tile.IsWalkable = false;
+        tile.Type = TileType.Nothing;
+
     }
     void OnTileMapClickHandler(Vector2Int position)
     {
         Debug.Log($"Tile clicked at: {position}");
+
         var tile = map.GetTile(position);
+        if (tile.Type == TileType.Player || tile.Type == TileType.Nothing) return;
+        _currentTile = tile;
         OnTileSelected?.Invoke(tile);
     }
 
+
+    private Tile _currentTile;
+    public void OnBattleEnter()
+    {
+
+    }
+    public void OnBattleWin()
+    {
+        ClearTile(playerPosition);
+        UpdatePlayerTile(_currentTile.Position);
+    }
     private void OnDestroy()
     {
         UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;

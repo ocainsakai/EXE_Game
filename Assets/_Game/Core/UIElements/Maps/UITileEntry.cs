@@ -12,7 +12,9 @@ public class UITileEntry : MonoBehaviour
     public void SetData(Vector2Int position,Sprite icon, Color bgColor)
     {
         _position = position;
+        if (icon != null) 
         _content.sprite = icon;
+        else _content.gameObject.SetActive(false);
         _background.color = bgColor;
 
         _button.onClick.RemoveAllListeners();

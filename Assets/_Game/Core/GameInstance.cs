@@ -87,4 +87,9 @@ public class GameInstance : MonoBehaviour
     {
         return enemyDatas[Random.Range(0, enemyDatas.Length)];
     }
+
+    public EnemyData GetBoss(string occupantID)
+    {
+        return bossDatas.FirstOrDefault(x => x.EnemyID == occupantID);
+    }
 }

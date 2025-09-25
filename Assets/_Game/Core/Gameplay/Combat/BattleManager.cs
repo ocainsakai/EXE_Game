@@ -6,25 +6,28 @@ public class BattleManager : MonoBehaviour
     [SerializeField] UIGameplay uiGameplay;
 
     public UnityEvent OnBattleStart;
+    public UnityEvent OnBattleWin;
 
     private EnemyData currentEnemy;
 
     public void OnEnterTheBattleWithTile(Tile tile)
     {
-        if (tile.Type == TileType.Enemy || tile.Type == TileType.Boss)
+        if (tile.Type == TileType.Enemy)
         {
-            var enemy = GameInstance.Singleton.GetEnemyData(tile.OccupantID);
-            if (enemy == null) 
-            {
-                Debug.LogError($"Enemy data not found for ID: {tile.OccupantID}");
-                return;
-            }
-            StartBattle(enemy);
+            currentEnemy = GameInstance.Singleton.GetEnemyData(tile.OccupantID);
+            
         }
-        else
+        else if (tile.Type == TileType.Boss)
         {
-            Debug.LogWarning("No enemy on this tile to battle.");
+            currentEnemy = GameInstance.Singleton.GetBoss(tile.OccupantID);
         }
+
+        if (currentEnemy == null)
+        {
+            Debug.LogError($"Enemy data not found for ID: {tile.OccupantID}");
+            return;
+        }
+        StartBattle(currentEnemy);
     }
     public void StartBattle(EnemyData enemy)
     {
@@ -35,5 +38,9 @@ public class BattleManager : MonoBehaviour
 
         OnBattleStart?.Invoke();
 
+    }
+    public void WinTheBattle()
+    {
+        OnBattleWin?.Invoke();
     }
 }
