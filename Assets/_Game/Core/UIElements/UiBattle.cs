@@ -1,16 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
-public class UiBattle : MonoBehaviour
+public class UIBattle : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Show(EnemyData enemy)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log($"[UIBattle] Show battle UI for enemy: {enemy.Name}");
+        // Hiển thị thông tin kẻ thù trên giao diện người dùng
     }
 }

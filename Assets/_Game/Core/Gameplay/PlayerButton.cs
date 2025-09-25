@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerButton : MonoBehaviour
 {
-    [SerializeField] private Button[] actionButtons;
+    [SerializeField] private Button[] actionButtons = new Button[3];
 
     
     public UnityEvent onPlayButtonClicked;
@@ -19,28 +19,24 @@ public class PlayerButton : MonoBehaviour
     }
     public void SetupActionButtons()
     {
-        if (actionButtons == null || actionButtons.Length < 4)
-        {
-            Debug.LogError("Action buttons not properly assigned!");
-            return;
-        }
+        actionButtons[0] = CreateButton("Play", () => onPlayButtonClicked?.Invoke());
+        actionButtons[1] = CreateButton("Discard", () => onDiscardButtonClicked?.Invoke());
+        actionButtons[2] = CreateButton("Sort", () => onSortButtonClicked?.Invoke());
+    }
 
-        // Set button texts
-        actionButtons[0].GetComponentInChildren<TextMeshProUGUI>().text = "PLAY";
-        actionButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = "DISCARD";
-        actionButtons[2].GetComponentInChildren<TextMeshProUGUI>().text = "SORT";
-        actionButtons[3].GetComponentInChildren<TextMeshProUGUI>().text = "SKIP";
+    private Button CreateButton(string title, Action onClick = null)
+    {
+        var newButton = new GameObject();
+        newButton.transform.SetParent(this.transform);
+        var btn = newButton.AddComponent<Button>();
+        btn.onClick.AddListener(() => onClick?.Invoke());
+        newButton.AddComponent<Image>();
+        var text = new GameObject();
+        text.transform.SetParent(newButton.transform);
+        var textContent = text.AddComponent<TextMeshProUGUI>();
+        textContent.text = title;
 
-        // Clear existing listeners to prevent duplicates
-        foreach (var button in actionButtons)
-        {
-            button.onClick.RemoveAllListeners();
-        }
-        Debug.Log("add listener");
-        // Add new listeners
-        actionButtons[0].onClick.AddListener(() => onPlayButtonClicked?.Invoke());
-        actionButtons[1].onClick.AddListener(() => onDiscardButtonClicked?.Invoke());
-        actionButtons[2].onClick.AddListener(() => onSortButtonClicked?.Invoke());
+        return btn;
     }
 
     // Action control methods

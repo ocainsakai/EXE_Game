@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] UiBattle uiBattle;
+    [SerializeField] UIGameplay uiGameplay;
+
+    public UnityEvent OnBattleStart;
+
     private EnemyData currentEnemy;
 
     public void OnEnterTheBattleWithTile(Tile tile)
@@ -10,6 +14,11 @@ public class BattleManager : MonoBehaviour
         if (tile.Type == TileType.Enemy || tile.Type == TileType.Boss)
         {
             var enemy = GameInstance.Singleton.GetEnemyData(tile.OccupantID);
+            if (enemy == null) 
+            {
+                Debug.LogError($"Enemy data not found for ID: {tile.OccupantID}");
+                return;
+            }
             StartBattle(enemy);
         }
         else
@@ -21,10 +30,10 @@ public class BattleManager : MonoBehaviour
     {
         currentEnemy = enemy;
         Debug.Log($"Starting battle with {enemy.Name}");
-        // Initialize battle UI, player stats, enemy stats, etc.
+        
+        uiGameplay.ShowBattle(enemy);
 
+        OnBattleStart?.Invoke();
 
-        // open ui
-        //uiBattle.Open(enemy);
     }
 }

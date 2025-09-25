@@ -37,7 +37,7 @@ public class Room : BaseCardPile
         _uIRoom?.gameObject.SetActive(true);
         Draw();
     }
-    private void Draw()
+    public void Draw()
     {
         // logic
         if (RoomSize > deck.Count)

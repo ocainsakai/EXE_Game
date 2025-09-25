@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mushroom
   m_EditorClassIdentifier: 
   EnemyID: enemy_mushroom
-  DisplayName: Mushroom
+  Name: Mushroom
   Icon: {fileID: -654737500350741434, guid: 17e1a40da00030a4e91c20e27a65a013, type: 3}
   Atk: 10
   HP: 50

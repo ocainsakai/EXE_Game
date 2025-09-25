@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fly Box
   m_EditorClassIdentifier: 
   EnemyID: enemy_fly
-  DisplayName: Fly Box
+  Name: Fly
   Icon: {fileID: -4331948892352828423, guid: 9fa6fdd60c83ecb4eb3d7289c746c775, type: 3}
   Atk: 10
   HP: 100

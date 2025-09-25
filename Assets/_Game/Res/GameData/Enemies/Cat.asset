@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cat
   m_EditorClassIdentifier: 
   EnemyID: enemy_cat
-  DisplayName: Cattt
+  Name: Cat
   Icon: {fileID: 2587706737540376869, guid: 08087a7661d5eb649bcbd698cfd813f5, type: 3}
   Atk: 50
   HP: 300

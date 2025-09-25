@@ -21,6 +21,10 @@ public class UIDeckDetails : MonoBehaviour
 
     private List<char> ranks = new List<char>() { 'A' , '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', };
 
+    public void Toggle()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
     private void OnEnable()
     {
         SetDeck(deckManager.Cards.ToList());
