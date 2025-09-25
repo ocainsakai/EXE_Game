@@ -1,0 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using UnityEngine;
+
+
+public static partial class PlayerSave
+{
+}
+
