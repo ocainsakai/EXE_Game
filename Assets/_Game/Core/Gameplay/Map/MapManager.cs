@@ -175,11 +175,9 @@ public class MapManager : MonoBehaviour
     }
     void OnTileMapClickHandler(Vector2Int position)
     {
+        Debug.Log($"Tile clicked at: {position}");
         var tile = map.GetTile(position);
-        if (tile.IsWalkable)
-        {
-            OnTileSelected?.Invoke(tile);
-        }
+        OnTileSelected?.Invoke(tile);
     }
 
     private void OnDestroy()

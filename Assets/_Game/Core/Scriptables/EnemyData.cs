@@ -4,7 +4,7 @@
 public class EnemyData : ScriptableObject
 {
     public string EnemyID;
-    public string DisplayName;
+    public string Name;
     public Sprite Icon;
     public int Atk;
     public int HP;

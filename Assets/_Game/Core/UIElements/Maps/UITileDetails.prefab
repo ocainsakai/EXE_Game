@@ -49,6 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e6daded0556054fb75271826e5a5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playBtn: {fileID: 3577593131712854663}
+  avatar: {fileID: 6317447384730476136}
+  tileNameText: {fileID: 381557029369723392}
+  decription: {fileID: 3584371449711133292}
 --- !u!1 &2352415274636271369
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +771,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.30017188, y: 0.5}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1338723590738756669
