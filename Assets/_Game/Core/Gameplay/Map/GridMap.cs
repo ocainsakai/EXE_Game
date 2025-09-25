@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-// 2. Map don gi?n - ch? luu tiles và cung c?p access co b?n
+using System;
 public class GridMap
 {
     private Tile[,] tiles;
@@ -59,5 +59,16 @@ public class GridMap
         }
 
         return neighbors;
+    }
+
+    public void ResetWalkable()
+    {
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                tiles[x, y].IsWalkable = false;
+            }
+        }
     }
 }

@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Cat
   m_EditorClassIdentifier: 
-  EnemyID:
-    Part1: 116211772
-    Part2: 1183356426
-    Part3: 2318044070
-    Part4: 605994474
+  EnemyID: enemy_cat
   DisplayName: Cattt
   Icon: {fileID: 2587706737540376869, guid: 08087a7661d5eb649bcbd698cfd813f5, type: 3}
   Atk: 50

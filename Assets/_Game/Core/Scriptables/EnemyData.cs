@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData")]
 public class EnemyData : ScriptableObject
 {
-    public int EnemyID;
+    public string EnemyID;
     public string DisplayName;
     public Sprite Icon;
     public int Atk;

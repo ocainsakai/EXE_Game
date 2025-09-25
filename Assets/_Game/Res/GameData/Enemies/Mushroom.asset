@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  EnemyID: 2
+  EnemyID: enemy_mushroom
   DisplayName: Mushroom
   Icon: {fileID: -654737500350741434, guid: 17e1a40da00030a4e91c20e27a65a013, type: 3}
   Atk: 10

@@ -7,17 +7,6 @@ public class UICardManager : MonoBehaviour
     [SerializeField] private CardEntry cardEntry;
 
     private Dictionary<Card, CardEntry> cardEntries = new();
-    public static UICardManager Singleton;
-    private void Awake()
-    {
-        if (Singleton != null && Singleton != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        Singleton = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     public CardEntry Add(Card card, Transform transform = null)
     {

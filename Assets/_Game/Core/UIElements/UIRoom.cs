@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class UIRoom : MonoBehaviour
 {
-
+    [SerializeField] UICardManager cardManager;
     private List<CardEntry> cardEntries = new List<CardEntry>();
     private Queue<IEnumerator> animationQueue = new Queue<IEnumerator>();
 
     public void UpdateIndex(IEnumerable<Card> cards)
     {
         cardEntries.Clear();
-        cardEntries = UICardManager.Singleton.GetCards(cards);
+        cardEntries = cardManager.GetCards(cards);
         RepositionCards();
     }
     public void Add(Card card)
     {
-        var entry = UICardManager.Singleton.GetCard(card);
+        var entry = cardManager.GetCard(card);
         if (entry == null || cardEntries.Contains(entry)) return;
         entry.transform.SetParent(transform);
         cardEntries.Add(entry);
@@ -38,7 +38,7 @@ public class UIRoom : MonoBehaviour
         if (cards == null) return;
         foreach (var card in cards)
         {
-            var entry = UICardManager.Singleton.GetCard(card);
+            var entry = cardManager.GetCard(card);
             if (entry == null || cardEntries.Contains(entry)) return;
             cardEntries.Add(entry);
             entry.transform.SetParent(transform);
@@ -56,7 +56,7 @@ public class UIRoom : MonoBehaviour
     }
     public void Remove(Card card)
     {
-        var entry = UICardManager.Singleton.GetCard(card);
+        var entry = cardManager.GetCard(card);
         if (entry == null) return;
         cardEntries.Remove(entry);
     }

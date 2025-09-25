@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using System.Linq;
+using System;
+using UnityEngine.Events;
 // 4. MonoBehaviour để sử dụng trong Unity
 public class MapManager : MonoBehaviour
 {
@@ -10,24 +12,43 @@ public class MapManager : MonoBehaviour
     [Header("Rendering")]
     public Transform containter;
     public UITileEntry tilePrefab;
+    public Sprite playerIcon;
     public Color walkableColor = Color.white;
     public Color unwalkableColor = Color.red;
+
+    public UnityEvent<Tile> OnTileSelected;
+
 
     private GridMap map;
     private SimplePathfinder pathfinder;
     private UITileEntry[,] tileObjects;
 
-    void OnEnable()
+
+    private Vector2Int playerPosition;
+    void Start()
     {
         CreateMap();
         CreateTileType();
+        CreateOccupants();
+        UpdateWalkableTile();
         RenderMap();
+    }
+
+    private void CreateOccupants()
+    {
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                var tile = map.GetTile(x, y);
+                CreateOccupant(tile);
+            }
+        }
     }
 
     void CreateMap()
     {
         map = new GridMap(mapWidth, mapHeight);
-        pathfinder = new SimplePathfinder();
     }
     void CreateTileType()
     {
@@ -36,32 +57,55 @@ public class MapManager : MonoBehaviour
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                map.GetTile(x, y).Type = TileType.Enemy;
+                var tile = map.GetTile(x, y);
+                tile.Type = TileType.Enemy;
             }
         }
+        playerPosition = new Vector2Int(0, 0);
         map.GetTile(0, 0).Type = TileType.Player;
-        map.GetTile(mapWidth, mapHeight).Type = TileType.Boss;
+        map.GetTile(mapWidth-1, mapHeight-1).Type = TileType.Boss;
     }
     void CreateOccupant(Tile tile)
     {
         if (tile.Type == TileType.Player)
         {
-            // Tạo occupant cho player
-            //var player = 
+            tile.Icon = playerIcon;
         }
         else if (tile.Type == TileType.Enemy)
         {
-            // Tạo occupant cho enemy
+            var enemy = GameInstance.Singleton.GetRandomEnemy();
+            tile.OccupantID = enemy.EnemyID;
+            tile.Icon = enemy.Icon;
         }
         else if (tile.Type == TileType.Boss)
         {
-            // Tạo occupant cho boss
+            var enemy = GameInstance.Singleton.bossDatas.FirstOrDefault();
+            tile.OccupantID = enemy.BossID;
+            tile.Icon = enemy.Icon;
         }
     }
-    void RenderMap()
+    public void RenderMap()
     {
-        tileObjects = new UITileEntry[mapWidth, mapHeight];
+        if (map == null)
+        {
+            Debug.LogError("Map is null, cannot render!");
+            return;
+        }
 
+        if (tilePrefab == null)
+        {
+            Debug.LogError("TilePrefab is not assigned!");
+            return;
+        }
+
+        if (containter == null)
+        {
+            Debug.LogError("Container is not assigned!");
+            return;
+        }
+
+        tileObjects = new UITileEntry[mapWidth, mapHeight];
+        UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
         float tileSize = 100f;
 
         // offset để căn giữa map
@@ -73,63 +117,73 @@ public class MapManager : MonoBehaviour
             for (int y = 0; y < mapHeight; y++)
             {
                 Tile tile = map.GetTile(x, y);
+                if (tile == null)
+                {
+                    Debug.LogWarning($"Tile at ({x},{y}) is null, skipping.");
+                    continue;
+                }
+
                 Vector3 worldPos = new Vector3(x * tileSize + offsetX, y * tileSize + offsetY, 0);
 
                 UITileEntry tileObj = Instantiate(tilePrefab, containter);
+                if (tileObj == null)
+                {
+                    Debug.LogError($"Failed to instantiate Tile prefab at ({x},{y})");
+                    continue;
+                }
 
                 tileObj.name = $"Tile_{x}_{y}";
                 tileObj.transform.localPosition = worldPos;
                 tileObj.transform.localScale = Vector3.one;
 
                 var rect = tileObj.GetComponent<RectTransform>();
-                rect.sizeDelta = new Vector2(tileSize, tileSize);
+                if (rect != null)
+                {
+                    rect.sizeDelta = new Vector2(tileSize, tileSize);
+                }
+                else
+                {
+                    Debug.LogWarning($"Tile prefab at ({x},{y}) has no RectTransform!");
+                }
 
-                tileObj.SetData(null, unwalkableColor);
+                // Nếu icon null thì log cảnh báo nhưng vẫn cho chạy
+                if (tile.Icon == null)
+                {
+                    Debug.LogWarning($"Tile at ({x},{y}) has no Icon assigned!");
+                }
+
+                tileObj.SetData(
+                    new Vector2Int(x, y),
+                    tile.Icon,
+                    tile.IsWalkable ? walkableColor : unwalkableColor
+                );
+
                 tileObjects[x, y] = tileObj;
             }
         }
     }
 
-
-    // Test pathfinding - gọi từ editor hoặc code khác
-    public void TestPathfinding(Vector2Int startPos, Vector2Int goalPos)
+    void UpdateWalkableTile()
     {
-        Tile start = map.GetTile(startPos);
-        Tile goal = map.GetTile(goalPos);
-
-        if (start == null || goal == null)
+        map.ResetWalkable();
+        var playerTile = map.GetTile(playerPosition.x, playerPosition.y);
+        var walkableTiles = map.GetNeighbors(playerTile);
+        foreach (var tileObj in walkableTiles)
         {
-            Debug.Log("Invalid positions");
-            return;
+            tileObj.IsWalkable = true;
         }
-
-        List<Tile> path = pathfinder.FindPath(map, start, goal);
-
-        if (path != null)
+    }
+    void OnTileMapClickHandler(Vector2Int position)
+    {
+        var tile = map.GetTile(position);
+        if (tile.IsWalkable)
         {
-            Debug.Log($"Found path with {path.Count} steps");
-            //HighlightPath(path);
-        }
-        else
-        {
-            Debug.Log("No path found");
+            OnTileSelected?.Invoke(tile);
         }
     }
 
-    //void HighlightPath(List<Tile> path)
-    //{
-    //    // Reset màu cũ
-    //    RenderMap();
-
-    //    // Highlight path
-    //    foreach (Tile tile in path)
-    //    {
-    //        GameObject tileObj = tileObjects[tile.Position.x, tile.Position.y];
-    //        Renderer renderer = tileObj.GetComponent<Renderer>();
-    //        if (renderer != null)
-    //        {
-    //            renderer.material.color = Color.green;
-    //        }
-    //    }
-    //}
+    private void OnDestroy()
+    {
+        UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
+    }
 }

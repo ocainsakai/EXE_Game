@@ -6,7 +6,8 @@ public class Tile
     public Vector2Int Position;
     public bool IsWalkable = true;
     public TileType Type = TileType.Nothing;
-    public object Occupant = null; 
+    public Sprite Icon = null; 
+    public string OccupantID;
     public Tile(int x, int y)
     {
         Position = new Vector2Int(x, y);

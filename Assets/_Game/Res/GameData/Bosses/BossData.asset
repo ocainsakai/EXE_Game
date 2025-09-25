@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Fly Box
+  m_Script: {fileID: 11500000, guid: 67a6396b6ee56cd47ae5641f140c65ac, type: 3}
+  m_Name: BossData
   m_EditorClassIdentifier: 
-  EnemyID: enemy_fly
-  DisplayName: Fly Box
-  Icon: {fileID: -4331948892352828423, guid: 9fa6fdd60c83ecb4eb3d7289c746c775, type: 3}
-  Atk: 10
-  HP: 100
-  Count: 3
-  cost: 150
-  reward: 250
+  EnemyID: boss_cat
+  DisplayName: BOSS
+  Icon: {fileID: 21300000, guid: abe5e899916bd0a42a11a508b87a2b9b, type: 3}
+  Atk: 0
+  HP: 0
+  Count: 0
+  cost: 0
+  reward: 0

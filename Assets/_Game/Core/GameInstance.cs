@@ -8,7 +8,8 @@ public class GameInstance : MonoBehaviour
     public DeckData[] deckDatas;
     public CardData[] cardsData;
 
-    public EnemyData[] enemyData;
+    public EnemyData[] enemyDatas;
+    public BossData[] bossDatas;
 
     public PlayerData[] playerData;
 
@@ -70,9 +71,9 @@ public class GameInstance : MonoBehaviour
 
     }
 
-    public EnemyData GetEnemyData(int id)
+    public EnemyData GetEnemyData(string id)
     {
-        foreach (var enemy in enemyData)
+        foreach (var enemy in enemyDatas)
         {
             if (enemy.EnemyID == id)
             {
@@ -81,5 +82,9 @@ public class GameInstance : MonoBehaviour
         }
         Debug.LogError($"EnemyData with ID {id} not found");
         return null;
+    }
+    public EnemyData GetRandomEnemy()
+    {
+        return enemyDatas[Random.Range(0, enemyDatas.Length)];
     }
 }

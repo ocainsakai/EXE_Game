@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class DeckManager : BaseCardPile
 {
-    [SerializeField] private Card cardPrefab;
+    [SerializeField] UICardManager cardManager;
     [SerializeField] private Transform cardContainer;
     [SerializeField] private Transform deckCover;
     private void Awake()
     { 
         var deckData = GameInstance.Singleton.GetDeckData(PlayerSave.GetSelectedDeck());
+        if (deckData == null)
+        {
+            Debug.LogError("DeckData is null");
+            return;
+        }
         deckCover.GetComponent<Image>().sprite = deckData.DeckCover;
         CreateCards(deckData.Cards);
         ShuffleDeck();
@@ -21,7 +26,7 @@ public class DeckManager : BaseCardPile
         cards.Add(card);
 
         // create UI
-        UICardManager.Singleton.Add(card, cardContainer);
+        cardManager.Add(card, cardContainer);
         return card;
     }
     public void CreateCards(IEnumerable<CardData> cardsData)
