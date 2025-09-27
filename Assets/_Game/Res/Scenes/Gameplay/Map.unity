@@ -1572,6 +1572,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135365587}
   m_CullTransparentMesh: 1
+--- !u!1 &1148342377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 154446065234859288, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+  m_PrefabInstance: {fileID: 4053113626113517095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1148342380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148342377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 80, y: 120}
+  m_Spacing: {x: 5, y: 5}
+  m_Constraint: 2
+  m_ConstraintCount: 6
 --- !u!1 &1276258352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,6 +2832,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIGameplay
       objectReference: {fileID: 0}
+    - target: {fileID: 6885994453537982257, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7235048939134876681, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2844,6 +2877,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7887154164540547371, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+      propertyPath: cardPrefab
+      value: 
+      objectReference: {fileID: 8182382045385411611, guid: 807edce72ab9b22499d043b74e4e8b59, type: 3}
+    - target: {fileID: 7887154164540547371, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
       propertyPath: deckManager
       value: 
       objectReference: {fileID: 7009746711664460415}
@@ -2851,10 +2888,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8252347106859208101, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+      propertyPath: m_MinWidth
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461906682346938922, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+      propertyPath: m_PreferredWidth
+      value: 600
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 154446065234859288, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1148342380}
   m_SourcePrefab: {fileID: 100100000, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
 --- !u!224 &4369885537923511935 stripped
 RectTransform:
@@ -3045,7 +3093,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIPokerMult
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8077793312599503408, guid: b33280394924bce49b374a313f008f1b, type: 3}
+    - {fileID: 6015471522508591857, guid: b33280394924bce49b374a313f008f1b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

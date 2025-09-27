@@ -13,6 +13,7 @@ public class UIDeckDetails : MonoBehaviour
     [SerializeField] GameObject baseCards;
     [SerializeField] GameObject rankCount;
     [SerializeField] GameObject content;
+    [SerializeField] GameObject cardPrefab;
 
     [SerializeField] AtributeEntry atributeVertical;
     [SerializeField] RankAttributeEntry atributeHorizontal;
@@ -48,15 +49,24 @@ public class UIDeckDetails : MonoBehaviour
 
     private void UpdateContent()
     {
-        // ví dụ: hiển thị tổng số face cards và number cards
-        int faceCount = currentDeck.GetFaceCardCount();
-        int numberCount = currentDeck.GetNumberCardCount();
-        int aceCount = currentDeck.GetAceCount();
+        // clear content cũ
+        foreach (Transform child in content.transform)
+        {
+            Destroy(child.gameObject);
+        }
 
-        //var text = content.GetComponentInChildren<TextMeshProUGUI>();
-        //text.text = $"Faces: {faceCount}\n" +
-        //            $"Numbers: {numberCount}\n" +
-        //            $"Aces: {aceCount}";
+        // tạo mới 52 lá
+        foreach (var card in currentDeck)
+        {
+            GameObject cardGO = Instantiate(cardPrefab, content.transform);
+
+            // giả sử cardPrefab có component CardUI để hiển thị thông tin lá bài
+            CardUI ui = cardGO.GetComponent<CardUI>();
+            if (ui != null)
+            {
+                ui.SetCard(card.CardData); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
+            }
+        }
     }
 
     private void UpdateDeckInfo()
