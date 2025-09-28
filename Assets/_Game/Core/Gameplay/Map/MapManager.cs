@@ -66,17 +66,28 @@ public class MapManager : MonoBehaviour
     {
         if (tile.Type == TileType.Enemy)
         {
-            var enemy = GameInstance.Singleton.GetRandomEnemy();
+            var enemy = GameInstance.Singleton?.GetRandomEnemy();
+            if (enemy == null)
+            {
+                Debug.LogError("No enemy found in GameInstance!");
+                return;
+            }
             tile.OccupantID = enemy.EnemyID;
             tile.Icon = enemy.Icon;
         }
         else if (tile.Type == TileType.Boss)
         {
-            var enemy = GameInstance.Singleton.bossDatas.FirstOrDefault();
+            var enemy = GameInstance.Singleton?.bossDatas?.FirstOrDefault();
+            if (enemy == null)
+            {
+                Debug.LogError("No boss data found in GameInstance!");
+                return;
+            }
             tile.OccupantID = enemy.BossID;
             tile.Icon = enemy.Icon;
         }
     }
+
     public void RenderMap()
     {
         if (map == null)
