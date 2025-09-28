@@ -4,9 +4,9 @@ using System;
 public class Card
 {
     public static bool CanSelect;
-    private CardData cardData;
-    public CardData CardData => cardData;
-   
+    private CardData _cardData;
+    public CardData CardData => _cardData;
+
     public Action onSelectChange;
     private bool isSelecting;
     public bool IsSelecting
@@ -20,9 +20,9 @@ public class Card
         }
     }
 
-    public Card(CardData cardData)
+    public Card(CardData data)
     {
-        this.cardData = cardData;
+        _cardData = data;
     }
 
     public void OnCardClickHandle()
