@@ -1,8 +1,9 @@
 ﻿using CardSystem;
 using System.Linq;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
+
+[DefaultExecutionOrder(-1)]
 public class GameInstance : MonoBehaviour
 {
     public DeckData[] deckDatas;

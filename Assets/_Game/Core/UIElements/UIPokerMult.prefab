@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 6772666736152102622}
   - component: {fileID: 1636989239211295446}
   - component: {fileID: 1143347092566843020}
-  - component: {fileID: 6015471522508591857}
   m_Layer: 5
   m_Name: UIMult
   m_TagString: Untagged
@@ -213,19 +212,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6015471522508591857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300790616956240769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f091550c725ebd41b67225baecda7f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMesh: {fileID: 6198667995833005143}
 --- !u!1 &1713449341492166931
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +359,6 @@ GameObject:
   - component: {fileID: 1336725760110234180}
   - component: {fileID: 8470298685571992137}
   - component: {fileID: 2020537958403765118}
-  - component: {fileID: 8077793312599503408}
   m_Layer: 5
   m_Name: UIPoker
   m_TagString: Untagged
@@ -439,19 +424,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8077793312599503408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2704871409086614100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f091550c725ebd41b67225baecda7f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMesh: {fileID: 4165764220626925642}
 --- !u!1 &7546501241480089135
 GameObject:
   m_ObjectHideFlags: 0

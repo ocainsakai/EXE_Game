@@ -3,84 +3,93 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityUtils;
 
-public class Room : BaseCardPile
+public class Room : MonoBehaviour
 {
     [SerializeField] BaseCardPile discard;
-    [SerializeField] BaseCardPile deck;
-    [SerializeField] UIRoom _uIRoom;
+    [SerializeField] DeckManager deck;
     [SerializeField] UIPokerMult _uIPokerMult;
 
+    private List<Card> _cards = new List<Card>();
+    private List<Card> runtimeDeck = new();
+
+    public UnityEvent<List<Card>> OnCardsChanged;
     public Action OnDiscardComplete;
     public int RoomSize = 8;
 
-    private bool sortToggle = true;
-    public override void Add(Card card)
-    {
-        base.Add(card);
-        card.onSelectChange += SelectHandler;
-        card.IsSelecting = false;
-        
-    }
 
-    public List<Card> SetectedCards => cards.Where(x => x.IsSelecting).ToList();
-    private void SelectHandler()
+    public UnityEvent<bool> CanSelectCardChanged;
+    private bool _canSelectCard;
+    public bool CanSelectCard
     {
-        // update can select
-        Card.CanSelect = cards.Where(x => x.IsSelecting).Count() < 5;
-        // update poker hand
-        var pokerHand = PokerEvaluator.Evaluate(SetectedCards.Select(x => x.CardData.Mask).ToList());
-        _uIPokerMult.SetPokerMult(pokerHand.HandType);
+        get => _canSelectCard;
+        set {
+            _canSelectCard = value;
+            CanSelectCardChanged?.Invoke(value);
+        }
+    }
+    private bool sortToggle = true;
+    public List<Card> SetectedCards => _cards.Where(x => x.IsSeleced).ToList();
+    public void Add(Card card)
+    {
+        _cards.Add(card);
+        card.SelectedChanged += UpdateSelected;
+        card.IsSeleced = false;
+    }
+    private void UpdateSelected()
+    {
+        CanSelectCard = _cards.Where(x => x.IsSeleced).Count() < 5;
+        Debug.Log(CanSelectCard);
+        var pokerHand = PokerEvaluator.Evaluate(SetectedCards.Select(x => x.Mask).ToList());
+
+        if (_uIPokerMult != null)
+        {
+            _uIPokerMult.SetPokerMult(pokerHand.HandType);
+        }
     }
     public void OnEnable()
     {
-        _uIRoom?.gameObject.SetActive(true);
+        runtimeDeck = deck.OriginCards.ToList();
+        ShuffleDeck();
         Draw();
     }
     public void Draw()
     {
-        // logic
-        if (RoomSize > deck.Count)
-        {
-            discard.MoveAllTo(deck);
-        }
-        var cards = this.DrawFrom(deck, RoomSize - Cards.Count);
-
-        //condition
-        SelectHandler();
-
-        //ui
-        _uIRoom.AddRange(cards);
+        var cards = runtimeDeck.Take(RoomSize - _cards.Count);   
+        cards.ForEach(x => Add(x));
         Sort(sortToggle);
-        _uIRoom.UpdateIndex(Cards);
-       
-       
+        OnCardsChanged?.Invoke(_cards);
+        UpdateSelected();
+
     }
     public void OnDisable()
     {
-        this.MoveAllTo(deck);
-        if (_uIRoom == null) return;
-        _uIRoom.gameObject.SetActive(false);
-
+        runtimeDeck.Clear();
+        _cards.Clear();
+        OnCardsChanged.Invoke(_cards);
     }
     public void Discards()
     {
-        var cardsToDiscard = Cards.Where(x => x.IsSelecting).ToList();
-        if (cardsToDiscard.Count == 0) return;
-        foreach (var card in cardsToDiscard)
-        {
-            this.MoveCardTo(discard, card);
-            _uIRoom.Remove(card);
-        }
-        //OnDiscardComplete?.Invoke();
+        var cardsToDiscard = _cards.Where(x => x.IsSeleced).ToList();
+        OnCardsChanged?.Invoke(_cards);
         Draw();
     }
     public void Sort()
     {
         sortToggle = !sortToggle;
         Sort(sortToggle);
-        _uIRoom.UpdateIndex(cards);
 
+        OnCardsChanged?.Invoke(_cards);
+    }
+    public void ShuffleDeck()
+    {
+        for (int i = runtimeDeck.Count - 1; i > 0; i--)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            (runtimeDeck[i], runtimeDeck[randomIndex]) = (runtimeDeck[randomIndex], runtimeDeck[i]);
+        }
     }
     private void Sort(bool isRank)
     {
@@ -97,17 +106,21 @@ public class Room : BaseCardPile
     {
         SortCards((a, b) =>
         {
-            int rankCompare = a.CardData.Rank.CompareTo(b.CardData.Rank);
-            return rankCompare != 0 ? rankCompare : a.CardData.Rank.CompareTo(b.CardData.Rank);
+            int rankCompare = a.Rank.CompareTo(b.Rank);
+            return rankCompare != 0 ? rankCompare : a.Rank.CompareTo(b.Rank);
         });
     }
     public void SortBySuit()
     {
         SortCards((a, b) =>
-        {
-            int rankCompare = a.CardData.Suit.CompareTo(b.CardData.Suit);
-            return rankCompare != 0 ? rankCompare : a.CardData.Suit.CompareTo(b.CardData.Suit);
+        {   
+            int rankCompare = a.Suit.CompareTo(b.Suit);
+            return rankCompare != 0 ? rankCompare : a.Suit.CompareTo(b.Suit);
         });
 
+    }
+    protected void SortCards(Comparison<Card> comparison)
+    {
+        _cards.Sort(comparison);
     }
 }

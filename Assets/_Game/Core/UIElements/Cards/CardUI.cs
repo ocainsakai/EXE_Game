@@ -7,8 +7,8 @@ public class CardUI : MonoBehaviour
 {
     [SerializeField] private Image artImage;
 
-    public void SetCard(CardData data)
+    public void SetCard(Sprite data)
     {
-        if (artImage != null) artImage.sprite = data.Art;
+        if (artImage != null) artImage.sprite = data;
     }
 }

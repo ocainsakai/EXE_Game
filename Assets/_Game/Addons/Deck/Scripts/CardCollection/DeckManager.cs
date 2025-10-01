@@ -1,54 +1,55 @@
 ﻿using CardSystem;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeckManager : BaseCardPile
+public class DeckManager : MonoBehaviour
 {
-    [SerializeField] UICardManager cardManager;
-    [SerializeField] private Transform cardContainer;
     [SerializeField] private Transform deckCover;
-
+    private List<Card> originCards=new();
+    public IReadOnlyCollection<Card> OriginCards => originCards;
     private void Awake()
     {
-        // ✅ Load toàn bộ CardData từ Resources/Cards
-        var allCards = Resources.LoadAll<CardData>("Cards");
-        if (allCards == null || allCards.Length == 0)
+        var deckData = GameInstance.Singleton.GetDeckData(PlayerSave.GetSelectedDeck());
+        if (deckData == null)
         {
-            Debug.LogError("Không tìm thấy CardData trong Resources/Cards");
+            Debug.LogError("DeckData is null");
             return;
         }
 
-        CreateCards(allCards);
-        ShuffleDeck();
+        Debug.Log(deckData.ToString() + $"   {deckData.Cards.Count}");
+        originCards = (CreateCards(deckData.Cards).ToList());
+
+        if (deckCover != null)
+        {
+            deckCover.GetComponent<Image>().sprite = deckData.DeckCover;
+        }
+        
+    }
+    public bool DestroyCard(SerializableGuid cardID)
+    {
+        if (originCards.Select(x => x.CardID).Contains(cardID))
+        {
+            var item = originCards.FirstOrDefault(x => x.CardID == cardID);
+            originCards.Remove(item);
+            return true;
+        }
+        return false;
     }
 
     public Card CreateCard(CardData data)
     {
         Card card = new(data);
-        cards.Add(card);
-
-        // tạo UI
-        if (cardManager != null)
-            cardManager.Add(card, cardContainer);
-
+        originCards.Add(card);
         return card;
     }
 
-    public void CreateCards(IEnumerable<CardData> cardsData)
+    public IEnumerable<Card> CreateCards(IEnumerable<CardData> cardsData)
     {
         foreach (var cardData in cardsData)
         {
-            CreateCard(cardData);
-        }
-    }
-
-    public void ShuffleDeck()
-    {
-        for (int i = cards.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
+           yield return CreateCard(cardData);
         }
     }
 }

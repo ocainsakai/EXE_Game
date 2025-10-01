@@ -19,7 +19,7 @@ public static class CardPileExtensions
         for (int i = 0; i < amount; i++)
         {
             var card = target.RemoveTop();
-            Debug.Log($"Draw card {card.CardData.Name}");
+            Debug.Log($"Draw card {card.Name}");
             sources.Add(card);
             drawnCards.Add(card);
         }

@@ -28,7 +28,7 @@ public class UIDeckDetails : MonoBehaviour
     }
     private void OnEnable()
     {
-        SetDeck(deckManager.Cards.ToList());
+        //SetDeck(deckManager.);
     }
 
     public void SetDeck(List<Card> deck)
@@ -64,7 +64,7 @@ public class UIDeckDetails : MonoBehaviour
             CardUI ui = cardGO.GetComponent<CardUI>();
             if (ui != null)
             {
-                ui.SetCard(card.CardData); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
+                ui.SetCard(card.Art); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
             }
         }
     }
@@ -102,13 +102,13 @@ public class UIDeckDetails : MonoBehaviour
             case 3: // Clubs
                 return currentDeck.GetNumberCardCount();
             case 4: // Others (Joker, etc.)
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Hearts);
+                return currentDeck.GetSuitCount(CardSuit.Hearts);
             case 5:
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Diamonds);
+                return currentDeck.GetSuitCount(CardSuit.Diamonds);
             case 6:
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Clubs);
+                return currentDeck.GetSuitCount(CardSuit.Clubs);
             case 7:
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Spades);
+                return currentDeck.GetSuitCount(CardSuit.Spades);
 
             default:
                 return 0;
