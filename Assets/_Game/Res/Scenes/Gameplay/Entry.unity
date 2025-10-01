@@ -1150,7 +1150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a2c00b91aeca145aeeb0c4b95052e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckDatas:
+  deckData:
   - {fileID: 11400000, guid: 0c850ee6b91a2e74493deaa103c5cd96, type: 2}
   - {fileID: 11400000, guid: 5e4775558687d224aaab52805df1fcd9, type: 2}
   - {fileID: 11400000, guid: b6c678e48f651bd41a4f80af5b153c9c, type: 2}
@@ -1207,12 +1207,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef8b9708b04f7314fa3fe46f73a314b0, type: 2}
   - {fileID: 11400000, guid: e775f59afaa5e2c42ba7b05b977449a9, type: 2}
   - {fileID: 11400000, guid: 678e233b0016a364ab625cccfe7be582, type: 2}
-  enemyDatas:
-  - {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}
-  - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
-  - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-  bossDatas:
-  - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
+  maps:
+  - MapID: sontinhthuytinh
+    enemyData:
+    - {fileID: 11400000, guid: 72d7d88494c2e5f4a87c957b83e208b2, type: 2}
+    bossData:
+    - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
+  currentMap:
+    MapID: 
+    enemyData: []
+    bossData: []
   playerData:
   - {fileID: 11400000, guid: 52a15d4d4dec16f4883b36aac760ac93, type: 2}
 --- !u!1 &1936247614

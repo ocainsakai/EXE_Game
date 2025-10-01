@@ -24,7 +24,7 @@ public static partial class PlayerSave
             return SecurePrefs.GetDecryptedInt(KEY_SELECTED_DECK, 0);
 
         // fallback: first unlocked in the DB
-        foreach (var c in GameInstance.Singleton.deckDatas)
+        foreach (var c in GameInstance.Singleton.deckData)
             if (c.CheckUnlocked) return c.DeckID;
 
         Debug.LogError("No unlocked characters available to select.");

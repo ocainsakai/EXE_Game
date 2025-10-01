@@ -26,6 +26,18 @@ public class MapManager : MonoBehaviour
     private Vector2Int playerPosition;
     void Start()
     {
+        GameInstance.Singleton.SetRandomCurrentMap();
+
+        var currentMap = GameInstance.Singleton?.currentMap;
+        if (currentMap == null)
+        {
+            Debug.LogError("No current map set in GameInstance");
+            return;
+        }
+
+        mapWidth = 5; 
+        mapHeight = 5;
+
         CreateMap();
         CreateTileType();
         CreateOccupants();
@@ -51,42 +63,61 @@ public class MapManager : MonoBehaviour
     }
     void CreateTileType()
     {
-        
+        var enemies = GameInstance.Singleton.currentMap?.enemyData;
+        var boss = GameInstance.Singleton.currentMap?.bossData?.FirstOrDefault();
+
+        if (enemies == null || enemies.Length == 0)
+        {
+            Debug.LogWarning("No enemies in current map");
+            return;
+        }
+
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
                 var tile = map.GetTile(x, y);
-                tile.Type = TileType.Enemy;
+                if (x == mapWidth - 1 && y == mapHeight - 1)
+                {
+                    tile.Type = TileType.Boss;
+                }
+                else
+                {
+                    tile.Type = TileType.Enemy;
+                }
             }
         }
-        map.GetTile(mapWidth-1, mapHeight-1).Type = TileType.Boss;
     }
+
+
     void CreateOccupant(Tile tile)
     {
-        if (tile.Type == TileType.Enemy)
+        switch (tile.Type)
         {
-            var enemy = GameInstance.Singleton?.GetRandomEnemy();
-            if (enemy == null)
-            {
-                Debug.LogError("No enemy found in GameInstance!");
-                return;
-            }
-            tile.OccupantID = enemy.EnemyID;
-            tile.Icon = enemy.Icon;
-        }
-        else if (tile.Type == TileType.Boss)
-        {
-            var enemy = GameInstance.Singleton?.bossDatas?.FirstOrDefault();
-            if (enemy == null)
-            {
-                Debug.LogError("No boss data found in GameInstance!");
-                return;
-            }
-            tile.OccupantID = enemy.BossID;
-            tile.Icon = enemy.Icon;
+            case TileType.Enemy:
+                var enemy = GameInstance.Singleton?.GetRandomEnemy();
+                if (enemy != null)
+                {
+                    tile.OccupantID = enemy.EnemyID;
+                    tile.Icon = enemy.Icon;
+                }
+                break;
+
+            case TileType.Boss:
+                var boss = GameInstance.Singleton?.currentMap?.bossData?.FirstOrDefault();
+                if (boss != null)
+                {
+                    tile.OccupantID = boss.EnemyID;
+                    tile.Icon = boss.Icon;
+                }
+                break;
+
+            case TileType.Player:
+                tile.Icon = playerIcon;
+                break;
         }
     }
+
 
     public void RenderMap()
     {

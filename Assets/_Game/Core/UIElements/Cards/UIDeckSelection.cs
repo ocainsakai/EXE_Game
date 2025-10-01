@@ -15,7 +15,7 @@ public class UIDeckSelection : MonoBehaviour
     [SerializeField] private Button selectBtn;
     private int currentDetailDeckId;
     private DeckData currentDetailDeck => GameInstance.Singleton.GetDeckData(currentDetailDeckId);
-    private int max => GameInstance.Singleton.deckDatas.Length; 
+    private int max => GameInstance.Singleton.deckData.Length; 
     private void OnEnable()
     {
         leftBtn.onClick.AddListener(OnLeftBtnClicked);

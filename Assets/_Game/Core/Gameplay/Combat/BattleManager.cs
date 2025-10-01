@@ -15,7 +15,6 @@ public class BattleManager : MonoBehaviour
         if (tile.Type == TileType.Enemy)
         {
             currentEnemy = GameInstance.Singleton.GetEnemyData(tile.OccupantID);
-            
         }
         else if (tile.Type == TileType.Boss)
         {
@@ -29,6 +28,7 @@ public class BattleManager : MonoBehaviour
         }
         StartBattle(currentEnemy);
     }
+
     public void StartBattle(EnemyData enemy)
     {
         currentEnemy = enemy;
