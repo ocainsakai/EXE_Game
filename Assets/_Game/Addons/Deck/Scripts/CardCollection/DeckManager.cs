@@ -6,49 +6,55 @@ using UnityEngine.UI;
 public class DeckManager : BaseCardPile
 {
     [SerializeField] UICardManager cardManager;
-    [SerializeField] private Transform cardContainer;
-    [SerializeField] private Transform deckCover;
+    [SerializeField] Transform cardContainer;
+    [SerializeField] private Image deckCover;
+
+    private List<Card> cards = new List<Card>();
 
     private void Awake()
     {
-        // ✅ Load toàn bộ CardData từ Resources/Cards
-        var allCards = Resources.LoadAll<CardData>("Cards");
-        if (allCards == null || allCards.Length == 0)
+        // Lấy deck đã chọn từ PlayerSave thông qua GameInstance
+        var deckData = GameInstance.Singleton.GetDeckData(PlayerSave.GetSelectedDeck());
+        if (deckData == null)
         {
-            Debug.LogError("Không tìm thấy CardData trong Resources/Cards");
+            Debug.LogError("DeckData is null!");
             return;
         }
 
-        CreateCards(allCards);
+        // Gán cover cho UI
+        if (deckCover != null)
+            deckCover.sprite = deckData.DeckCover;
+
+        // Tạo các lá bài trong deck
+        CreateCards(deckData.Cards);
+
+        // Shuffle deck ngay từ đầu nếu cần
         ShuffleDeck();
     }
 
-    public Card CreateCard(CardData data)
+    public void CreateCards(IEnumerable<CardData> cardDatas)
     {
-        Card card = new(data);
-        cards.Add(card);
+        cards.Clear();
 
-        // tạo UI
-        if (cardManager != null)
-            cardManager.Add(card, cardContainer);
-
-        return card;
-    }
-
-    public void CreateCards(IEnumerable<CardData> cardsData)
-    {
-        foreach (var cardData in cardsData)
+        foreach (var data in cardDatas)
         {
-            CreateCard(cardData);
+            Card card = new Card(data);
+            cards.Add(card);
+
+            // Spawn UI
+            if (cardManager != null)
+                cardManager.Add(card, cardContainer);
         }
     }
 
     public void ShuffleDeck()
     {
-        for (int i = cards.Count - 1; i > 0; i--)
+        for (int i = 0; i < cards.Count; i++)
         {
-            int randomIndex = Random.Range(0, i + 1);
-            (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
+            int rnd = Random.Range(i, cards.Count);
+            (cards[i], cards[rnd]) = (cards[rnd], cards[i]);
         }
     }
+
+    public List<Card> Cards => cards;
 }
