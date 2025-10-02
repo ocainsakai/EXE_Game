@@ -6,6 +6,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class GameInstance : MonoBehaviour
 {
+
     public DeckData[] deckDatas;
     public CardData[] cardsData;
 
@@ -49,6 +50,8 @@ public class GameInstance : MonoBehaviour
         Debug.LogError($"DeckData with ID {id} not found");
         return null;
     }
+
+    //public float GetMult
     public DeckData GetDeckData()
     {
         int selectedId = PlayerSave.GetSelectedDeck();

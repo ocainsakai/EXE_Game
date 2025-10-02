@@ -45,5 +45,10 @@ public class UIGameplay : MonoBehaviour
         uiBattle.SetActive(true);
         uiBattle.GetComponent<UIBattle>().Show(enemyData);
     }
-   
+    public void OnBattleWin()
+    {
+        uiPlayerAction.gameObject.SetActive(false);
+        uiMapOpen.gameObject.SetActive(true);
+        uiBattle.gameObject.SetActive(false);
+    }  
 }

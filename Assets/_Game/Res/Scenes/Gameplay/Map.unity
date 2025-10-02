@@ -874,6 +874,18 @@ MonoBehaviour:
   OnBattleWin:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6035367678090787923}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1306251526}
         m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
         m_MethodName: OnBattleWin
@@ -886,46 +898,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4610913895408082233}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5254198112934122834}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1089590286637005610}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6035367678090787923}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2904328257966476338}
+        m_TargetAssemblyTypeName: UIGameplay, Assembly-CSharp
+        m_MethodName: OnBattleWin
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2644,11 +2620,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 245637388174581859, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
   m_PrefabInstance: {fileID: 4053113626113517095}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1089590286637005610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3403720501504321035, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
-  m_PrefabInstance: {fileID: 4053113626113517095}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2182794112365567270 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1713084580146336235, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
@@ -2854,7 +2825,7 @@ PrefabInstance:
     - target: {fileID: 7379524492828375396, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
       propertyPath: onPlayButtonClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 952502848}
+      objectReference: {fileID: 0}
     - target: {fileID: 7379524492828375396, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
       propertyPath: onSortButtonClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2863,6 +2834,10 @@ PrefabInstance:
       propertyPath: onDiscardButtonClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8559972209748943752}
+    - target: {fileID: 7379524492828375396, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
+      propertyPath: onPlayButtonClicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7606254885994361627, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2891,11 +2866,6 @@ PrefabInstance:
 --- !u!224 &4369885537923511935 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6179176279360267845, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
-  m_PrefabInstance: {fileID: 4053113626113517095}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4610913895408082233 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3923074209575162356, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
   m_PrefabInstance: {fileID: 4053113626113517095}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4811304108573738203
@@ -2927,11 +2897,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardManager: {fileID: 6964477650715492430}
   discard: {fileID: 2182794112365567270}
---- !u!1 &5254198112934122834 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4712568064837163423, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
-  m_PrefabInstance: {fileID: 4053113626113517095}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5287509462183126342 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3781593507086744824, guid: 4f57124842cd21d44a8dea46ea5dbf14, type: 3}
@@ -3185,6 +3150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   discard: {fileID: 4811304108573738204}
   deck: {fileID: 7009746711664460415}
+  multTable: {fileID: 11400000, guid: bcd55117bd7c0984693d7583ff16eb3b, type: 2}
   _uIPokerMult: {fileID: 540184465}
   OnCardsChanged:
     m_PersistentCalls:
@@ -3192,6 +3158,36 @@ MonoBehaviour:
       - m_Target: {fileID: 5342423934565399108}
         m_TargetAssemblyTypeName: UIRoom, Assembly-CSharp
         m_MethodName: UpdateCards
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCardAdd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5342423934565399108}
+        m_TargetAssemblyTypeName: UIRoom, Assembly-CSharp
+        m_MethodName: AddCardToRoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCardDiscard:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5342423934565399108}
+        m_TargetAssemblyTypeName: UIRoom, Assembly-CSharp
+        m_MethodName: DiscardFormRoom
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
