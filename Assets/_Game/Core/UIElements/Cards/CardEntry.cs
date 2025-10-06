@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,17 @@ public class CardEntry : MonoBehaviour
     [SerializeField] private Button _selectBtn;
 
     public SerializableGuid CardID;
-    private Card card;
+    public Card Card {  get; private set; }
     public bool IsSelected { get; private set; }
+    public Action OnCardClicked;
+
     private bool CanSelect;
     public void SetCard(Card card)
     {
         CardID = card.CardID;
         CanSelect = true;
         IsSelected = false;
-        this.card = card;
+        this.Card = card;
         if (_art != null)
         {
             _art.sprite = card.Art;
@@ -33,7 +36,7 @@ public class CardEntry : MonoBehaviour
         {
             _selectBtn.onClick.AddListener(() => {
                 OnSelected();
-                card.IsSeleced = IsSelected;
+                Card.IsSeleced = IsSelected;
             });
         }
     }
@@ -47,7 +50,7 @@ public class CardEntry : MonoBehaviour
 
     public void OnSelected()
     {
-
+        OnCardClicked?.Invoke();
         if (!CanSelect && !IsSelected) return;
         IsSelected = !IsSelected;
         transform.DOLocalMoveY((IsSelected ? 50 : 0), 0.1f);
