@@ -36,6 +36,7 @@ public class GameInstance : MonoBehaviour
             Singleton = this;
             DontDestroyOnLoad(gameObject);
             isInitialized = true;
+            SetRandomCurrentMap();
         }
         else
         {

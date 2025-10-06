@@ -1740,7 +1740,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 6573104810372271394, guid: 74710e3948605084294e0a1e6688f16b, type: 3}
   playerIcon: {fileID: 3427114271967980436, guid: 099fe7b997f04174e9eb431f0d4c4b13, type: 3}
   walkableColor: {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
-  unwalkableColor: {r: 0.20784315, g: 0.20784315, b: 0.20784315, a: 0.88235295}
+  unwalkableColor: {r: 0, g: 0, b: 0, a: 0.85882354}
   OnTileSelected:
     m_PersistentCalls:
       m_Calls:

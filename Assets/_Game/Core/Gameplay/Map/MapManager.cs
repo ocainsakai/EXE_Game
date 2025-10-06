@@ -238,7 +238,7 @@ public class MapManager : MonoBehaviour
     private Tile _currentTile;
     public void OnBattleEnter()
     {
-
+            
     }
     public void OnBattleWin()
     {
