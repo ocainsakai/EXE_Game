@@ -38,7 +38,7 @@ public class DeckManager : MonoBehaviour
         return false;
     }
 
-    public Card CreateCard(CardData data)
+    public void CreateCards(IEnumerable<CardData> cardDatas)
     {
         Card card = new(data);
         originCards.Add(card);
@@ -52,4 +52,6 @@ public class DeckManager : MonoBehaviour
            yield return CreateCard(cardData);
         }
     }
+
+    public List<Card> Cards => cards;
 }

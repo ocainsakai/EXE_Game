@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIDeckDetails : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class UIDeckDetails : MonoBehaviour
 
     [SerializeField] AtributeEntry atributeVertical;
     [SerializeField] RankAttributeEntry atributeHorizontal;
+
+    [SerializeField] Button remainingButton;
+    [SerializeField] Button fullDeckButton;
 
     [SerializeField] List<Sprite> baseIcons;
 
@@ -49,19 +53,20 @@ public class UIDeckDetails : MonoBehaviour
 
     private void UpdateContent()
     {
-        // clear content cũ
         foreach (Transform child in content.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // tạo mới 52 lá
-        foreach (var card in currentDeck)
+        // sort deck theo Balatro style
+        var sortedDeck = currentDeck
+            .Select(c => c.CardData)   // từ Card → CardData
+            .SortForDisplay();
+
+        foreach (var cardData in sortedDeck)
         {
             GameObject cardGO = Instantiate(cardPrefab, content.transform);
-
-            // giả sử cardPrefab có component CardUI để hiển thị thông tin lá bài
-            CardUI ui = cardGO.GetComponent<CardUI>();
+            var ui = cardGO.GetComponent<CardUI>();
             if (ui != null)
             {
                 ui.SetCard(card.Art); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
@@ -131,5 +136,22 @@ public class UIDeckDetails : MonoBehaviour
             icon.SetActive(true);
             icon.GetComponent<RankAttributeEntry>().SetAttribute(ranks[i].ToString(), count);
         }
+    }
+
+    public void ShowRemainingCards()
+    {
+        // ví dụ: chỉ hiển thị những lá bài chưa được rút
+        Debug.Log("Show Remaining Cards");
+
+        var remaining = deckManager.Cards; // tuỳ logic bạn đang giữ bài ở đâu
+        SetDeck(remaining.ToList());
+    }
+
+    public void ShowFullDeck()
+    {
+        Debug.Log("Show Full Deck");
+
+        var fullDeck = deckManager.Cards; // toàn bộ 52 lá
+        SetDeck(fullDeck.ToList());
     }
 }
