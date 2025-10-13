@@ -14,7 +14,7 @@ public class MapManager : MonoBehaviour
     public UITileEntry tilePrefab;
     public Sprite playerIcon;
     public Color walkableColor = Color.white;
-    public Color unwalkableColor = Color.red;
+    public Color unwalkableColor = Color.black;
 
     public UnityEvent<Tile> OnTileSelected;
 
@@ -144,7 +144,7 @@ public class MapManager : MonoBehaviour
         }
         tileObjects = new UITileEntry[mapWidth, mapHeight];
         UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
-        float tileSize = 100f;
+        float tileSize = 150f;
 
         // offset để căn giữa map
         float offsetX = -(mapWidth * tileSize) / 2f + tileSize / 2f;
@@ -190,10 +190,15 @@ public class MapManager : MonoBehaviour
                     Debug.LogWarning($"Tile at ({x},{y}) has no Icon assigned!");
                 }
 
+                Color tileColor = tile.IsWalkable ? walkableColor : unwalkableColor;
+                
+                // Debug log để kiểm tra màu sắc
+                Debug.Log($"Tile ({x},{y}): IsWalkable={tile.IsWalkable}, Color={tileColor}");
+                
                 tileObj.SetData(
                     new Vector2Int(x, y),
                     tile.Icon,
-                    tile.IsWalkable ? walkableColor : unwalkableColor
+                    tileColor
                 );
 
                 tileObjects[x, y] = tileObj;
@@ -203,17 +208,25 @@ public class MapManager : MonoBehaviour
 
     void UpdatePlayerTile(Vector2Int position)
     {
+        // Reset tất cả tiles thành unwalkable
         map.ResetWalkable();
+        
         playerPosition = position;
         var playerTile = map.GetTile(playerPosition.x, playerPosition.y);
         playerTile.Icon = playerIcon;
         playerTile.Type = TileType.Player;
+        
+        // Chỉ set neighbors của player là walkable
         var walkableTiles = map.GetNeighbors(playerTile);
         foreach (var tileObj in walkableTiles)
         {
-            if (tileObj.Type == TileType.Nothing) continue;
-            tileObj.IsWalkable = true;
+            // Chỉ cho phép di chuyển đến tiles có enemy hoặc boss
+            if (tileObj.Type == TileType.Enemy || tileObj.Type == TileType.Boss)
+            {
+                tileObj.IsWalkable = true;
+            }
         }
+        
         RenderMap();
     }
     void ClearTile(Vector2Int position)
@@ -222,7 +235,16 @@ public class MapManager : MonoBehaviour
         tile.Icon = null;
         tile.IsWalkable = false;
         tile.Type = TileType.Nothing;
-
+        
+        // Clear the UI object as well
+        if (tileObjects[position.x, position.y] != null)
+        {
+            tileObjects[position.x, position.y].SetData(
+                position,
+                null,
+                unwalkableColor
+            );
+        }
     }
     void OnTileMapClickHandler(Vector2Int position)
     {
@@ -242,7 +264,10 @@ public class MapManager : MonoBehaviour
     }
     public void OnBattleWin()
     {
+        // Clear the old player position first
         ClearTile(playerPosition);
+        
+        // Move player to new position
         UpdatePlayerTile(_currentTile.Position);
     }
     private void OnDestroy()

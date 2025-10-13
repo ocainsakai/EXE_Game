@@ -4,7 +4,7 @@
 public class Tile
 {
     public Vector2Int Position;
-    public bool IsWalkable = true;
+    public bool IsWalkable = false;
     public TileType Type = TileType.Nothing;
     public Sprite Icon = null; 
     public string OccupantID;

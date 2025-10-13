@@ -1221,30 +1221,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
     bossData:
     - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
-  - MapID: thachsanh
-    enemyData:
-    - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-    - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
-    bossData:
-    - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
-  - MapID: thachsanh
-    enemyData:
-    - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-    - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
-    bossData:
-    - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
-  - MapID: thachsanh
-    enemyData:
-    - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-    - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
-    bossData:
-    - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
-  - MapID: thachsanh
-    enemyData:
-    - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-    - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
-    bossData:
-    - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
   currentMap:
     MapID: 
     enemyData: []
