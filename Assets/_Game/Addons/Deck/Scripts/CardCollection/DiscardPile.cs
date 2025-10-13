@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DiscardPile : BaseCardPile
 {
-    [SerializeField] UICardPool _cardManager;
+    [SerializeField] UICardFactory _cardManager;
     [SerializeField] private Transform discard;
     public override void Add(Card card)
     {

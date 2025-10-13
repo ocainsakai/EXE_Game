@@ -66,10 +66,10 @@ public class UIDeckDetails : MonoBehaviour
         foreach (var cardData in sortedDeck)
         {
             GameObject cardGO = Instantiate(cardPrefab, content.transform);
-            var ui = cardGO.GetComponent<CardUI>();
+            var ui = cardGO.GetComponent<CardEntry>();
             if (ui != null)
             {
-                ui.SetCard(card.Art); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
+                //ui.SetCard(); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
             }
         }
     }

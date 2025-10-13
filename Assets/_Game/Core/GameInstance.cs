@@ -1,18 +1,11 @@
 ﻿using CardSystem;
 using System.Linq;
 using UnityEngine;
-
-
 [DefaultExecutionOrder(-1)]
 public class GameInstance : MonoBehaviour
 {
-    [System.Serializable]
-    public class MapData
-    {
-        public string MapID;
-        public EnemyData[] enemyData;
-        public BossData[] bossData;
-    }
+
+    
 
     // --- Deck ---
     public DeckData[] deckData;
@@ -27,7 +20,7 @@ public class GameInstance : MonoBehaviour
     public MapData currentMap;     // map đang chơi
 
     // --- Player ---
-    public PlayerData[] playerData;
+    public PlayerData playerData;
 
     // --- Singleton ---
     public static GameInstance Singleton;

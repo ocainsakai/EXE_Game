@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class UIRoom : MonoBehaviour
 {
-    [SerializeField] private UICardPool cardFactory;
+    [SerializeField] private UICardFactory cardFactory;
+    //[SerializeField] private Room room;
     private List<CardEntry> cardEntries = new List<CardEntry>();
+
+
 
     public void UpdateInteract(bool canSelect)
     {
-        Debug.Log("UI update: " + canSelect);
+        //Debug.Log("UI update: " + canSelect);
         foreach (CardEntry entry in cardEntries)
         {
             entry.SetButton(canSelect);
@@ -68,19 +71,20 @@ public class UIRoom : MonoBehaviour
         RepositionCards();
     }
 
+    public void AddCardToRoom(Card card)
+    {
+        //Debug.Log(card.ToString() + "UI");
+        var entry = cardFactory.GetOrCreateCard(card);
+        if (cardEntries.Contains(entry)) return;
+        AddCardToRoom(entry);
+        RepositionCards();
+    }
     public void AddCardToRoom(List<Card> cards)
     {
-        var add = cards
-            .Select(c => cardFactory.GetOrCreateCard(c))
-            .ToList();
-
-        foreach (var card in add)
+        foreach (var card in cards)
         {
-            if (cardEntries.Contains(card)) continue;
             AddCardToRoom(card);
         }
-
-        RepositionCards();
     }
 
     public void AddCardToRoom(CardEntry entry)
@@ -94,7 +98,12 @@ public class UIRoom : MonoBehaviour
             .DOMove(transform.position, 0.1f)
             .SetEase(Ease.OutQuad);
     }
-
+    public void DiscardFromRoom(Card card)
+    {
+        var entry = cardFactory.GetOrCreateCard(card);
+        if (cardEntries.Contains(entry)) return;
+        DiscardFromRoom(entry);
+    }
     public void DiscardFromRoom(CardEntry card)
     {
         if (card == null) return;
@@ -106,7 +115,7 @@ public class UIRoom : MonoBehaviour
 
     private void RepositionCards()
     {
-        Debug.Log("Reposition: " + cardEntries.Count + " cards");
+        //Debug.Log("Reposition: " + cardEntries.Count + " cards");
         if (cardEntries.Count == 0) return;
 
         float totalWidth = 1000f;

@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DeckManager : MonoBehaviour
 {
-    [SerializeField] private Transform deckCover;
     private List<Card> originCards=new();
+    private List<Card> cards=new();
     public IReadOnlyCollection<Card> OriginCards => originCards;
+    public IReadOnlyCollection<Card> Cards => cards;
+
+    public Sprite DeckCover { get; private set; }
+    
+    public bool IsTestMode;
+
+    public DeckData testDeck;
     private void Awake()
     {
+        if (IsTestMode)
+        {
+            originCards = (CreateCards(testDeck.Cards).ToList());
+            DeckCover = testDeck.DeckCover;
+            return;
+        }
+
         var deckData = GameInstance.Singleton.GetDeckData(PlayerSave.GetSelectedDeck());
         if (deckData == null)
         {
@@ -20,12 +33,7 @@ public class DeckManager : MonoBehaviour
 
         Debug.Log(deckData.ToString() + $"   {deckData.Cards.Count}");
         originCards = (CreateCards(deckData.Cards).ToList());
-
-        if (deckCover != null)
-        {
-            deckCover.GetComponent<Image>().sprite = deckData.DeckCover;
-        }
-        
+        DeckCover = deckData.DeckCover;
     }
     public bool DestroyCard(SerializableGuid cardID)
     {
@@ -38,7 +46,7 @@ public class DeckManager : MonoBehaviour
         return false;
     }
 
-    public void CreateCards(IEnumerable<CardData> cardDatas)
+    public Card CreateCard(CardData data)
     {
         Card card = new(data);
         originCards.Add(card);
@@ -53,5 +61,26 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    public List<Card> Cards => cards;
+    public void CreateRuntimeDeck()
+    {
+        cards.Clear();
+        cards = new List<Card>(originCards);
+        ShuffleDeck();
+    }
+
+    public Card DrawCard()
+    {
+        var card = cards.FirstOrDefault();
+        cards.Remove(card);
+        return card;
+    }
+    public void ShuffleDeck()
+    {
+        for (int i = cards.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
+        }
+    }
+
 }

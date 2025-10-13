@@ -1,11 +1,15 @@
-using CardSystem;
+﻿using CardSystem;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Card
 {
+    public static Func<Card, IEnumerator> OnActive;
+
     public static bool CanSelect;
     private CardData _cardData;
+    public CardData CardData;
     public int CardDataID => _cardData.CardID;
     public SerializableGuid CardID;
 
@@ -51,6 +55,22 @@ public class Card
     public override int GetHashCode()
     {
         return CardID.GetHashCode();
+    }
+
+    public IEnumerator Active()
+    {
+        if (OnActive != null)
+        {
+            // Lấy toàn bộ delegate trong event (nếu có nhiều listener)
+            foreach (var d in OnActive.GetInvocationList())
+            {
+                var func = (Func<Card, IEnumerator>)d;
+                yield return func(this); // chạy lần lượt từng listener
+            }
+        }
+
+        Debug.Log("playing..."+ Name);
+        yield return new WaitForSeconds(1);
     }
 
 }

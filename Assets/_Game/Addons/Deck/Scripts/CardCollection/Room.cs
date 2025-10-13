@@ -4,21 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityUtils;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private BaseCardPile discard;
-    [SerializeField] private DeckManager deck;
-    [SerializeField] private MultTable multTable;
-    [SerializeField] private UIPokerMult _uIPokerMult;
-
     private List<Card> _cards = new List<Card>();
-    private List<Card> runtimeDeck = new List<Card>();
 
     public UnityEvent<List<Card>> OnCardsChanged;
-    public UnityEvent<List<Card>> OnCardAdd;
-    public UnityEvent<List<Card>> OnCardDiscard;
+    public UnityEvent<Card> OnCardAdd;
+    public UnityEvent<Card> OnCardDiscard;
+    public UnityEvent<PokerHandResult> OnPokerHandResult;
     public Action OnDiscardComplete;
 
     public int RoomSize = 8;
@@ -38,17 +32,12 @@ public class Room : MonoBehaviour
         }
     }
 
-    private bool sortToggle = true;
+    private bool currentSort = true;
 
     public List<Card> SelectedCards => _cards.Where(x => x.IsSeleced).ToList();
     public List<Card> Cards => new List<Card>(_cards); // Return copy để tránh modify từ bên ngoài
 
-    private void OnEnable()
-    {
-        runtimeDeck = deck.OriginCards.ToList();
-        ShuffleDeck();
-        Draw();
-    }
+    public List<Card> GetSelectCards => Cards.Where(x => x.IsSeleced).ToList();
 
     private void OnDisable()
     {
@@ -56,46 +45,23 @@ public class Room : MonoBehaviour
         foreach (var card in _cards)
         {
             card.SelectedChanged -= UpdateSelected;
+            OnCardDiscard?.Invoke(card);
         }
-
-        var allCards = new List<Card>(_cards);
         _cards.Clear();
-        runtimeDeck.Clear();
-
-        OnCardDiscard?.Invoke(allCards);
     }
 
     public void Add(Card card)
     {
+        //Debug.Log(card.ToString());
         if (card == null || _cards.Contains(card)) return;
 
         _cards.Add(card);
         card.SelectedChanged += UpdateSelected;
         card.IsSeleced = false;
-    }
-
-    public void Draw()
-    {
-        int cardsNeeded = RoomSize - _cards.Count;
-        if (cardsNeeded <= 0) return;
-
-        var cardsToDraw = runtimeDeck.Take(cardsNeeded).ToList();
-
-        foreach (var card in cardsToDraw)
-        {
-            Add(card);
-        }
-
-        runtimeDeck.RemoveRange(0, cardsToDraw.Count);
-        Debug.Log($"Deck remaining: {runtimeDeck.Count}");
-
-        Sort(sortToggle);
-
-        OnCardAdd?.Invoke(cardsToDraw);
-        OnCardsChanged?.Invoke(_cards);
-
         UpdateSelected();
+        OnCardAdd?.Invoke(card);
     }
+
 
     public void Discards()
     {
@@ -107,30 +73,31 @@ public class Room : MonoBehaviour
             return;
         }
 
-        // Unsubscribe events
+        _cards.RemoveAll(x => cardsToDiscard.Contains(x));
         foreach (var card in cardsToDiscard)
         {
             card.SelectedChanged -= UpdateSelected;
+            OnCardDiscard?.Invoke(card);
         }
 
-        _cards.RemoveAll(x => cardsToDiscard.Contains(x));
-
-        OnCardDiscard?.Invoke(cardsToDiscard);
         OnCardsChanged?.Invoke(_cards);
-
-        Draw();
-
         OnDiscardComplete?.Invoke();
     }
 
     public void Sort()
     {
-        sortToggle = !sortToggle;
-        Sort(sortToggle);
+        currentSort = !currentSort;
+        Sort(currentSort);
         OnCardsChanged?.Invoke(_cards);
     }
 
-    private void Sort(bool isBySuit)
+    public void CurrentSort()
+    {
+        Sort(currentSort);
+        OnCardsChanged?.Invoke(_cards);
+
+    }
+    public void Sort(bool isBySuit)
     {
         if (isBySuit)
         {
@@ -167,43 +134,18 @@ public class Room : MonoBehaviour
         _cards.Sort(comparison);
     }
 
-    public void ShuffleDeck()
-    {
-        for (int i = runtimeDeck.Count - 1; i > 0; i--)
-        {
-            int randomIndex = UnityEngine.Random.Range(0, i + 1);
-            (runtimeDeck[i], runtimeDeck[randomIndex]) = (runtimeDeck[randomIndex], runtimeDeck[i]);
-        }
-    }
-
+  
     private void UpdateSelected()
     {
         int selectedCount = SelectedCards.Count;
         CanSelectCard = selectedCount < 5;
 
-        Debug.Log($"Selected: {selectedCount}/5, CanSelect: {CanSelectCard}");
+        //Debug.Log($"Selected: {selectedCount}/5, CanSelect: {CanSelectCard}");
 
         if (selectedCount > 0)
         {
             var pokerHand = PokerEvaluator.Evaluate(SelectedCards.Select(x => x.Mask).ToList());
-            UpdateUIPoker(pokerHand);
-        }
-        else
-        {
-            // Clear poker UI khi không có card nào được chọn
-            if (_uIPokerMult != null)
-            {
-                _uIPokerMult.SetPokerMult(PokerHandType.HighCard, 0);
-            }
-        }
-    }
-
-    private void UpdateUIPoker(PokerHandResult pokerHand)
-    {
-        if (_uIPokerMult != null)
-        {
-            float mult = multTable.GetMult(pokerHand.HandType);
-            _uIPokerMult.SetPokerMult(pokerHand.HandType, mult);
+            OnPokerHandResult?.Invoke(pokerHand);
         }
     }
 }
