@@ -43,14 +43,13 @@ public class GridMap
         List<Tile> neighbors = new List<Tile>();
         Vector2Int pos = tile.Position;
 
-        Vector2Int[] directions = {
-            Vector2Int.up,
-            Vector2Int.down,
-            Vector2Int.left,
-            Vector2Int.right
+        // Chỉ cho phép di chuyển sang phải và lên trên
+        Vector2Int[] allowedDirections = {
+            Vector2Int.up,    // Lên trên
+            Vector2Int.right  // Sang phải
         };
 
-        foreach (Vector2Int dir in directions)
+        foreach (Vector2Int dir in allowedDirections)
         {
             Vector2Int neighborPos = pos + dir;
             Tile neighbor = GetTile(neighborPos);
