@@ -4,15 +4,10 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class GameInstance : MonoBehaviour
 {
-
-    
-
     // --- Deck ---
     public DeckData[] deckData;
 
     // --- Card ---
-
-    public DeckData[] deckDatas;
     public CardData[] cardsData;
 
     // --- Map ---

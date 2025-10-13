@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyID: enemy_fish
   Name: Fish
-  Icon: {fileID: 0}
+  Icon: {fileID: 8966945178157639174, guid: a7e53851b9098454eb0c25307309c2b5, type: 3}
   Atk: 10
   HP: 100
   Count: 2
