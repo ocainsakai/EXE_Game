@@ -13,6 +13,7 @@ public class PlayerButton : MonoBehaviour
     public UnityEvent onPlayButtonClicked;
     public UnityEvent onDiscardButtonClicked;
     public UnityEvent onSortButtonClicked;
+    public UnityEvent onEndTurntButtonClicked;
 
     private void Start()
     {
@@ -23,10 +24,11 @@ public class PlayerButton : MonoBehaviour
         var play = CreateButton("Play", () => onPlayButtonClicked?.Invoke());
         var discard = CreateButton("Discard", () => onDiscardButtonClicked?.Invoke());
         var sort = CreateButton("Sort", () => onSortButtonClicked?.Invoke());
-
+        var end = CreateButton("End", () => onEndTurntButtonClicked?.Invoke());
         actionButtons.Add(play);
         actionButtons.Add(discard);
         actionButtons.Add(sort);
+        actionButtons.Add(end);
     }
 
     private Button CreateButton(string title, Action onClick = null)

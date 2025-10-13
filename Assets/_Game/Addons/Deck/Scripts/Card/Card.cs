@@ -1,41 +1,76 @@
-using CardSystem;
+﻿using CardSystem;
 using System;
+using System.Collections;
+using UnityEngine;
 
 public class Card
 {
+    public static Func<Card, IEnumerator> OnActive;
+
     public static bool CanSelect;
     private CardData _cardData;
-    public CardData CardData => _cardData;
+    public CardData CardData;
+    public int CardDataID => _cardData.CardID;
+    public SerializableGuid CardID;
 
-    public Action onSelectChange;
+    [Header("Card Identity")]
+    public CardRank Rank => _cardData.Rank;
+    public CardSuit Suit => _cardData.Suit;
+
+    [Header("Card Info")]
+    public int Cost => _cardData.Cost;
+    public string Name => _cardData.Name;
+    [TextArea] public string Description;
+    public Sprite Art => _cardData.Art;
+
+    public CardMask Mask => new CardMask(Rank, Suit);
+
+    public Action SelectedChanged;
+
     private bool isSelecting;
-    public bool IsSelecting
+    public bool IsSeleced
     {
         get => isSelecting;
         set
         {
-            isSelecting = value;
-            onSelectChange?.Invoke();
-
+            if (value != isSelecting)
+            {
+                isSelecting = value;
+                SelectedChanged?.Invoke();
+            }
         }
     }
 
     public Card(CardData data)
     {
         _cardData = data;
+        CardID = SerializableGuid.NewGuid();
     }
 
-    public void OnCardClickHandle()
+    public override bool Equals(object obj)
     {
-        if (!IsSelecting && !CanSelect) return;
-
-        else if (!IsSelecting && CanSelect)
-        {
-            IsSelecting = true;
-        }
-        else if (IsSelecting)
-        {
-            IsSelecting = false;
-        }
+        return obj is Card other && other.CardID == CardID;
     }
+
+    public override int GetHashCode()
+    {
+        return CardID.GetHashCode();
+    }
+
+    public IEnumerator Active()
+    {
+        if (OnActive != null)
+        {
+            // Lấy toàn bộ delegate trong event (nếu có nhiều listener)
+            foreach (var d in OnActive.GetInvocationList())
+            {
+                var func = (Func<Card, IEnumerator>)d;
+                yield return func(this); // chạy lần lượt từng listener
+            }
+        }
+
+        Debug.Log("playing..."+ Name);
+        yield return new WaitForSeconds(1);
+    }
+
 }

@@ -1,46 +1,48 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Manager tổng thể cho battle flow - kết nối Map và Battle System
+/// </summary>
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] UIGameplay uiGameplay;
+    [SerializeField] private Enemy enemy;
+    [SerializeField] private PlayerActionController playerActionController;
+    [SerializeField] private PlayerStatComponent playerStatComponent;
 
-    public UnityEvent OnBattleStart;
-    public UnityEvent OnBattleWin;
-
-    private EnemyData currentEnemy;
-
-    public void OnEnterTheBattleWithTile(Tile tile)
+    public UnityEvent OnEndBattle;
+    private void Start()
     {
-        if (tile.Type == TileType.Enemy)
-        {
-            currentEnemy = GameInstance.Singleton.GetEnemyData(tile.OccupantID);
-        }
-        else if (tile.Type == TileType.Boss)
-        {
-            currentEnemy = GameInstance.Singleton.GetBoss(tile.OccupantID);
-        }
+        
+    }
 
-        if (currentEnemy == null)
+    public void CheckCondition(object sender)
+    {
+        if (playerStatComponent.HP <= 0)
         {
-            Debug.LogError($"Enemy data not found for ID: {tile.OccupantID}");
+            Debug.Log($"You lose");
+            // lose resolve
+            OnEndBattle?.Invoke();
             return;
         }
-        StartBattle(currentEnemy);
-    }
-
-    public void StartBattle(EnemyData enemy)
-    {
-        currentEnemy = enemy;
-        Debug.Log($"Starting battle with {enemy.Name}");
-        
-        uiGameplay.ShowBattle(enemy);
-
-        OnBattleStart?.Invoke();
-
-    }
-    public void WinTheBattle()
-    {
-        OnBattleWin?.Invoke();
+        if (enemy.HP <=0)
+        {
+            Debug.Log($"You win");
+            // win resolve
+            OnEndBattle?.Invoke();
+            return;
+        }
+        if (sender != null && (sender is Enemy))
+        {
+            Debug.Log($"You start your turn");
+            playerActionController.PlayerStartTurn();
+            return;
+        }
+        if (sender != null && sender is PlayerActionController)
+        {
+            Debug.Log($"You start enemy turn");
+            enemy.CountToAction();
+            return;
+        }
     }
 }

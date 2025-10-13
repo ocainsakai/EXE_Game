@@ -1,90 +1,105 @@
-using CardSystem.PokerSystem;
+﻿using CardSystem.PokerSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Room : BaseCardPile
+public class Room : MonoBehaviour
 {
-    [SerializeField] BaseCardPile discard;
-    [SerializeField] BaseCardPile deck;
-    [SerializeField] UIRoom _uIRoom;
-    [SerializeField] UIPokerMult _uIPokerMult;
+    private List<Card> _cards = new List<Card>();
 
+    public UnityEvent<List<Card>> OnCardsChanged;
+    public UnityEvent<Card> OnCardAdd;
+    public UnityEvent<Card> OnCardDiscard;
+    public UnityEvent<PokerHandResult> OnPokerHandResult;
     public Action OnDiscardComplete;
+
     public int RoomSize = 8;
 
-    private bool sortToggle = true;
-    public override void Add(Card card)
+    public UnityEvent<bool> CanSelectCardChanged;
+    private bool _canSelectCard = true;
+    public bool CanSelectCard
     {
-        base.Add(card);
-        card.onSelectChange += SelectHandler;
-        card.IsSelecting = false;
-        
-    }
-
-    public List<Card> SetectedCards => cards.Where(x => x.IsSelecting).ToList();
-    private void SelectHandler()
-    {
-        // update can select
-        Card.CanSelect = cards.Where(x => x.IsSelecting).Count() < 5;
-        // update poker hand
-        var pokerHand = PokerEvaluator.Evaluate(SetectedCards.Select(x => x.CardData.Mask).ToList());
-        _uIPokerMult.SetPokerMult(pokerHand.HandType);
-    }
-    public void OnEnable()
-    {
-        _uIRoom?.gameObject.SetActive(true);
-        Draw();
-    }
-    public void Draw()
-    {
-        // logic
-        if (RoomSize > deck.Count)
+        get => _canSelectCard;
+        set
         {
-            discard.MoveAllTo(deck);
+            if (_canSelectCard != value)
+            {
+                _canSelectCard = value;
+                CanSelectCardChanged?.Invoke(value);
+            }
         }
-        var cards = this.DrawFrom(deck, RoomSize - Cards.Count);
-
-        //condition
-        SelectHandler();
-
-        //ui
-        _uIRoom.AddRange(cards);
-        Sort(sortToggle);
-        _uIRoom.UpdateIndex(Cards);
-       
-       
     }
-    public void OnDisable()
+
+    private bool currentSort = true;
+
+    public List<Card> SelectedCards => _cards.Where(x => x.IsSeleced).ToList();
+    public List<Card> Cards => new List<Card>(_cards); // Return copy để tránh modify từ bên ngoài
+
+    public List<Card> GetSelectCards => Cards.Where(x => x.IsSeleced).ToList();
+
+    private void OnDisable()
     {
-        this.MoveAllTo(deck);
-        if (_uIRoom == null) return;
-        _uIRoom.gameObject.SetActive(false);
-
+        // Unsubscribe events trước khi clear
+        foreach (var card in _cards)
+        {
+            card.SelectedChanged -= UpdateSelected;
+            OnCardDiscard?.Invoke(card);
+        }
+        _cards.Clear();
     }
+
+    public void Add(Card card)
+    {
+        //Debug.Log(card.ToString());
+        if (card == null || _cards.Contains(card)) return;
+
+        _cards.Add(card);
+        card.SelectedChanged += UpdateSelected;
+        card.IsSeleced = false;
+        UpdateSelected();
+        OnCardAdd?.Invoke(card);
+    }
+
+
     public void Discards()
     {
-        var cardsToDiscard = Cards.Where(x => x.IsSelecting).ToList();
-        if (cardsToDiscard.Count == 0) return;
+        var cardsToDiscard = SelectedCards;
+
+        if (cardsToDiscard.Count == 0)
+        {
+            Debug.LogWarning("No cards selected to discard!");
+            return;
+        }
+
+        _cards.RemoveAll(x => cardsToDiscard.Contains(x));
         foreach (var card in cardsToDiscard)
         {
-            this.MoveCardTo(discard, card);
-            _uIRoom.Remove(card);
+            card.SelectedChanged -= UpdateSelected;
+            OnCardDiscard?.Invoke(card);
         }
-        //OnDiscardComplete?.Invoke();
-        Draw();
+
+        OnCardsChanged?.Invoke(_cards);
+        OnDiscardComplete?.Invoke();
     }
+
     public void Sort()
     {
-        sortToggle = !sortToggle;
-        Sort(sortToggle);
-        _uIRoom.UpdateIndex(cards);
+        currentSort = !currentSort;
+        Sort(currentSort);
+        OnCardsChanged?.Invoke(_cards);
+    }
+
+    public void CurrentSort()
+    {
+        Sort(currentSort);
+        OnCardsChanged?.Invoke(_cards);
 
     }
-    private void Sort(bool isRank)
+    public void Sort(bool isBySuit)
     {
-        if (isRank)
+        if (isBySuit)
         {
             SortBySuit();
         }
@@ -93,21 +108,44 @@ public class Room : BaseCardPile
             SortByRank();
         }
     }
+
     public void SortByRank()
     {
         SortCards((a, b) =>
         {
-            int rankCompare = a.CardData.Rank.CompareTo(b.CardData.Rank);
-            return rankCompare != 0 ? rankCompare : a.CardData.Rank.CompareTo(b.CardData.Rank);
+            int rankCompare = a.Rank.CompareTo(b.Rank);
+            if (rankCompare != 0) return rankCompare;
+            return a.Suit.CompareTo(b.Suit);
         });
     }
+
     public void SortBySuit()
     {
         SortCards((a, b) =>
         {
-            int rankCompare = a.CardData.Suit.CompareTo(b.CardData.Suit);
-            return rankCompare != 0 ? rankCompare : a.CardData.Suit.CompareTo(b.CardData.Suit);
+            int suitCompare = a.Suit.CompareTo(b.Suit);
+            if (suitCompare != 0) return suitCompare;
+            return a.Rank.CompareTo(b.Rank);
         });
+    }
 
+    protected void SortCards(Comparison<Card> comparison)
+    {
+        _cards.Sort(comparison);
+    }
+
+  
+    private void UpdateSelected()
+    {
+        int selectedCount = SelectedCards.Count;
+        CanSelectCard = selectedCount < 5;
+
+        //Debug.Log($"Selected: {selectedCount}/5, CanSelect: {CanSelectCard}");
+
+        if (selectedCount > 0)
+        {
+            var pokerHand = PokerEvaluator.Evaluate(SelectedCards.Select(x => x.Mask).ToList());
+            OnPokerHandResult?.Invoke(pokerHand);
+        }
     }
 }

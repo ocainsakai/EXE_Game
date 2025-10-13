@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIDeckDetails : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class UIDeckDetails : MonoBehaviour
     [SerializeField] AtributeEntry atributeVertical;
     [SerializeField] RankAttributeEntry atributeHorizontal;
 
+    [SerializeField] Button remainingButton;
+    [SerializeField] Button fullDeckButton;
+
     [SerializeField] List<Sprite> baseIcons;
 
     private List<char> ranks = new List<char>() { 'A' , '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', };
@@ -28,7 +32,7 @@ public class UIDeckDetails : MonoBehaviour
     }
     private void OnEnable()
     {
-        SetDeck(deckManager.Cards.ToList());
+        //SetDeck(deckManager.);
     }
 
     public void SetDeck(List<Card> deck)
@@ -49,22 +53,23 @@ public class UIDeckDetails : MonoBehaviour
 
     private void UpdateContent()
     {
-        // clear content cũ
         foreach (Transform child in content.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // tạo mới 52 lá
-        foreach (var card in currentDeck)
+        // sort deck theo Balatro style
+        var sortedDeck = currentDeck
+            .Select(c => c.CardData)   // từ Card → CardData
+            .SortForDisplay();
+
+        foreach (var cardData in sortedDeck)
         {
             GameObject cardGO = Instantiate(cardPrefab, content.transform);
-
-            // giả sử cardPrefab có component CardUI để hiển thị thông tin lá bài
-            CardUI ui = cardGO.GetComponent<CardUI>();
+            var ui = cardGO.GetComponent<CardEntry>();
             if (ui != null)
             {
-                ui.SetCard(card.CardData); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
+                //ui.SetCard(); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)
             }
         }
     }
@@ -102,13 +107,13 @@ public class UIDeckDetails : MonoBehaviour
             case 3: // Clubs
                 return currentDeck.GetNumberCardCount();
             case 4: // Others (Joker, etc.)
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Hearts);
+                return currentDeck.GetSuitCount(CardSuit.Hearts);
             case 5:
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Diamonds);
+                return currentDeck.GetSuitCount(CardSuit.Diamonds);
             case 6:
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Clubs);
+                return currentDeck.GetSuitCount(CardSuit.Clubs);
             case 7:
-                return currentDeck.GetSuitCount(CardSystem.CardSuit.Spades);
+                return currentDeck.GetSuitCount(CardSuit.Spades);
 
             default:
                 return 0;
@@ -131,5 +136,22 @@ public class UIDeckDetails : MonoBehaviour
             icon.SetActive(true);
             icon.GetComponent<RankAttributeEntry>().SetAttribute(ranks[i].ToString(), count);
         }
+    }
+
+    public void ShowRemainingCards()
+    {
+        // ví dụ: chỉ hiển thị những lá bài chưa được rút
+        Debug.Log("Show Remaining Cards");
+
+        var remaining = deckManager.Cards; // tuỳ logic bạn đang giữ bài ở đâu
+        SetDeck(remaining.ToList());
+    }
+
+    public void ShowFullDeck()
+    {
+        Debug.Log("Show Full Deck");
+
+        var fullDeck = deckManager.Cards; // toàn bộ 52 lá
+        SetDeck(fullDeck.ToList());
     }
 }

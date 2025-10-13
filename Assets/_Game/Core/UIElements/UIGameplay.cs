@@ -4,7 +4,6 @@ public class UIGameplay : MonoBehaviour
 {
     [SerializeField] GameObject uiMapOpen;
     [SerializeField] GameObject uiDeckOpen;
-    [SerializeField] GameObject uiPlayerAction;
     [SerializeField] GameObject uiMap;
     [SerializeField] GameObject uiBattle;
 
@@ -16,7 +15,6 @@ public class UIGameplay : MonoBehaviour
     {
         uiMapOpen.SetActive(false);
         uiDeckOpen.SetActive(false);
-        uiPlayerAction.SetActive(false);
         uiMap.SetActive(false);
         uiBattle.SetActive(false);
     }
@@ -29,7 +27,6 @@ public class UIGameplay : MonoBehaviour
     public void ShowPlayerAction()
     {
         HideAll();
-        uiPlayerAction.SetActive(true);
     }
    
     public void ShowMap()
@@ -41,9 +38,11 @@ public class UIGameplay : MonoBehaviour
     {
         HideAll();
         uiDeckOpen.SetActive(true);
-        uiPlayerAction.SetActive(true);
         uiBattle.SetActive(true);
-        uiBattle.GetComponent<UIBattle>().Show(enemyData);
     }
-   
+    public void OnBattleWin()
+    {
+        uiMapOpen.gameObject.SetActive(true);
+        uiBattle.gameObject.SetActive(false);
+    }  
 }
