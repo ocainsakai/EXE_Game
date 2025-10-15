@@ -28,19 +28,24 @@ public class Card
     public Action SelectedChanged;
 
     private bool isSelecting;
-    public bool IsSeleced
+    public bool IsSelected
     {
         get => isSelecting;
         set
         {
-            if (value != isSelecting)
+            if (value ==  isSelecting) return;
+            if (!CanSelect && !isSelecting)
             {
                 isSelecting = value;
                 SelectedChanged?.Invoke();
             }
+            else if (isSelecting) 
+            {
+                isSelecting = value; 
+                SelectedChanged?.Invoke();
+            }
         }
     }
-
     public Card(CardData data)
     {
         _cardData = data;

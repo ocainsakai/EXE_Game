@@ -34,10 +34,10 @@ public class Room : MonoBehaviour
 
     private bool currentSort = true;
 
-    public List<Card> SelectedCards => _cards.Where(x => x.IsSeleced).ToList();
+    public List<Card> SelectedCards => _cards.Where(x => x.IsSelected).ToList();
     public List<Card> Cards => new List<Card>(_cards); // Return copy để tránh modify từ bên ngoài
 
-    public List<Card> GetSelectCards => Cards.Where(x => x.IsSeleced).ToList();
+    public List<Card> GetSelectCards => Cards.Where(x => x.IsSelected).ToList();
 
     private void OnDisable()
     {
@@ -50,6 +50,16 @@ public class Room : MonoBehaviour
         _cards.Clear();
     }
 
+    public void UnselectAll()
+    {
+        foreach(var card in _cards)
+        {
+            card.IsSelected = false;
+        }
+        UpdateSelected();
+        OnCardsChanged?.Invoke(_cards);
+
+    }
     public void Add(Card card)
     {
         //Debug.Log(card.ToString());
@@ -57,7 +67,7 @@ public class Room : MonoBehaviour
 
         _cards.Add(card);
         card.SelectedChanged += UpdateSelected;
-        card.IsSeleced = false;
+        card.IsSelected = false;
         UpdateSelected();
         OnCardAdd?.Invoke(card);
     }

@@ -124,13 +124,15 @@ public class PlayerActionController : MonoBehaviour
     {
         Debug.Log("================= Player End Turn =======================");
         _playerButton.DisableAllActions();
+        _room.UnselectAll();
         OnEndTurn?.Invoke(this);
     }
 
     private IEnumerator PlayHand(List<Card> cards)
     {
         yield return ActivateCards(cards);
-        PlayerEndTurn();
+        _playerButton.DisableAllActions();
+        OnEndTurn?.Invoke(this);
     }
 
     private IEnumerator ActivateCards(List<Card> cards)

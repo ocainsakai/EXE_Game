@@ -13,6 +13,8 @@ public class BattleManager : MonoBehaviour
 
     public UnityEvent OnBattleStart;
     public UnityEvent OnBattleEnd;
+    public UnityEvent OnBattleWin;
+    public UnityEvent OnBattleLose;
     public void BattleStart(EnemyData enemyData)
     {
         
@@ -30,6 +32,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"You lose");
             // lose resolve
             OnBattleEnd?.Invoke();
+            OnBattleLose?.Invoke();
             return;
         }
         if (enemy.HP <=0)
@@ -37,6 +40,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"You win");
             // win resolve
             OnBattleEnd?.Invoke();
+            OnBattleWin?.Invoke();
             return;
         }
         if (sender != null && (sender is Enemy))
