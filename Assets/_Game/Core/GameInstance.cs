@@ -15,7 +15,7 @@ public class GameInstance : MonoBehaviour
     public MapData currentMap;     // map đang chơi
 
     // --- Player ---
-    public PlayerData playerData;
+    public PlayerData PlayerData;
 
     // --- Singleton ---
     public static GameInstance Singleton;

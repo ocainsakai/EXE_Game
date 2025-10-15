@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour
         }
         EndEnemyTurn();
     }
+    
     public void EndEnemyTurn()
     {
         OnEndTurn?.Invoke(this);

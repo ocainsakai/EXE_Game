@@ -42,7 +42,7 @@ public class ShopUI : MonoBehaviour
 
     private void UpdateCurrencyUI()
     {
-        var playerData = GameInstance.Singleton.playerData;
+        var playerData = GameInstance.Singleton.PlayerData;
         //coinText.text = playerData.Coin.ToString();
         //goldText.text = playerData.Gold.ToString();
     }

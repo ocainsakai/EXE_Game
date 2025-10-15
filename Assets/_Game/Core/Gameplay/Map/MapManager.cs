@@ -17,6 +17,7 @@ public class MapManager : MonoBehaviour
     public Color unwalkableColor = Color.black;
 
     public UnityEvent<Tile> OnTileSelected;
+    public UnityEvent<EnemyData> OnTilePlay;
 
 
     private GridMap map;
@@ -193,7 +194,7 @@ public class MapManager : MonoBehaviour
                 Color tileColor = tile.IsWalkable ? walkableColor : unwalkableColor;
                 
                 // Debug log để kiểm tra màu sắc
-                Debug.Log($"Tile ({x},{y}): IsWalkable={tile.IsWalkable}, Color={tileColor}");
+                //Debug.Log($"Tile ({x},{y}): IsWalkable={tile.IsWalkable}, Color={tileColor}");
                 
                 tileObj.SetData(
                     new Vector2Int(x, y),
@@ -248,7 +249,7 @@ public class MapManager : MonoBehaviour
     }
     void OnTileMapClickHandler(Vector2Int position)
     {
-        Debug.Log($"Tile clicked at: {position}");
+        //Debug.Log($"Tile clicked at: {position}");
 
         var tile = map.GetTile(position);
         if (tile.Type == TileType.Player || tile.Type == TileType.Nothing) return;
@@ -258,9 +259,11 @@ public class MapManager : MonoBehaviour
 
 
     private Tile _currentTile;
+    [SerializeField] EnemyData _Test;
     public void OnBattleEnter()
     {
-            
+
+        OnTilePlay?.Invoke(_Test);
     }
     public void OnBattleWin()
     {

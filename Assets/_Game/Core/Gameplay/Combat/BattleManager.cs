@@ -6,30 +6,37 @@ using UnityEngine.Events;
 /// </summary>
 public class BattleManager : MonoBehaviour
 {
+    [SerializeField] private BattleSystem battleSystem;
     [SerializeField] private Enemy enemy;
     [SerializeField] private PlayerActionController playerActionController;
     [SerializeField] private PlayerStatComponent playerStatComponent;
 
-    public UnityEvent OnEndBattle;
-    private void Start()
+    public UnityEvent OnBattleStart;
+    public UnityEvent OnBattleEnd;
+    public void BattleStart(EnemyData enemyData)
     {
         
-    }
+        var playerData = GameInstance.Singleton.PlayerData;
+        battleSystem.StartBattle(playerData, enemyData);
+        playerActionController.gameObject.SetActive(true);
+        this.enemy.SetData(enemyData);
 
+        OnBattleStart?.Invoke();
+    }
     public void CheckCondition(object sender)
     {
         if (playerStatComponent.HP <= 0)
         {
             Debug.Log($"You lose");
             // lose resolve
-            OnEndBattle?.Invoke();
+            OnBattleEnd?.Invoke();
             return;
         }
         if (enemy.HP <=0)
         {
             Debug.Log($"You win");
             // win resolve
-            OnEndBattle?.Invoke();
+            OnBattleEnd?.Invoke();
             return;
         }
         if (sender != null && (sender is Enemy))
@@ -44,5 +51,9 @@ public class BattleManager : MonoBehaviour
             enemy.CountToAction();
             return;
         }
+    }
+    public void AttackPlayer(Enemy enemy)
+    {
+        playerStatComponent.HP -= enemy.Data.Atk;
     }
 }

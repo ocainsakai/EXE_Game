@@ -17,6 +17,6 @@ MonoBehaviour:
   Icon: {fileID: 227784112655540353, guid: c2603f815b2a814478ec8f7c05a31854, type: 3}
   Atk: 88
   HP: 888
-  Count: 1
+  Count: 8
   cost: 8
   reward: 888

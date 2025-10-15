@@ -9,7 +9,6 @@ public class BattleSystem : MonoBehaviour
     [Header("References")]
     [SerializeField] private MultTable multTable;
     [SerializeField] private Slider energyBar;
-    [SerializeField] private Enemy enemy;
     [Header("Energy Settings")]
     [SerializeField] private int startEnergy = 3;
     [SerializeField] private int maxEnergy = 3;
@@ -44,13 +43,9 @@ public class BattleSystem : MonoBehaviour
             energyBar.maxValue = max;
             energyBar.value = curent;
         });
-        StartBattle(null, enemy.Data);
+        //StartBattle(null, enemy.Data);
     }
 
-    private void Start()
-    {
-        // test
-    }
     public void StartBattle(PlayerData player, EnemyData enemy)
     {
         _state = new BattleState(player, enemy, startEnergy, maxEnergy, energyRegenPerRound);
@@ -96,7 +91,6 @@ public class BattleSystem : MonoBehaviour
     }
     public void UseEnergyDiscard()
     {
-        //Debug.Log($"energyCostDiscard: {energyCostDiscard}");
         _state.TryUseEnergy(energyCostDiscard);
         Events.TriggerEnergyChanged(_state.CurrentEnergy, _state.MaxEnergy);
 
