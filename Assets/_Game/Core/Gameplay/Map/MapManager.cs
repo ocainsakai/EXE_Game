@@ -2,12 +2,11 @@
 using System.Linq;
 using System;
 using UnityEngine.Events;
-// 4. MonoBehaviour để sử dụng trong Unity
 public class MapManager : MonoBehaviour
 {
     [Header("Map Settings")]
-    public int mapWidth = 10;
-    public int mapHeight = 10;
+    public int mapWidth = 5;
+    public int mapHeight = 5;
 
     [Header("Rendering")]
     public Transform containter;
@@ -18,16 +17,14 @@ public class MapManager : MonoBehaviour
 
     public UnityEvent<Tile> OnTileSelected;
 
-
     private GridMap map;
     private UITileEntry[,] tileObjects;
-
-
     private Vector2Int playerPosition;
+
+    private Tile _currentTile;
     void Start()
     {
         GameInstance.Singleton.SetRandomCurrentMap();
-
         var currentMap = GameInstance.Singleton?.currentMap;
         if (currentMap == null)
         {
@@ -35,48 +32,26 @@ public class MapManager : MonoBehaviour
             return;
         }
 
-        mapWidth = 5; 
-        mapHeight = 5;
+        // OPTIMIZED: Đăng ký event chỉ một lần duy nhất.
+        UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
 
-        CreateMap();
-        CreateTileType();
-        CreateOccupants();
-        UpdatePlayerTile(new Vector2Int(0, 0));
-        RenderMap();
+        CreateAndPopulateMap();
+        RenderMapFirstTime();
+
+        UpdatePlayerTile(new Vector2Int(0, 0), true); // isFirstTime = true
     }
 
-    private void CreateOccupants()
-    {
-        for (int x = 0; x < mapWidth; x++)
-        {
-            for (int y = 0; y < mapHeight; y++)
-            {
-                var tile = map.GetTile(x, y);
-                CreateOccupant(tile);
-            }
-        }
-    }
-
-    void CreateMap()
+    // OPTIMIZED: Gộp các hàm khởi tạo map vào một chỗ cho gọn.
+    void CreateAndPopulateMap()
     {
         map = new GridMap(mapWidth, mapHeight);
-    }
-    void CreateTileType()
-    {
-        var enemies = GameInstance.Singleton.currentMap?.enemyData;
-        var boss = GameInstance.Singleton.currentMap?.bossData?.FirstOrDefault();
-
-        if (enemies == null || enemies.Length == 0)
-        {
-            Debug.LogWarning("No enemies in current map");
-            return;
-        }
-
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
                 var tile = map.GetTile(x, y);
+
+                // Gán loại Tile
                 if (x == mapWidth - 1 && y == mapHeight - 1)
                 {
                     tile.Type = TileType.Boss;
@@ -85,12 +60,14 @@ public class MapManager : MonoBehaviour
                 {
                     tile.Type = TileType.Enemy;
                 }
+
+                // Gán Occupant tương ứng
+                CreateOccupantForTile(tile);
             }
         }
     }
 
-
-    void CreateOccupant(Tile tile)
+    void CreateOccupantForTile(Tile tile)
     {
         switch (tile.Type)
         {
@@ -111,42 +88,26 @@ public class MapManager : MonoBehaviour
                     tile.Icon = boss.Icon;
                 }
                 break;
-
-            case TileType.Player:
-                tile.Icon = playerIcon;
-                break;
         }
     }
 
-
-    public void RenderMap()
+    // OPTIMIZED: Đổi tên để rõ ràng đây là lần render đầu tiên, tạo ra các GameObjects.
+    void RenderMapFirstTime()
     {
-        if (map == null)
+        if (tilePrefab == null || containter == null)
         {
-            Debug.LogError("Map is null, cannot render!");
+            Debug.LogError("TilePrefab or Container is not assigned!");
             return;
         }
 
-        if (tilePrefab == null)
+        // OPTIMIZED: Sử dụng Destroy thay vì DestroyImmediate.
+        foreach (Transform child in containter)
         {
-            Debug.LogError("TilePrefab is not assigned!");
-            return;
+            Destroy(child.gameObject);
         }
 
-        if (containter == null)
-        {
-            Debug.LogError("Container is not assigned!");
-            return;
-        }
-        foreach(Transform child in containter)
-        {
-            DestroyImmediate(child.gameObject);
-        }
         tileObjects = new UITileEntry[mapWidth, mapHeight];
-        UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
         float tileSize = 150f;
-
-        // offset để căn giữa map
         float offsetX = -(mapWidth * tileSize) / 2f + tileSize / 2f;
         float offsetY = -(mapHeight * tileSize) / 2f + tileSize / 2f;
 
@@ -154,24 +115,9 @@ public class MapManager : MonoBehaviour
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                Tile tile = map.GetTile(x, y);
-                if (tile == null)
-                {
-                    Debug.LogWarning($"Tile at ({x},{y}) is null, skipping.");
-                    continue;
-                }
-
-                Vector3 worldPos = new Vector3(x * tileSize + offsetX, y * tileSize + offsetY, 0);
-
                 UITileEntry tileObj = Instantiate(tilePrefab, containter);
-                if (tileObj == null)
-                {
-                    Debug.LogError($"Failed to instantiate Tile prefab at ({x},{y})");
-                    continue;
-                }
-
                 tileObj.name = $"Tile_{x}_{y}";
-                tileObj.transform.localPosition = worldPos;
+                tileObj.transform.localPosition = new Vector3(x * tileSize + offsetX, y * tileSize + offsetY, 0);
                 tileObj.transform.localScale = Vector3.one;
 
                 var rect = tileObj.GetComponent<RectTransform>();
@@ -179,97 +125,95 @@ public class MapManager : MonoBehaviour
                 {
                     rect.sizeDelta = new Vector2(tileSize, tileSize);
                 }
-                else
-                {
-                    Debug.LogWarning($"Tile prefab at ({x},{y}) has no RectTransform!");
-                }
-
-                // Nếu icon null thì log cảnh báo nhưng vẫn cho chạy
-                if (tile.Icon == null)
-                {
-                    Debug.LogWarning($"Tile at ({x},{y}) has no Icon assigned!");
-                }
-
-                Color tileColor = tile.IsWalkable ? walkableColor : unwalkableColor;
-                
-                // Debug log để kiểm tra màu sắc
-                Debug.Log($"Tile ({x},{y}): IsWalkable={tile.IsWalkable}, Color={tileColor}");
-                
-                tileObj.SetData(
-                    new Vector2Int(x, y),
-                    tile.Icon,
-                    tileColor
-                );
 
                 tileObjects[x, y] = tileObj;
+                UpdateTileVisuals(x, y); // Cập nhật hình ảnh ban đầu
             }
         }
     }
 
-    void UpdatePlayerTile(Vector2Int position)
+    // OPTIMIZED: Hàm mới chỉ để cập nhật hình ảnh của một ô cụ thể.
+    void UpdateTileVisuals(int x, int y)
     {
-        // Reset tất cả tiles thành unwalkable
+        if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return;
+
+        Tile tileData = map.GetTile(x, y);
+        UITileEntry tileUI = tileObjects[x, y];
+
+        if (tileData == null || tileUI == null) return;
+
+        Color tileColor = tileData.IsWalkable ? walkableColor : unwalkableColor;
+        tileUI.SetData(new Vector2Int(x, y), tileData.Icon, tileColor);
+    }
+
+    // OPTIMIZED: Sửa lại để không render toàn bộ map.
+    void UpdatePlayerTile(Vector2Int newPosition, bool isFirstTime = false)
+    {
+        // 1. Dọn dẹp vị trí cũ của người chơi (nếu không phải lần đầu)
+        if (!isFirstTime)
+        {
+            ClearTile(playerPosition);
+        }
+
+        // 2. Reset trạng thái walkable của cả bản đồ trong data
         map.ResetWalkable();
-        
-        playerPosition = position;
+
+        // 3. Cập nhật vị trí mới và dữ liệu cho ô người chơi
+        playerPosition = newPosition;
         var playerTile = map.GetTile(playerPosition.x, playerPosition.y);
         playerTile.Icon = playerIcon;
         playerTile.Type = TileType.Player;
-        
-        // Chỉ set neighbors của player là walkable
+        playerTile.IsWalkable = false; // Người chơi không thể đi vào ô của chính mình
+
+        // 4. Set các ô xung quanh là walkable (trong data)
         var walkableTiles = map.GetNeighbors(playerTile);
-        foreach (var tileObj in walkableTiles)
+        foreach (var tile in walkableTiles)
         {
-            // Chỉ cho phép di chuyển đến tiles có enemy hoặc boss
-            if (tileObj.Type == TileType.Enemy || tileObj.Type == TileType.Boss)
+            if (tile.Type == TileType.Enemy || tile.Type == TileType.Boss)
             {
-                tileObj.IsWalkable = true;
+                tile.IsWalkable = true;
             }
         }
-        
-        RenderMap();
+
+        // 5. Cập nhật lại hình ảnh cho TẤT CẢ các ô (chỉ cập nhật data, không tạo lại object)
+        // Đây là cách đơn giản nhất. Cách tối ưu hơn nữa là chỉ cập nhật những ô bị thay đổi.
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                UpdateTileVisuals(x, y);
+            }
+        }
     }
+
     void ClearTile(Vector2Int position)
     {
         var tile = map.GetTile(position.x, position.y);
         tile.Icon = null;
         tile.IsWalkable = false;
         tile.Type = TileType.Nothing;
-        
-        // Clear the UI object as well
-        if (tileObjects[position.x, position.y] != null)
-        {
-            tileObjects[position.x, position.y].SetData(
-                position,
-                null,
-                unwalkableColor
-            );
-        }
+
+        // Cập nhật hình ảnh của ô vừa bị xóa
+        UpdateTileVisuals(position.x, position.y);
     }
+
     void OnTileMapClickHandler(Vector2Int position)
     {
-        Debug.Log($"Tile clicked at: {position}");
-
         var tile = map.GetTile(position);
         if (tile.Type == TileType.Player || tile.Type == TileType.Nothing) return;
         _currentTile = tile;
         OnTileSelected?.Invoke(tile);
     }
-
-
-    private Tile _currentTile;
-    public void OnBattleEnter()
+    public void OnEnterBattle()
     {
-            
-    }
-    public void OnBattleWin()
-    {
-        // Clear the old player position first
-        ClearTile(playerPosition);
-        
-        // Move player to new position
         UpdatePlayerTile(_currentTile.Position);
     }
+
+    public void OnBattleWin()
+    {
+        UpdatePlayerTile(_currentTile.Position);
+    }
+
     private void OnDestroy()
     {
         UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
