@@ -44,30 +44,21 @@ public class Room : MonoBehaviour
         // Unsubscribe events trước khi clear
         foreach (var card in _cards)
         {
-            card.SelectedChanged -= UpdateSelected;
+            card.RequestSelectedChanged -= UpdateSelected;
             OnCardDiscard?.Invoke(card);
         }
         _cards.Clear();
     }
 
-    public void UnselectAll()
-    {
-        foreach(var card in _cards)
-        {
-            card.IsSelected = false;
-        }
-        UpdateSelected();
-        OnCardsChanged?.Invoke(_cards);
-
-    }
+   
     public void Add(Card card)
     {
         //Debug.Log(card.ToString());
         if (card == null || _cards.Contains(card)) return;
 
         _cards.Add(card);
-        card.SelectedChanged += UpdateSelected;
-        card.IsSelected = false;
+        //card.SelectedChanged += UpdateSelected;
+        card.RequestSelectedChanged += UpdateSelected;
         UpdateSelected();
         OnCardAdd?.Invoke(card);
     }
@@ -86,7 +77,7 @@ public class Room : MonoBehaviour
         _cards.RemoveAll(x => cardsToDiscard.Contains(x));
         foreach (var card in cardsToDiscard)
         {
-            card.SelectedChanged -= UpdateSelected;
+            card.RequestSelectedChanged -= UpdateSelected;
             OnCardDiscard?.Invoke(card);
         }
 
@@ -147,15 +138,24 @@ public class Room : MonoBehaviour
   
     private void UpdateSelected()
     {
-        int selectedCount = SelectedCards.Count;
-        CanSelectCard = selectedCount < 5;
+        //Debug.Log($"{gameObject} + {gameObject.name} + UpdateSelected ");
 
-        //Debug.Log($"Selected: {selectedCount}/5, CanSelect: {CanSelectCard}");
+        int selectedCount = SelectedCards.Count;
+        Card.CanSelect = selectedCount < 5;
 
         if (selectedCount > 0)
         {
             var pokerHand = PokerEvaluator.Evaluate(SelectedCards.Select(x => x.Mask).ToList());
             OnPokerHandResult?.Invoke(pokerHand);
         }
+    }
+    public void UnselectAll()
+    {
+        foreach (var card in _cards)
+        {
+            card.IsSelected = false;
+        }
+        OnCardsChanged?.Invoke(_cards);
+
     }
 }

@@ -70,11 +70,8 @@ public class CardEntry : MonoBehaviour
     private void HandleClick()
     {
         OnCardClicked?.Invoke(); // Thông báo cho các hệ thống khác nếu cần
-
-        Debug.Log("click on...");
-        // YÊU CẦU thay đổi trạng thái của Card.
-        // Đây là nơi duy nhất CardEntry tác động lên trạng thái.
-        this.Card.IsSelected = !this.Card.IsSelected;
+        Debug.Log($"{gameObject} + {gameObject.name} + HandleClick ");
+        this.Card.ChangedState();
     }
 
     // Hàm PHẢN HỒI lại sự thay đổi trạng thái từ Card

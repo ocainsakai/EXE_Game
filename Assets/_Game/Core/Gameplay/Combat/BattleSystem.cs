@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 /// <summary>
 /// Hệ thống battle với Energy System
@@ -8,7 +9,6 @@ public class BattleSystem : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private MultTable multTable;
-    [SerializeField] private Slider energyBar;
     [Header("Energy Settings")]
     [SerializeField] private int startEnergy = 3;
     [SerializeField] private int maxEnergy = 3;
@@ -22,13 +22,10 @@ public class BattleSystem : MonoBehaviour
 
     // State
     private BattleState _state;
-
-    // Events
-    public BattleEvents Events { get; private set; } = new BattleEvents();
-
     // Properties
     public BattleState State => _state;
-    public bool IsProcessing { get; private set; }
+
+    public UnityEvent<int, int> OnEnergyChanged;
 
     private void Awake()
     {
@@ -36,14 +33,6 @@ public class BattleSystem : MonoBehaviour
         {
             Debug.LogError("[BattleSystem] MultTable is not assigned!");
         }
-
-        Events.OnEnergyChanged.AddListener((curent, max) =>
-        {
-            Debug.Log($"{curent}/{max}");
-            energyBar.maxValue = max;
-            energyBar.value = curent;
-        });
-        //StartBattle(null, enemy.Data);
     }
 
     public void StartBattle(PlayerData player, EnemyData enemy)
@@ -52,9 +41,7 @@ public class BattleSystem : MonoBehaviour
 
         Debug.Log($"[BattleSystem] Battle started: Player vs {enemy.Name} (HP: {enemy.HP}, Energy: {startEnergy})");
 
-        Events.TriggerBattleStart();
-        Events.TriggerEnergyChanged(_state.CurrentEnergy, _state.MaxEnergy);
-        Events.TriggerStateChanged();
+        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
     }
 
     // ==================== PLAYER ACTIONS ====================
@@ -86,19 +73,19 @@ public class BattleSystem : MonoBehaviour
     public void UseEnergyPlay()
     {
         _state.TryUseEnergy(energyCostPlay);
-        Events.TriggerEnergyChanged(_state.CurrentEnergy, _state.MaxEnergy);
+        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
 
     }
     public void UseEnergyDiscard()
     {
         _state.TryUseEnergy(energyCostDiscard);
-        Events.TriggerEnergyChanged(_state.CurrentEnergy, _state.MaxEnergy);
+        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
 
     }
     public void RegenEnergy()
     {
         _state.RestoreEnergy(energyRegenPerRound);
-        Events.TriggerEnergyChanged(_state.CurrentEnergy, _state.MaxEnergy);
+        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
 
     }
     private void EndBattle()
@@ -106,8 +93,6 @@ public class BattleSystem : MonoBehaviour
         bool isVictory = _state.IsPlayerVictory;
 
         Debug.Log($"[BattleSystem] Battle ended - {(isVictory ? "VICTORY" : "DEFEAT")}");
-
-        Events.TriggerBattleEnd(isVictory);
     }
 
     /// <summary>

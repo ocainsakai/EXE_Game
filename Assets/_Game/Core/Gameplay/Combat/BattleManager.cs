@@ -18,12 +18,13 @@ public class BattleManager : MonoBehaviour
     public void BattleStart(EnemyData enemyData)
     {
         
+        OnBattleStart?.Invoke();
         var playerData = GameInstance.Singleton.PlayerData;
         battleSystem.StartBattle(playerData, enemyData);
         playerActionController.gameObject.SetActive(true);
-        this.enemy.SetData(enemyData);
+        playerStatComponent.SetData(playerData);
+        enemy.SetData(enemyData);
 
-        OnBattleStart?.Invoke();
     }
     public void CheckCondition(object sender)
     {

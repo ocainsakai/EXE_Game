@@ -39,6 +39,7 @@ public class PlayerActionController : MonoBehaviour
         Debug.Log("[PlayerActionController] Activating Room. Creating runtime deck and starting player turn.");
         _deckManager.CreateRuntimeDeck();
         PlayerStartTurn();
+        _room.UnselectAll();
     }
 
     public void PlayerDraw()
