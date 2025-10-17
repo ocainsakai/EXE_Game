@@ -13,10 +13,9 @@ public class UIRoom : MonoBehaviour
 
     public void UpdateInteract(bool canSelect)
     {
-        //Debug.Log("UI update: " + canSelect);
         foreach (CardEntry entry in cardEntries)
         {
-            entry.SetButton(canSelect);
+            entry.SetButton(canSelect || entry.IsSelected);
         }
     }
 

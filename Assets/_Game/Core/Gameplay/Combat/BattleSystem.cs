@@ -16,9 +16,6 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private int energyCostPlay = 1;
     [SerializeField] private int energyCostDiscard = 1;
 
-    [Header("Timing")]
-    [SerializeField] private float enemyAttackDelay = 1f;
-    [SerializeField] private float actionDelay = 0.3f;
 
     // State
     private BattleState _state;

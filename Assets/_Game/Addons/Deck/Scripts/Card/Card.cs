@@ -1,5 +1,4 @@
 ﻿using CardSystem;
-using Google.Impl;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -11,7 +10,6 @@ public class Card
     //public static bool CanSelect;
     private CardData _cardData;
     public CardData CardData;
-    public static bool CanSelect;
     public int CardDataID => _cardData.CardID;
     public SerializableGuid CardID;
 
@@ -28,7 +26,6 @@ public class Card
     public CardMask Mask => new CardMask(Rank, Suit);
 
     public Action SelectedChanged;
-    public Action RequestSelectedChanged;
 
     private bool isSelecting;
     public bool IsSelected
@@ -36,8 +33,6 @@ public class Card
         get => isSelecting;
         set
         {
-            if (value == isSelecting) return;
-            if (!CanSelect && !isSelecting) return;
             isSelecting = value;
             SelectedChanged?.Invoke();
         }
@@ -75,13 +70,5 @@ public class Card
 
         Debug.Log("playing..."+ Name);
         yield return new WaitForSeconds(1);
-    }
-
-    public void ChangedState()
-    {
-        Debug.Log($"{this} + ChangedState ");
-
-        RequestSelectedChanged?.Invoke();
-        IsSelected = !IsSelected;
     }
 }

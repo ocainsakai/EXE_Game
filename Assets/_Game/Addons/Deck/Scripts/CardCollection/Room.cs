@@ -44,7 +44,7 @@ public class Room : MonoBehaviour
         // Unsubscribe events trước khi clear
         foreach (var card in _cards)
         {
-            card.RequestSelectedChanged -= UpdateSelected;
+            card.SelectedChanged -= UpdateSelected;
             OnCardDiscard?.Invoke(card);
         }
         _cards.Clear();
@@ -57,8 +57,7 @@ public class Room : MonoBehaviour
         if (card == null || _cards.Contains(card)) return;
 
         _cards.Add(card);
-        //card.SelectedChanged += UpdateSelected;
-        card.RequestSelectedChanged += UpdateSelected;
+        card.SelectedChanged += UpdateSelected;
         UpdateSelected();
         OnCardAdd?.Invoke(card);
     }
@@ -77,7 +76,7 @@ public class Room : MonoBehaviour
         _cards.RemoveAll(x => cardsToDiscard.Contains(x));
         foreach (var card in cardsToDiscard)
         {
-            card.RequestSelectedChanged -= UpdateSelected;
+            card.SelectedChanged -= UpdateSelected;
             OnCardDiscard?.Invoke(card);
         }
 
@@ -141,7 +140,7 @@ public class Room : MonoBehaviour
         //Debug.Log($"{gameObject} + {gameObject.name} + UpdateSelected ");
 
         int selectedCount = SelectedCards.Count;
-        Card.CanSelect = selectedCount < 5;
+        CanSelectCard = selectedCount < 5;
 
         if (selectedCount > 0)
         {

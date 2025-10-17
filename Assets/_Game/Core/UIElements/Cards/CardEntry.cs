@@ -16,11 +16,6 @@ public class CardEntry : MonoBehaviour
 
     public void SetCard(Card card)
     {
-        // Hủy đăng ký sự kiện từ card cũ nếu có
-        if (this.Card != null)
-        {
-            this.Card.SelectedChanged -= OnCardSelectionChanged;
-        }
 
         this.Card = card;
         CardID = card.CardID;
@@ -29,12 +24,6 @@ public class CardEntry : MonoBehaviour
         {
             _art.sprite = card.Art;
         }
-
-        // Đăng ký sự kiện của card mới
-        this.Card.SelectedChanged += OnCardSelectionChanged;
-
-        // Đồng bộ trạng thái ban đầu
-        OnCardSelectionChanged();
     }
 
     public void SetButton(bool canSelect)
@@ -58,27 +47,15 @@ public class CardEntry : MonoBehaviour
         {
             _selectBtn.onClick.RemoveAllListeners();
         }
-
-        // Hủy đăng ký sự kiện của Card để tránh memory leak
-        if (this.Card != null)
-        {
-            this.Card.SelectedChanged -= OnCardSelectionChanged;
-        }
     }
 
     // Hàm được gọi khi button được nhấn
     private void HandleClick()
     {
-        OnCardClicked?.Invoke(); // Thông báo cho các hệ thống khác nếu cần
+        OnCardClicked?.Invoke(); 
         Debug.Log($"{gameObject} + {gameObject.name} + HandleClick ");
-        this.Card.ChangedState();
-    }
-
-    // Hàm PHẢN HỒI lại sự thay đổi trạng thái từ Card
-    private void OnCardSelectionChanged()
-    {
-        // 1. Đồng bộ trạng thái từ Card (nguồn dữ liệu chính)
-        IsSelected = this.Card.IsSelected;
+        Card.IsSelected = !Card.IsSelected; 
+        IsSelected = Card.IsSelected;
 
         // 2. Cập nhật giao diện dựa trên trạng thái mới
         float targetY = IsSelected ? 50f : 0f;
