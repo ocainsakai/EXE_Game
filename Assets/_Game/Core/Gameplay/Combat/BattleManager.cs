@@ -10,21 +10,25 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Enemy enemy;
     [SerializeField] private PlayerActionController playerActionController;
     [SerializeField] private PlayerStatComponent playerStatComponent;
-
+    [SerializeField] private GameObject battlePanel;
     public UnityEvent OnBattleStart;
     public UnityEvent OnBattleEnd;
     public UnityEvent OnBattleWin;
     public UnityEvent OnBattleLose;
     public void BattleStart(EnemyData enemyData)
     {
-        
-        OnBattleStart?.Invoke();
+        // start UI
+        battlePanel.SetActive(true);
+
+        // start player
         var playerData = GameInstance.Singleton.PlayerData;
         battleSystem.StartBattle(playerData, enemyData);
         playerActionController.gameObject.SetActive(true);
         playerStatComponent.SetData(playerData);
-        enemy.SetData(enemyData);
 
+        // start enemy
+        enemy.SetData(enemyData);
+        OnBattleStart?.Invoke();
     }
     public void CheckCondition(object sender)
     {

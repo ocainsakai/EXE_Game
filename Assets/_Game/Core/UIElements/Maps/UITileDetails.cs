@@ -16,7 +16,7 @@ public class UITileDetails : MonoBehaviour
     [SerializeField] TextMeshProUGUI atkText;
     [SerializeField] TextMeshProUGUI rewardText;
 
-    public UnityEvent<Tile> OnPlayBtnClicked;
+    public UnityEvent<EnemyData> OnPlayBtnClicked;
     public void Show(Tile tile)
     {
         gameObject.SetActive(true);
@@ -61,7 +61,7 @@ public class UITileDetails : MonoBehaviour
         playBtn.gameObject.SetActive(tile.IsWalkable);
         playBtn.onClick.RemoveAllListeners();
         playBtn.onClick.AddListener(() => {
-            OnPlayBtnClicked?.Invoke(tile);
+            OnPlayBtnClicked?.Invoke(enemyData);
             Hide();
         });
     }

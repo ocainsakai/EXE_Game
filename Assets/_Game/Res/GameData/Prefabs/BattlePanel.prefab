@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UISliderBarHelper
   _slider: {fileID: 6127590255637931140}
+  _valueText: {fileID: 0}
 --- !u!1 &4222384679094385938
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UISliderBarHelper
   _slider: {fileID: 3652520967145138429}
+  _valueText: {fileID: 0}
 --- !u!1 &6298977222630202975
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +962,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIEnemyBattle
       objectReference: {fileID: 0}
+    - target: {fileID: 7417880025777868598, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
+      propertyPath: m_Name
+      value: _valueText
+      objectReference: {fileID: 0}
     - target: {fileID: 7432053183303568328, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -987,10 +993,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5584051670363717218, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8307415291889701057}
+    - targetCorrespondingSourceObject: {fileID: 8750934734732310931, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7000117408701286163}
   m_SourcePrefab: {fileID: 100100000, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
 --- !u!224 &3727354376662683833 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1158079423597509962, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
   m_PrefabInstance: {fileID: 2569420235468566003}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6546539312699495520 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8750934734732310931, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
+  m_PrefabInstance: {fileID: 2569420235468566003}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7000117408701286163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546539312699495520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc479ae250fb6814cb629caacf22ef14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISliderBarHelper
+  _slider: {fileID: 0}
+  _valueText: {fileID: 0}
+--- !u!1 &7986821126585668497 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5584051670363717218, guid: 2a78ee36b2019f844a5065e4d22b7b9b, type: 3}
+  m_PrefabInstance: {fileID: 2569420235468566003}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8307415291889701057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986821126585668497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc479ae250fb6814cb629caacf22ef14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISliderBarHelper
+  _slider: {fileID: 0}
+  _valueText: {fileID: 0}

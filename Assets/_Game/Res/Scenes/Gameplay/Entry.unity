@@ -1410,8 +1410,8 @@ MonoBehaviour:
   maps:
   - {fileID: 11400000, guid: 6763cbfcb05414941b4409aa8cda40d3, type: 2}
   - {fileID: 11400000, guid: 23456789012345678901234567890123, type: 2}
-  currentMap: {fileID: 0}
-  PlayerData: {fileID: 0}
+  currentMap: {fileID: 11400000, guid: 6763cbfcb05414941b4409aa8cda40d3, type: 2}
+  PlayerData: {fileID: 11400000, guid: 52a15d4d4dec16f4883b36aac760ac93, type: 2}
 --- !u!1 &1936247614
 GameObject:
   m_ObjectHideFlags: 0
