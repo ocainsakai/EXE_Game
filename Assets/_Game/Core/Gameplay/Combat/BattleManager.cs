@@ -1,68 +1,72 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
-/// <summary>
-/// Manager tổng thể cho battle flow - kết nối Map và Battle System
-/// </summary>
-public class BattleManager : MonoBehaviour
+namespace _Game.Core.Gameplay.Combat
 {
-    [SerializeField] private BattleSystem battleSystem;
-    [SerializeField] private Enemy enemy;
-    [SerializeField] private PlayerActionController playerActionController;
-    [SerializeField] private PlayerStatComponent playerStatComponent;
-    [SerializeField] private GameObject battlePanel;
-    public UnityEvent OnBattleStart;
-    public UnityEvent OnBattleEnd;
-    public UnityEvent OnBattleWin;
-    public UnityEvent OnBattleLose;
-    public void BattleStart(EnemyData enemyData)
+    /// <summary>
+    /// Manager tổng thể cho battle flow - kết nối Map và Battle System
+    /// </summary>
+    public class BattleManager : MonoBehaviour
     {
-        // start UI
-        battlePanel.SetActive(true);
+        [SerializeField] private BattleSystem battleSystem;
+        [SerializeField] private Enemy enemy;
+        [SerializeField] private PlayerActionController playerActionController;
+        [SerializeField] private PlayerStatComponent playerStatComponent;
+        [SerializeField] private GameObject battlePanel;
+        [FormerlySerializedAs("OnBattleStart")] public UnityEvent onBattleStart;
+        [FormerlySerializedAs("OnBattleEnd")] public UnityEvent onBattleEnd;
+        [FormerlySerializedAs("OnBattleWin")] public UnityEvent onBattleWin;
+        [FormerlySerializedAs("OnBattleLose")] public UnityEvent onBattleLose;
+        public void BattleStart(EnemyData enemyData)
+        {
+            // start UI
+            battlePanel.SetActive(true);
 
-        // start player
-        var playerData = GameInstance.Singleton.PlayerData;
-        battleSystem.StartBattle(playerData, enemyData);
-        playerActionController.gameObject.SetActive(true);
-        playerStatComponent.SetData(playerData);
+            // start player
+            var playerData = GameInstance.Singleton.playerData;
+            battleSystem.StartBattle(playerData, enemyData);
+            playerActionController.gameObject.SetActive(true);
+            playerStatComponent.SetData(playerData);
 
-        // start enemy
-        enemy.SetData(enemyData);
-        OnBattleStart?.Invoke();
-    }
-    public void CheckCondition(object sender)
-    {
-        if (playerStatComponent.HP <= 0)
-        {
-            Debug.Log($"You lose");
-            // lose resolve
-            OnBattleEnd?.Invoke();
-            OnBattleLose?.Invoke();
-            return;
+            // start enemy
+            enemy.SetData(enemyData);
+            onBattleStart?.Invoke();
         }
-        if (enemy.HP <=0)
+        public void CheckCondition(object sender)
         {
-            Debug.Log($"You win");
-            // win resolve
-            OnBattleEnd?.Invoke();
-            OnBattleWin?.Invoke();
-            return;
+            if (playerStatComponent.Hp <= 0)
+            {
+                Debug.Log($"You lose");
+                // lose resolve
+                onBattleEnd?.Invoke();
+                onBattleLose?.Invoke();
+                return;
+            }
+            if (enemy.hp <=0)
+            {
+                Debug.Log($"You win");
+                // win resolve
+                onBattleEnd?.Invoke();
+                onBattleWin?.Invoke();
+                return;
+            }
+            if (sender != null && (sender is Enemy))
+            {
+                Debug.Log($"You start your turn");
+                playerActionController.PlayerStartTurn();
+                return;
+            }
+            if (sender != null && sender is PlayerActionController)
+            {
+                Debug.Log($"You start enemy turn");
+                enemy.CountToAction();
+                return;
+            }
         }
-        if (sender != null && (sender is Enemy))
+        public void AttackPlayer(Enemy enemy)
         {
-            Debug.Log($"You start your turn");
-            playerActionController.PlayerStartTurn();
-            return;
+            playerStatComponent.Hp -= enemy.data.atk;
         }
-        if (sender != null && sender is PlayerActionController)
-        {
-            Debug.Log($"You start enemy turn");
-            enemy.CountToAction();
-            return;
-        }
-    }
-    public void AttackPlayer(Enemy enemy)
-    {
-        playerStatComponent.HP -= enemy.Data.Atk;
     }
 }

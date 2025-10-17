@@ -5,15 +5,15 @@ public class SimplePathfinder
 {
     private class Node
     {
-        public Tile tile;
-        public Node parent;
-        public float gCost; // khoảng cách từ start
-        public float hCost; // khoảng cách ước tính đến goal
-        public float FCost => gCost + hCost;
+        public Tile Tile;
+        public Node Parent;
+        public float GCost; // khoảng cách từ start
+        public float HCost; // khoảng cách ước tính đến goal
+        public float FCost => GCost + HCost;
 
         public Node(Tile tile)
         {
-            this.tile = tile;
+            this.Tile = tile;
         }
     }
 
@@ -36,35 +36,35 @@ public class SimplePathfinder
             }
 
             openSet.Remove(currentNode);
-            closedSet.Add(currentNode.tile);
+            closedSet.Add(currentNode.Tile);
 
             // Tìm thấy đích
-            if (currentNode.tile == goal)
+            if (currentNode.Tile == goal)
             {
                 return BuildPath(currentNode);
             }
 
             // Kiểm tra neighbors
-            foreach (Tile neighbor in map.GetNeighbors(currentNode.tile))
+            foreach (Tile neighbor in map.GetNeighbors(currentNode.Tile))
             {
                 if (!neighbor.IsWalkable || closedSet.Contains(neighbor))
                     continue;
 
-                float newGCost = currentNode.gCost + 1; // mỗi bước = 1
+                float newGCost = currentNode.GCost + 1; // mỗi bước = 1
                 Node neighborNode = GetNodeFromOpenSet(openSet, neighbor);
 
                 if (neighborNode == null)
                 {
                     neighborNode = new Node(neighbor);
-                    neighborNode.gCost = newGCost;
-                    neighborNode.hCost = GetDistance(neighbor, goal);
-                    neighborNode.parent = currentNode;
+                    neighborNode.GCost = newGCost;
+                    neighborNode.HCost = GetDistance(neighbor, goal);
+                    neighborNode.Parent = currentNode;
                     openSet.Add(neighborNode);
                 }
-                else if (newGCost < neighborNode.gCost)
+                else if (newGCost < neighborNode.GCost)
                 {
-                    neighborNode.gCost = newGCost;
-                    neighborNode.parent = currentNode;
+                    neighborNode.GCost = newGCost;
+                    neighborNode.Parent = currentNode;
                 }
             }
         }
@@ -76,7 +76,7 @@ public class SimplePathfinder
     {
         foreach (Node node in openSet)
         {
-            if (node.tile == tile)
+            if (node.Tile == tile)
                 return node;
         }
         return null;
@@ -96,8 +96,8 @@ public class SimplePathfinder
 
         while (currentNode != null)
         {
-            path.Add(currentNode.tile);
-            currentNode = currentNode.parent;
+            path.Add(currentNode.Tile);
+            currentNode = currentNode.Parent;
         }
 
         path.Reverse();

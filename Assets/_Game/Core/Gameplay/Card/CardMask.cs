@@ -4,25 +4,25 @@ namespace CardSystem
     {
         private readonly int value;
 
-        private const int SUIT_MASK = 0b11;      // 2 bit cho suit
-        private const int RANK_MASK = 0b11111;   // 5 bit cho rank
-        private const int SUIT_SHIFT = 0;
-        private const int RANK_SHIFT = 2;
+        private const int SuitMask = 0b11;      // 2 bit cho suit
+        private const int RankMask = 0b11111;   // 5 bit cho rank
+        private const int SuitShift = 0;
+        private const int RankShift = 2;
 
         public CardMask(int rank, int suit)
         {
-            value = (rank & RANK_MASK) << RANK_SHIFT | (suit & SUIT_MASK) << SUIT_SHIFT;
+            value = (rank & RankMask) << RankShift | (suit & SuitMask) << SuitShift;
         }
         public CardMask(CardRank rank, CardSuit suit)
         {
-            value = (((int)rank & RANK_MASK) << RANK_SHIFT) | (((int)suit & SUIT_MASK) << SUIT_SHIFT);
+            value = (((int)rank & RankMask) << RankShift) | (((int)suit & SuitMask) << SuitShift);
         }
         public int RawValue => value;
 
-        public int Rank => value >> RANK_SHIFT & RANK_MASK;
-        public int Suit => value >> SUIT_SHIFT & SUIT_MASK;
-        public CardRank ERank => (CardRank)((value >> RANK_SHIFT) & RANK_MASK);
-        public CardSuit ESuit => (CardSuit)((value >> SUIT_SHIFT) & SUIT_MASK);
+        public int Rank => value >> RankShift & RankMask;
+        public int Suit => value >> SuitShift & SuitMask;
+        public CardRank ERank => (CardRank)((value >> RankShift) & RankMask);
+        public CardSuit ESuit => (CardSuit)((value >> SuitShift) & SuitMask);
         public override string ToString()
         {
             return $"{GetRankName(Rank)} of {GetSuitName(Suit)}";

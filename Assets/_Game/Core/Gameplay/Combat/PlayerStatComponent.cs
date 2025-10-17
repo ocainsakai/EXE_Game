@@ -1,30 +1,31 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class PlayerStatComponent : MonoBehaviour
 {
-    public float MaxHp;
+    [FormerlySerializedAs("MaxHp")] public float maxHp;
 
     private float _hp;
-    public float HP
+    public float Hp
     {
         get => _hp;
         set
         {
             if (_hp != value)
             {
-                _hp = Mathf.Clamp(value, 0, MaxHp);
-                OnHPChange?.Invoke(_hp, MaxHp);
+                _hp = Mathf.Clamp(value, 0, maxHp);
+                onHpChange?.Invoke(_hp, maxHp);
             }
         }
     }
 
     public void SetData(PlayerData playerData)
     {
-        MaxHp = playerData.HP;
-        HP = MaxHp;
+        maxHp = playerData.hp;
+        Hp = maxHp;
     }
 
-    public UnityEvent<float, float> OnHPChange; 
+    [FormerlySerializedAs("OnHPChange")] public UnityEvent<float, float> onHpChange; 
 }

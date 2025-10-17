@@ -1,28 +1,29 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UITileEntry : MonoBehaviour
 {
-    [SerializeField] Image _background;
-    [SerializeField] Image _content;
-    [SerializeField] Button _button;
+    [FormerlySerializedAs("_background")] [SerializeField] Image background;
+    [FormerlySerializedAs("_content")] [SerializeField] Image content;
+    [FormerlySerializedAs("_button")] [SerializeField] Button button;
     public static UnityAction<Vector2Int> OnTileMapClicked;
     private Vector2Int _position;
     public void SetData(Vector2Int position,Sprite icon, Color bgColor)
     {
         _position = position;
         if (icon != null) 
-        _content.sprite = icon;
-        else _content.gameObject.SetActive(false);
-        _background.color = bgColor;
+        content.sprite = icon;
+        else content.gameObject.SetActive(false);
+        background.color = bgColor;
 
-        _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(() => OnTileMapClicked?.Invoke(_position));
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() => OnTileMapClicked?.Invoke(_position));
     }
 
     void OnDestroy()
     {
-        _button.onClick.RemoveAllListeners();
+        button.onClick.RemoveAllListeners();
     }
 }

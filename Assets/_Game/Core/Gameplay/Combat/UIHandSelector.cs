@@ -2,9 +2,13 @@
 using CardSystem.PokerSystem;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+
 /// <summary>
 /// Quản lý việc chọn bài trong hand và preview poker hand
 /// </summary>
@@ -21,14 +25,14 @@ public class UIHandSelector : MonoBehaviour
     [SerializeField] private TextMeshProUGUI damagePreviewText;
     [SerializeField] private MultTable multTable;
 
-    [Header("Events")]
-    public UnityEvent OnSelectionChanged;
+    [FormerlySerializedAs("OnSelectionChanged")] [Header("Events")]
+    public UnityEvent onSelectionChanged;
 
     // State
-    private Dictionary<Card, CardEntry> _cardToEntry = new Dictionary<Card, CardEntry>();
-    private HashSet<Card> _selectedCards = new HashSet<Card>();
+    private Dictionary<CardRuntime, CardEntry> _cardToEntry = new Dictionary<CardRuntime, CardEntry>();
+    private HashSet<CardRuntime> _selectedCards = new HashSet<CardRuntime>();
 
-    public IReadOnlyList<Card> SelectedCards => _selectedCards.ToList();
+    public IReadOnlyList<CardRuntime> SelectedCards => _selectedCards.ToList();
     public int SelectedCount => _selectedCards.Count;
 
     private void Start()
@@ -43,16 +47,16 @@ public class UIHandSelector : MonoBehaviour
     /// </summary>
     public void RegisterCardEntry(CardEntry cardEntry)
     {
-        if (cardEntry == null || cardEntry.Card == null)
+        if (cardEntry == null || cardEntry.CardRuntime == null)
             return;
 
-        if (_cardToEntry.ContainsKey(cardEntry.Card))
+        if (_cardToEntry.ContainsKey(cardEntry.CardRuntime))
         {
-            Debug.LogWarning($"Card {cardEntry.Card.Mask} already registered!");
+            Debug.LogWarning($"Card {cardEntry.CardRuntime.Mask} already registered!");
             return;
         }
 
-        _cardToEntry[cardEntry.Card] = cardEntry;
+        _cardToEntry[cardEntry.CardRuntime] = cardEntry;
 
         // Subscribe to click event
         cardEntry.OnCardClicked += () => OnCardClicked(cardEntry);
@@ -63,11 +67,11 @@ public class UIHandSelector : MonoBehaviour
     /// </summary>
     public void UnregisterCardEntry(CardEntry cardEntry)
     {
-        if (cardEntry == null || cardEntry.Card == null)
+        if (cardEntry == null || cardEntry.CardRuntime == null)
             return;
 
-        _cardToEntry.Remove(cardEntry.Card);
-        _selectedCards.Remove(cardEntry.Card);
+        _cardToEntry.Remove(cardEntry.CardRuntime);
+        _selectedCards.Remove(cardEntry.CardRuntime);
 
         UpdatePreview();
     }
@@ -89,22 +93,22 @@ public class UIHandSelector : MonoBehaviour
     /// </summary>
     private void OnCardClicked(CardEntry cardEntry)
     {
-        if (cardEntry == null || cardEntry.Card == null)
+        if (cardEntry == null || cardEntry.CardRuntime == null)
             return;
 
-        Card card = cardEntry.Card;
+        CardRuntime cardRuntime = cardEntry.CardRuntime;
 
-        if (_selectedCards.Contains(card))
+        if (_selectedCards.Contains(cardRuntime))
         {
-            DeselectCard(card);
+            DeselectCard(cardRuntime);
         }
         else
         {
-            SelectCard(card);
+            SelectCard(cardRuntime);
         }
     }
 
-    private void SelectCard(Card card)
+    private void SelectCard(CardRuntime cardRuntime)
     {
         // Check limit
         if (_selectedCards.Count >= maxSelectedCards)
@@ -113,28 +117,28 @@ public class UIHandSelector : MonoBehaviour
             return;
         }
 
-        _selectedCards.Add(card);
+        _selectedCards.Add(cardRuntime);
 
-        if (_cardToEntry.TryGetValue(card, out var entry))
+        if (_cardToEntry.TryGetValue(cardRuntime, out var entry))
         {
             UpdateCardVisual(entry, true);
         }
 
         UpdatePreview();
-        OnSelectionChanged?.Invoke();
+        onSelectionChanged?.Invoke();
     }
 
-    private void DeselectCard(Card card)
+    private void DeselectCard(CardRuntime cardRuntime)
     {
-        _selectedCards.Remove(card);
+        _selectedCards.Remove(cardRuntime);
 
-        if (_cardToEntry.TryGetValue(card, out var entry))
+        if (_cardToEntry.TryGetValue(cardRuntime, out var entry))
         {
             UpdateCardVisual(entry, false);
         }
 
         UpdatePreview();
-        OnSelectionChanged?.Invoke();
+        onSelectionChanged?.Invoke();
     }
 
     /// <summary>
@@ -142,7 +146,7 @@ public class UIHandSelector : MonoBehaviour
     /// </summary>
     public void ClearSelection()
     {
-        var cardsToDeselect = new List<Card>(_selectedCards);
+        var cardsToDeselect = new List<CardRuntime>(_selectedCards);
 
         foreach (var card in cardsToDeselect)
         {
@@ -154,13 +158,13 @@ public class UIHandSelector : MonoBehaviour
 
         _selectedCards.Clear();
         UpdatePreview();
-        OnSelectionChanged?.Invoke();
+        onSelectionChanged?.Invoke();
     }
 
     /// <summary>
     /// Select specific cards (programmatically)
     /// </summary>
-    public void SelectCards(List<Card> cards)
+    public void SelectCards(List<CardRuntime> cards)
     {
         ClearSelection();
 
@@ -239,7 +243,7 @@ public class UIHandSelector : MonoBehaviour
         }
     }
 
-    private int CalculateBaseDamage(List<Card> cards)
+    private int CalculateBaseDamage(List<CardRuntime> cards)
     {
         int total = 0;
         foreach (var card in cards)
@@ -249,9 +253,9 @@ public class UIHandSelector : MonoBehaviour
         return total;
     }
 
-    private int GetCardChipValue(Card card)
+    private int GetCardChipValue(CardRuntime cardRuntime)
     {
-        switch (card.Mask.ERank)
+        switch (cardRuntime.Mask.ERank)
         {
             case CardRank.Ace:
                 return 11;
@@ -260,7 +264,7 @@ public class UIHandSelector : MonoBehaviour
             case CardRank.Jack:
                 return 10;
             default:
-                return (int)card.Mask.ERank;
+                return (int)cardRuntime.Mask.ERank;
         }
     }
 
@@ -284,9 +288,9 @@ public class UIHandSelector : MonoBehaviour
 
     // ==================== QUERIES ====================
 
-    public bool IsCardSelected(Card card)
+    public bool IsCardSelected(CardRuntime cardRuntime)
     {
-        return _selectedCards.Contains(card);
+        return _selectedCards.Contains(cardRuntime);
     }
 
     public bool CanSelectMore()

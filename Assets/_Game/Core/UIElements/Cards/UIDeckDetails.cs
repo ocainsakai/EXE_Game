@@ -1,13 +1,16 @@
 ﻿using CardSystem;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
+using _Game.Addons.Deck.Scripts.CardCollection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIDeckDetails : MonoBehaviour
 {
-    private List<Card> currentDeck;
+    private List<CardRuntime> currentDeck;
     [SerializeField] DeckManager deckManager;
 
     [SerializeField] GameObject deckInfo;
@@ -35,7 +38,7 @@ public class UIDeckDetails : MonoBehaviour
         //SetDeck(deckManager.);
     }
 
-    public void SetDeck(List<Card> deck)
+    public void SetDeck(List<CardRuntime> deck)
     {
         currentDeck = deck;
         UpdateDeckDetails();
@@ -65,8 +68,8 @@ public class UIDeckDetails : MonoBehaviour
 
         foreach (var cardData in sortedDeck)
         {
-            GameObject cardGO = Instantiate(cardPrefab, content.transform);
-            var ui = cardGO.GetComponent<CardEntry>();
+            GameObject cardGo = Instantiate(cardPrefab, content.transform);
+            var ui = cardGo.GetComponent<CardEntry>();
             if (ui != null)
             {
                 //ui.SetCard(); // Card.Data = CardData ScriptableObject (Ace_of_Clubs, v.v.)

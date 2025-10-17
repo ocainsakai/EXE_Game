@@ -2,16 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Room : MonoBehaviour
 {
-    private List<Card> _cards = new List<Card>();
+    private List<CardRuntime> _cards = new List<CardRuntime>();
 
-    public UnityEvent<List<Card>> OnCardsChanged;
-    public UnityEvent<Card> OnCardAdd;
-    public UnityEvent<Card> OnCardDiscard;
+    public UnityEvent<List<CardRuntime>> OnCardsChanged;
+    public UnityEvent<CardRuntime> OnCardAdd;
+    public UnityEvent<CardRuntime> OnCardDiscard;
     public UnityEvent<PokerHandResult> OnPokerHandResult;
     public Action OnDiscardComplete;
 
@@ -34,10 +36,10 @@ public class Room : MonoBehaviour
 
     private bool currentSort = true;
 
-    public List<Card> SelectedCards => _cards.Where(x => x.IsSelected).ToList();
-    public List<Card> Cards => new List<Card>(_cards); // Return copy để tránh modify từ bên ngoài
+    public List<CardRuntime> SelectedCards => _cards.Where(x => x.IsSelected).ToList();
+    public List<CardRuntime> Cards => new List<CardRuntime>(_cards); // Return copy để tránh modify từ bên ngoài
 
-    public List<Card> GetSelectCards => Cards.Where(x => x.IsSelected).ToList();
+    public List<CardRuntime> GetSelectCards => Cards.Where(x => x.IsSelected).ToList();
 
     private void OnDisable()
     {
@@ -51,15 +53,15 @@ public class Room : MonoBehaviour
     }
 
    
-    public void Add(Card card)
+    public void Add(CardRuntime cardRuntime)
     {
         //Debug.Log(card.ToString());
-        if (card == null || _cards.Contains(card)) return;
+        if (cardRuntime == null || _cards.Contains(cardRuntime)) return;
 
-        _cards.Add(card);
-        card.SelectedChanged += UpdateSelected;
+        _cards.Add(cardRuntime);
+        cardRuntime.SelectedChanged += UpdateSelected;
         UpdateSelected();
-        OnCardAdd?.Invoke(card);
+        OnCardAdd?.Invoke(cardRuntime);
     }
 
 
@@ -129,7 +131,7 @@ public class Room : MonoBehaviour
         });
     }
 
-    protected void SortCards(Comparison<Card> comparison)
+    protected void SortCards(Comparison<CardRuntime> comparison)
     {
         _cards.Sort(comparison);
     }

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using _Game.Core;
+using UnityEngine;
 
 public static partial class PlayerSave
 {
     // ─────────────────────────────────────────────────── Keys
-    private const string KEY_SELECTED_DECK= "PLAYERSELECTEDDECK_";
+    private const string KeySelectedDeck= "PLAYERSELECTEDDECK_";
     //private const string KEY_FAV_CHAR = "PLAYERFAVOURITECHARACTER_";
     //private const string KEY_MASTERY_LVL = "CHARACTERMASTERYLEVEL_";
     //private const string KEY_MASTERY_EXP = "CHARACTERMASTERYCURRENTEXP_";
@@ -16,12 +17,12 @@ public static partial class PlayerSave
     //private const string KEY_UNLOCKED_SKINS = "CHARACTERUNLOCKEDSKINS_";
 
     public static void SetSelectedDeck(int id) =>
-        SecurePrefs.SetEncryptedInt(KEY_SELECTED_DECK, id);
+        SecurePrefs.SetEncryptedInt(KeySelectedDeck, id);
 
     public static int GetSelectedDeck()
     {
-        if (SecurePrefs.HasKey(KEY_SELECTED_DECK))
-            return SecurePrefs.GetDecryptedInt(KEY_SELECTED_DECK, 0);
+        if (SecurePrefs.HasKey(KeySelectedDeck))
+            return SecurePrefs.GetDecryptedInt(KeySelectedDeck, 0);
 
         // fallback: first unlocked in the DB
         foreach (var c in GameInstance.Singleton.deckData)

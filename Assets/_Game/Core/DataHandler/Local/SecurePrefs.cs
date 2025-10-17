@@ -10,11 +10,11 @@ using System.IO;
 public static class SecurePrefs
 {
     private const string MasterPassphrase = "bh-template-very-secret-passphrase";
-    private static readonly byte[] _masterKey =
+    private static readonly byte[] MasterKey =
         SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(MasterPassphrase));
 
-    private static readonly byte[] _encKey = _masterKey.Take(16).ToArray();   // AES-128
-    private static readonly byte[] _macKey = _masterKey.Skip(16).Take(16).ToArray();
+    private static readonly byte[] EncKey = MasterKey.Take(16).ToArray();   // AES-128
+    private static readonly byte[] MacKey = MasterKey.Skip(16).Take(16).ToArray();
     private const int AesBlock = 16;                                          // IV length
 
     /*────────────────────────── High-level API ──────────────────────────*/
@@ -278,7 +278,7 @@ public static class SecurePrefs
     private static byte[] Encrypt(byte[] plain)
     {
         using var aes = Aes.Create();
-        aes.Key = _encKey;
+        aes.Key = EncKey;
         aes.Mode = CipherMode.CBC;
         aes.Padding = PaddingMode.PKCS7;
         aes.GenerateIV();
@@ -313,7 +313,7 @@ public static class SecurePrefs
         byte[] cipher = blob.Skip(ivLen).Take(cipherLen).ToArray();
 
         using var aes = Aes.Create();
-        aes.Key = _encKey;
+        aes.Key = EncKey;
         aes.Mode = CipherMode.CBC;
         aes.Padding = PaddingMode.PKCS7;
         aes.IV = iv;
@@ -323,7 +323,7 @@ public static class SecurePrefs
 
     private static byte[] Hmac(byte[] buf, int off, int cnt)
     {
-        using var h = new HMACSHA256(_macKey);
+        using var h = new HMACSHA256(MacKey);
         return h.ComputeHash(buf, off, cnt);
     }
 

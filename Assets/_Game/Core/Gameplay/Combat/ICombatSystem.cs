@@ -1,20 +1,24 @@
-using CardSystem;
 using System.Collections.Generic;
+using _Game.Addons.Deck.Scripts;
+using CardSystem;
 
-public interface ICombatSystem
+namespace _Game.Core.Gameplay.Combat
 {
-    // Start combat with a specific enemy
-    void StartCombat(PlayerData player, EnemyData enemy);
+    public interface ICombatSystem
+    {
+        // Start combat with a specific enemy
+        void StartCombat(PlayerData player, EnemyData enemy);
 
-    // Play a hand of cards (Poker hand)
-    CombatResult PlayHand(List<CardData> selectedCards);
+        // Play a hand of cards (Poker hand)
+        CombatResult PlayHand(List<CardData> selectedCards);
 
-    // Apply enemy turn (AI action)
-    void EnemyTurn();
+        // Apply enemy turn (AI action)
+        void EnemyTurn();
 
-    // Check if combat is finished
-    bool IsCombatOver();
+        // Check if combat is finished
+        bool IsCombatOver();
 
-    // Get combat log (for debug/UI)
-    List<string> GetCombatLog();
+        // Get combat log (for debug/UI)
+        List<string> GetCombatLog();
+    }
 }

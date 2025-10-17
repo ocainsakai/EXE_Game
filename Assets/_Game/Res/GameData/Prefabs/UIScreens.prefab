@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -278}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5388059834390654813
@@ -267,6 +267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5596839796051707019}
   - component: {fileID: 4547833525132536433}
+  - component: {fileID: 66198266321825586}
   m_Layer: 5
   m_Name: UIScreens
   m_TagString: Untagged
@@ -319,6 +320,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!114 &66198266321825586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370906818045379649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5accb5115f5da8d44b358c32cb105d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIScreens
+  winScreens: {fileID: 5708801137581045551}
+  loseScreens: {fileID: 5896545959553174921}
+  pauseScreens: {fileID: 4443356910371960297}
 --- !u!1 &2903423027599141051
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1835205614141586715
 RectTransform:
   m_ObjectHideFlags: 0

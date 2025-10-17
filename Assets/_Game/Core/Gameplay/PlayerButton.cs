@@ -63,15 +63,15 @@ public class PlayerButton : MonoBehaviour
     private Button CreateButton(string title, UnityAction onClickAction)
     {
         // Create a new GameObject for the button
-        var newButtonGO = new GameObject(title + "Button", typeof(RectTransform));
-        newButtonGO.transform.SetParent(this.transform, false); // Set 'worldPositionStays' to false
-        newButtonGO.transform.localScale = Vector3.one;
+        var newButtonGo = new GameObject(title + "Button", typeof(RectTransform));
+        newButtonGo.transform.SetParent(this.transform, false); // Set 'worldPositionStays' to false
+        newButtonGo.transform.localScale = Vector3.one;
 
         // Add Button and Image components
-        var image = newButtonGO.AddComponent<Image>();
+        var image = newButtonGo.AddComponent<Image>();
         image.color = Color.gray;
 
-        var btn = newButtonGO.AddComponent<Button>();
+        var btn = newButtonGo.AddComponent<Button>();
         // Directly add the provided action as a listener. This is the key change.
         if (onClickAction != null)
         {
@@ -79,19 +79,19 @@ public class PlayerButton : MonoBehaviour
         }
 
         // Create the text object
-        var textGO = new GameObject("Text", typeof(RectTransform));
-        textGO.transform.SetParent(newButtonGO.transform, false);
-        textGO.transform.localScale = Vector3.one;
+        var textGo = new GameObject("Text", typeof(RectTransform));
+        textGo.transform.SetParent(newButtonGo.transform, false);
+        textGo.transform.localScale = Vector3.one;
 
         // Add and configure TextMeshPro component
-        var textContent = textGO.AddComponent<TextMeshProUGUI>();
+        var textContent = textGo.AddComponent<TextMeshProUGUI>();
         textContent.text = title;
         textContent.alignment = TextAlignmentOptions.Center;
         textContent.fontSize = 24;
         textContent.color = Color.white;
 
         // Anchor the text to fill the button
-        var textRect = textGO.GetComponent<RectTransform>();
+        var textRect = textGo.GetComponent<RectTransform>();
         textRect.anchorMin = Vector2.zero;
         textRect.anchorMax = Vector2.one;
         textRect.sizeDelta = Vector2.zero;

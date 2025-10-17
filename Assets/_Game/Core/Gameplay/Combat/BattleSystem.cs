@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 /// <summary>
 /// Hệ thống battle với Energy System
@@ -22,7 +25,7 @@ public class BattleSystem : MonoBehaviour
     // Properties
     public BattleState State => _state;
 
-    public UnityEvent<int, int> OnEnergyChanged;
+    [FormerlySerializedAs("OnEnergyChanged")] public UnityEvent<int, int> onEnergyChanged;
 
     private void Awake()
     {
@@ -36,9 +39,9 @@ public class BattleSystem : MonoBehaviour
     {
         _state = new BattleState(player, enemy, startEnergy, maxEnergy, energyRegenPerRound);
 
-        Debug.Log($"[BattleSystem] Battle started: Player vs {enemy.Name} (HP: {enemy.HP}, Energy: {startEnergy})");
+        Debug.Log($"[BattleSystem] Battle started: Player vs {enemy.name} (HP: {enemy.hp}, Energy: {startEnergy})");
 
-        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
+        onEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
     }
 
     // ==================== PLAYER ACTIONS ====================
@@ -48,7 +51,7 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
    
 
-    public bool CanPlayHand(List<Card> selectedCards)
+    public bool CanPlayHand(List<CardRuntime> selectedCards)
     {
         int cost = selectedCards.Count * energyCostPlay;
         if (_state.CurrentEnergy < cost)
@@ -70,19 +73,19 @@ public class BattleSystem : MonoBehaviour
     public void UseEnergyPlay()
     {
         _state.TryUseEnergy(energyCostPlay);
-        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
+        onEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
 
     }
     public void UseEnergyDiscard()
     {
         _state.TryUseEnergy(energyCostDiscard);
-        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
+        onEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
 
     }
     public void RegenEnergy()
     {
         _state.RestoreEnergy(energyRegenPerRound);
-        OnEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
+        onEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
 
     }
     private void EndBattle()

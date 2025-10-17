@@ -1,85 +1,91 @@
-﻿using CardSystem;
-using CardSystem.PokerSystem;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
+using CardSystem;
+using CardSystem.PokerSystem;
 using UnityEngine;
-/// <summary>
-/// Tính damage từ hand đã chọn
-/// </summary>
-public class DamageCalculator
+
+namespace _Game.Core.Gameplay.Combat
 {
-    private readonly MultTable _multTable;
-
-    public DamageCalculator(MultTable multTable)
-    {
-        _multTable = multTable;
-    }
-
     /// <summary>
-    /// Tính damage tổng
+    /// Tính damage từ hand đã chọn
     /// </summary>
-    public int Calculate(List<Card> selectedCards, out PokerHandResult handResult)
+    public class DamageCalculator
     {
-        // Validate input
-        if (selectedCards == null || selectedCards.Count == 0)
+        private readonly MultTable _multTable;
+
+        public DamageCalculator(MultTable multTable)
         {
-            handResult = new PokerHandResult
+            _multTable = multTable;
+        }
+
+        /// <summary>
+        /// Tính damage tổng
+        /// </summary>
+        public int Calculate(List<CardRuntime> selectedCards, out PokerHandResult handResult)
+        {
+            // Validate input
+            if (selectedCards == null || selectedCards.Count == 0)
             {
-                HandType = PokerHandType.None,
-                BestCards = new List<CardMask>()
-            };
-            return 0;
+                handResult = new PokerHandResult
+                {
+                    HandType = PokerHandType.None,
+                    BestCards = new List<CardMask>()
+                };
+                return 0;
+            }
+
+            // Convert Card → CardMask
+            var cardMasks = selectedCards.Select(c => c.Mask).ToList();
+
+            // Evaluate poker hand
+            handResult = PokerEvaluator.Evaluate(cardMasks);
+
+            // Tính base damage từ các lá bài
+            int baseDamage = CalculateBaseDamage(selectedCards);
+
+            // Lấy multiplier từ poker hand
+            float multiplier = _multTable.GetMult(handResult.HandType);
+
+            // Damage = (Base × Multiplier) + Chips
+            int totalDamage = Mathf.RoundToInt(baseDamage * multiplier);
+
+            Debug.Log($"[DamageCalc] Hand: {handResult.HandType} | Base: {baseDamage} | Mult: {multiplier}x | Total: {totalDamage}");
+
+            return totalDamage;
         }
 
-        // Convert Card → CardMask
-        var cardMasks = selectedCards.Select(c => c.Mask).ToList();
-
-        // Evaluate poker hand
-        handResult = PokerEvaluator.Evaluate(cardMasks);
-
-        // Tính base damage từ các lá bài
-        int baseDamage = CalculateBaseDamage(selectedCards);
-
-        // Lấy multiplier từ poker hand
-        float multiplier = _multTable.GetMult(handResult.HandType);
-
-        // Damage = (Base × Multiplier) + Chips
-        int totalDamage = Mathf.RoundToInt(baseDamage * multiplier);
-
-        Debug.Log($"[DamageCalc] Hand: {handResult.HandType} | Base: {baseDamage} | Mult: {multiplier}x | Total: {totalDamage}");
-
-        return totalDamage;
-    }
-
-    /// <summary>
-    /// Tính base damage từ tổng điểm các lá bài
-    /// </summary>
-    private int CalculateBaseDamage(List<Card> cards)
-    {
-        int total = 0;
-        foreach (var card in cards)
+        /// <summary>
+        /// Tính base damage từ tổng điểm các lá bài
+        /// </summary>
+        private int CalculateBaseDamage(List<CardRuntime> cards)
         {
-            total += GetCardChipValue(card);
+            int total = 0;
+            foreach (var card in cards)
+            {
+                total += GetCardChipValue(card);
+            }
+            return total;
         }
-        return total;
-    }
 
-    /// <summary>
-    /// Lấy giá trị chip của 1 lá bài
-    /// Balatro: J/Q/K = 10, Ace = 11, còn lại = rank value
-    /// </summary>
-    private int GetCardChipValue(Card card)
-    {
-        switch (card.Mask.ERank)
+        /// <summary>
+        /// Lấy giá trị chip của 1 lá bài
+        /// Balatro: J/Q/K = 10, Ace = 11, còn lại = rank value
+        /// </summary>
+        private int GetCardChipValue(CardRuntime cardRuntime)
         {
-            case CardRank.Ace:
-                return 11;
-            case CardRank.King:
-            case CardRank.Queen:
-            case CardRank.Jack:
-                return 10;
-            default:
-                return (int)card.Mask.ERank;
+            switch (cardRuntime.Mask.ERank)
+            {
+                case CardRank.Ace:
+                    return 11;
+                case CardRank.King:
+                case CardRank.Queen:
+                case CardRank.Jack:
+                    return 10;
+                default:
+                    return (int)cardRuntime.Mask.ERank;
+            }
         }
     }
 }

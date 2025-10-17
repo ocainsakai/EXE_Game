@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using _Game.Core;
+using _Game.Core.Gameplay;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
-    private ISceneLoader sceneLoader => SceneLoader.Instance;
+    private ISceneLoader SceneLoader => global::_Game.Core.Gameplay.SceneLoader.Instance;
 
     [Header("Top Panel")]
     [SerializeField] private Text coinText;
@@ -33,7 +35,7 @@ public class ShopUI : MonoBehaviour
         backButton.onClick.RemoveAllListeners();
         backButton.onClick.AddListener(() =>
         {
-            sceneLoader.LoadSceneName("MainMenu").Execute();
+            SceneLoader.LoadSceneName("MainMenu").Execute();
         });
 
         // Cập nhật coin/gold khi mở Shop
@@ -42,7 +44,7 @@ public class ShopUI : MonoBehaviour
 
     private void UpdateCurrencyUI()
     {
-        var playerData = GameInstance.Singleton.PlayerData;
+        var playerData = GameInstance.Singleton.playerData;
         //coinText.text = playerData.Coin.ToString();
         //goldText.text = playerData.Gold.ToString();
     }

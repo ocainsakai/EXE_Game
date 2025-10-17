@@ -1,15 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    public EnemyData Data;
-    public float MaxHP;
-    public float HP;
+    [FormerlySerializedAs("Data")] [SerializeField]
+    public EnemyData data;
+    [FormerlySerializedAs("MaxHP")] public float maxHp;
+    [FormerlySerializedAs("HP")] public float hp;
 
-    public int MaxActionCount;
+    [FormerlySerializedAs("MaxActionCount")] public int maxActionCount;
     private int _currentActionCount;
     public int CurrentActionCount
     {
@@ -17,41 +18,41 @@ public class Enemy : MonoBehaviour
         set
         {
             _currentActionCount = value;
-            OnCounting?.Invoke(_currentActionCount, MaxActionCount);
+            onCounting?.Invoke(_currentActionCount, maxActionCount);
         }
     }
 
-    public UnityEvent<int, int> OnCounting;
-    public UnityEvent<float, float> OnHealthChange;
-    public UnityEvent<Enemy> OnTakeDame;
-    public UnityEvent<Enemy> OnDeath;
-    public UnityEvent<Enemy> OnAction;
-    public UnityEvent<Enemy> OnEndTurn;
+    [FormerlySerializedAs("OnCounting")] public UnityEvent<int, int> onCounting;
+    [FormerlySerializedAs("OnHealthChange")] public UnityEvent<float, float> onHealthChange;
+    [FormerlySerializedAs("OnTakeDame")] public UnityEvent<Enemy> onTakeDame;
+    [FormerlySerializedAs("OnDeath")] public UnityEvent<Enemy> onDeath;
+    [FormerlySerializedAs("OnAction")] public UnityEvent<Enemy> onAction;
+    [FormerlySerializedAs("OnEndTurn")] public UnityEvent<Enemy> onEndTurn;
     private void OnEnable()
     {
         // test
-        MaxHP = Data.HP;
-        HP = Data.HP;
-        MaxActionCount = Data.Count;
-        CurrentActionCount = Data.Count;
-        OnTakeDame?.Invoke(this);
+        maxHp = data.hp;
+        hp = data.hp;
+        maxActionCount = data.count;
+        CurrentActionCount = data.count;
+        onTakeDame?.Invoke(this);
     }
 
     public void SetData(EnemyData data) {
-        Data = data;
-        MaxHP = data.HP;
-        HP = data.HP;
-        MaxActionCount = data.Count;
+        this.data = data;
+        maxHp = data.hp;
+        hp = data.hp;
+        maxActionCount = data.count;
         CurrentActionCount = 0;
-        OnCounting?.Invoke(CurrentActionCount, MaxActionCount);
-        OnHealthChange?.Invoke(HP, MaxHP);
+        onCounting?.Invoke(CurrentActionCount, maxActionCount);
+        onHealthChange?.Invoke(hp, maxHp);
     }
 
     public void TakeDame(float dame)
     {
-        HP -= dame;
-        OnHealthChange?.Invoke(HP, MaxHP);
-        OnTakeDame?.Invoke(this);
+        hp -= dame;
+        onHealthChange?.Invoke(hp, maxHp);
+        onTakeDame?.Invoke(this);
     }
 
     public void CountToAction()
@@ -63,15 +64,15 @@ public class Enemy : MonoBehaviour
         Debug.Log($"Counting...");
         CurrentActionCount++;
         yield return new WaitForSeconds(1);
-        if (CurrentActionCount >= MaxActionCount)
+        if (CurrentActionCount >= maxActionCount)
         {
-            OnAction?.Invoke(this);
+            onAction?.Invoke(this);
             CurrentActionCount = 0;
         }
         EndEnemyTurn();
     }
     public void EndEnemyTurn()
     {
-        OnEndTurn?.Invoke(this);
+        onEndTurn?.Invoke(this);
     }
 }

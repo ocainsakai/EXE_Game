@@ -3,5 +3,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BossData", menuName = "Scriptable Objects/BossData")]
 public class BossData : EnemyData
 {
-    public string BossID => EnemyID;
+    public string BossID => enemyID;
 }

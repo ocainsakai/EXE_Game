@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 
 public interface ICardPile
 {
-    void Add(Card card);
-    void AddRange(IEnumerable<Card> cards);
-    Card RemoveTop();
-    bool RemoveCard(Card card);
-    List<Card> RemoveAll();
+    void Add(CardRuntime cardRuntime);
+    void AddRange(IEnumerable<CardRuntime> cards);
+    CardRuntime RemoveTop();
+    bool RemoveCard(CardRuntime cardRuntime);
+    List<CardRuntime> RemoveAll();
     int Count { get; }
-    IReadOnlyList<Card> Cards { get; }
+    IReadOnlyList<CardRuntime> Cards { get; }
 }

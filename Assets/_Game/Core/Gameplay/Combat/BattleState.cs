@@ -8,10 +8,10 @@ public class BattleState
     public PlayerData Player { get; private set; }
     public EnemyData Enemy { get; private set; }
 
-    public int PlayerHP { get; private set; }
-    public int PlayerMaxHP { get; private set; }
-    public int EnemyHP { get; private set; }
-    public int EnemyMaxHP { get; private set; }
+    public int PlayerHp { get; private set; }
+    public int PlayerMaxHp { get; private set; }
+    public int EnemyHp { get; private set; }
+    public int EnemyMaxHp { get; private set; }
 
     // Energy System
     public int CurrentEnergy { get; private set; }
@@ -34,11 +34,11 @@ public class BattleState
         Enemy = enemy;
 
         // TODO: Get từ PlayerData khi có
-        PlayerMaxHP = 100;
-        PlayerHP = PlayerMaxHP;
+        PlayerMaxHp = 100;
+        PlayerHp = PlayerMaxHp;
 
-        EnemyMaxHP = enemy.HP;
-        EnemyHP = EnemyMaxHP;
+        EnemyMaxHp = enemy.hp;
+        EnemyHp = EnemyMaxHp;
 
         // Energy setup
         MaxEnergy = maxEnergy;
@@ -54,13 +54,13 @@ public class BattleState
 
     public void DamageEnemy(int damage)
     {
-        EnemyHP = Mathf.Max(0, EnemyHP - damage);
+        EnemyHp = Mathf.Max(0, EnemyHp - damage);
         CheckBattleEnd();
     }
 
     public void DamagePlayer(int damage)
     {
-        PlayerHP = Mathf.Max(0, PlayerHP - damage);
+        PlayerHp = Mathf.Max(0, PlayerHp - damage);
         CheckBattleEnd();
     }
 
@@ -110,12 +110,12 @@ public class BattleState
 
     private void CheckBattleEnd()
     {
-        if (PlayerHP <= 0)
+        if (PlayerHp <= 0)
         {
             IsBattleOver = true;
             IsPlayerVictory = false;
         }
-        else if (EnemyHP <= 0)
+        else if (EnemyHp <= 0)
         {
             IsBattleOver = true;
             IsPlayerVictory = true;
@@ -130,8 +130,8 @@ public class BattleState
 
     // ==================== HELPERS ====================
 
-    public float GetPlayerHPPercent() => (float)PlayerHP / PlayerMaxHP;
-    public float GetEnemyHPPercent() => (float)EnemyHP / EnemyMaxHP;
+    public float GetPlayerHpPercent() => (float)PlayerHp / PlayerMaxHp;
+    public float GetEnemyHpPercent() => (float)EnemyHp / EnemyMaxHp;
     public float GetEnergyPercent() => (float)CurrentEnergy / MaxEnergy;
 }
 

@@ -1,6 +1,8 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 
 public class UIRoom : MonoBehaviour
@@ -19,17 +21,17 @@ public class UIRoom : MonoBehaviour
         }
     }
 
-    public void UpdateCards(List<Card> newCards)
+    public void UpdateCards(List<CardRuntime> newCards)
     {
         // Tạo dictionary để lookup nhanh
-        var cardEntryDict = cardEntries.ToDictionary(entry => entry.CardID, entry => entry);
+        var cardEntryDict = cardEntries.ToDictionary(entry => entry.cardID, entry => entry);
 
         // Tìm cards mới cần thêm vào
         var cardsToAdd = newCards.Where(card => !cardEntryDict.ContainsKey(card.CardID)).ToList();
 
         // Tìm cards cũ cần remove
         var newCardIds = new HashSet<SerializableGuid>(newCards.Select(c => c.CardID));
-        var entriesToRemove = cardEntries.Where(entry => !newCardIds.Contains(entry.CardID)).ToList();
+        var entriesToRemove = cardEntries.Where(entry => !newCardIds.Contains(entry.cardID)).ToList();
 
         // Remove các cards không còn trong newCards
         foreach (var entry in entriesToRemove)
@@ -45,7 +47,7 @@ public class UIRoom : MonoBehaviour
         }
 
         // Rebuild dictionary sau khi add
-        cardEntryDict = cardEntries.ToDictionary(entry => entry.CardID, entry => entry);
+        cardEntryDict = cardEntries.ToDictionary(entry => entry.cardID, entry => entry);
 
         // Reorder theo thứ tự của newCards
         cardEntries = newCards
@@ -56,10 +58,10 @@ public class UIRoom : MonoBehaviour
         RepositionCards();
     }
 
-    public void DiscardFormRoom(List<Card> cards)
+    public void DiscardFormRoom(List<CardRuntime> cards)
     {
         var cardIds = new HashSet<SerializableGuid>(cards.Select(c => c.CardID));
-        var entriesToRemove = cardEntries.Where(e => cardIds.Contains(e.CardID)).ToList();
+        var entriesToRemove = cardEntries.Where(e => cardIds.Contains(e.cardID)).ToList();
 
         foreach (var entry in entriesToRemove)
         {
@@ -70,15 +72,15 @@ public class UIRoom : MonoBehaviour
         RepositionCards();
     }
 
-    public void AddCardToRoom(Card card)
+    public void AddCardToRoom(CardRuntime cardRuntime)
     {
         //Debug.Log(card.ToString() + "UI");
-        var entry = cardFactory.GetOrCreateCard(card);
+        var entry = cardFactory.GetOrCreateCard(cardRuntime);
         if (cardEntries.Contains(entry)) return;
         AddCardToRoom(entry);
         RepositionCards();
     }
-    public void AddCardToRoom(List<Card> cards)
+    public void AddCardToRoom(List<CardRuntime> cards)
     {
         foreach (var card in cards)
         {
@@ -97,9 +99,9 @@ public class UIRoom : MonoBehaviour
             .DOMove(transform.position, 0.1f)
             .SetEase(Ease.OutQuad);
     }
-    public void DiscardFromRoom(Card card)
+    public void DiscardFromRoom(CardRuntime cardRuntime)
     {
-        var entry = cardFactory.GetOrCreateCard(card);
+        var entry = cardFactory.GetOrCreateCard(cardRuntime);
         if (cardEntries.Contains(entry)) return;
         DiscardFromRoom(entry);
     }

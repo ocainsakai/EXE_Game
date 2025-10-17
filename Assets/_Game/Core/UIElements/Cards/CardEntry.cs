@@ -1,51 +1,54 @@
 ﻿using DG.Tweening;
 using System;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardEntry : MonoBehaviour
 {
-    [SerializeField] private Image _art;
-    [SerializeField] private Button _selectBtn;
+    [FormerlySerializedAs("_art")] [SerializeField] private Image art;
+    [FormerlySerializedAs("_selectBtn")] [SerializeField] private Button selectBtn;
 
-    public SerializableGuid CardID;
-    public Card Card { get; private set; }
+    [FormerlySerializedAs("CardID")] public SerializableGuid cardID;
+    public CardRuntime CardRuntime { get; private set; }
     public bool IsSelected { get; private set; } // Trạng thái này sẽ được đồng bộ từ Card
     public Action OnCardClicked; // Giữ lại nếu bạn cần thông báo cho một manager khác
 
 
-    public void SetCard(Card card)
+    public void SetCard(CardRuntime cardRuntime)
     {
 
-        this.Card = card;
-        CardID = card.CardID;
+        this.CardRuntime = cardRuntime;
+        cardID = cardRuntime.CardID;
 
-        if (_art != null)
+        if (art != null)
         {
-            _art.sprite = card.Art;
+            art.sprite = cardRuntime.Art;
         }
     }
 
     public void SetButton(bool canSelect)
     {
-        _selectBtn.interactable = canSelect;
+        selectBtn.interactable = canSelect;
     }
 
     private void OnEnable()
     {
-        if (_selectBtn != null)
+        if (selectBtn != null)
         {
             // Đơn giản hóa listener, chỉ gọi một hàm
-            _selectBtn.onClick.AddListener(HandleClick);
+            selectBtn.onClick.AddListener(HandleClick);
         }
     }
 
     private void OnDisable()
     {
         // Hủy đăng ký listener của button
-        if (_selectBtn != null)
+        if (selectBtn != null)
         {
-            _selectBtn.onClick.RemoveAllListeners();
+            selectBtn.onClick.RemoveAllListeners();
         }
     }
 
@@ -54,8 +57,8 @@ public class CardEntry : MonoBehaviour
     {
         OnCardClicked?.Invoke(); 
         Debug.Log($"{gameObject} + {gameObject.name} + HandleClick ");
-        Card.IsSelected = !Card.IsSelected; 
-        IsSelected = Card.IsSelected;
+        CardRuntime.IsSelected = !CardRuntime.IsSelected; 
+        IsSelected = CardRuntime.IsSelected;
 
         // 2. Cập nhật giao diện dựa trên trạng thái mới
         float targetY = IsSelected ? 50f : 0f;

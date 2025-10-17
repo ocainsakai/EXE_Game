@@ -1,4 +1,6 @@
+using _Game.Addons.Deck.Scripts.CardCollection;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CardDispacher : MonoBehaviour
 {
@@ -7,11 +9,11 @@ public class CardDispacher : MonoBehaviour
     public DiscardPile discardPile;
     public UICardFactory cardFactory;
 
-    public bool IsTestMode;
+    [FormerlySerializedAs("IsTestMode")] public bool isTestMode;
 
     private void Start()
     {
-        if (IsTestMode)
+        if (isTestMode)
         {
             foreach (var card in deck.OriginCards)
             {

@@ -1,31 +1,33 @@
-using CardSystem;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
-public class UIDeckMenu : MonoBehaviour
+namespace _Game.Core
 {
-    [Header("Menu Sections")]
-    [Tooltip("Panel that displays the list of characters.")]
-    public GameObject deckSelection;
-    [Tooltip("Panel that displays the details of a specific character.")]
-    public GameObject deckDetails;
+    public class UIDeckMenu : MonoBehaviour
+    {
+        [Header("Menu Sections")]
+        [Tooltip("Panel that displays the list of characters.")]
+        public GameObject deckSelection;
+        [Tooltip("Panel that displays the details of a specific character.")]
+        public GameObject deckDetails;
 
-    public UnityEvent OnOpenMenu;
+        [FormerlySerializedAs("OnOpenMenu")] public UnityEvent onOpenMenu;
 
-    public UnityEvent OnCloseMenu;
+        [FormerlySerializedAs("OnCloseMenu")] public UnityEvent onCloseMenu;
 
     
-    void OnEnable()
-    {
-        OnOpenMenu?.Invoke();
-        if (deckSelection != null) deckSelection.SetActive(true);
-        if (deckDetails != null) deckDetails.SetActive(false);
+        void OnEnable()
+        {
+            onOpenMenu?.Invoke();
+            if (deckSelection != null) deckSelection.SetActive(true);
+            if (deckDetails != null) deckDetails.SetActive(false);
 
-    }
+        }
    
-    private void OnDisable()
-    {
-        OnCloseMenu?.Invoke();
+        private void OnDisable()
+        {
+            onCloseMenu?.Invoke();
+        }
     }
 }

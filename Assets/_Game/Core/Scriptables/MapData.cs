@@ -1,14 +1,15 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "MapData", menuName = "Scriptable Objects/MapData")]
 public class MapData : ScriptableObject
 {
-    public string MapID;
-    public string MapName;
+    [FormerlySerializedAs("MapID")] public string mapID;
+    [FormerlySerializedAs("MapName")] public string mapName;
     public EnemyData[] enemyDatas;
     public BossData[] bossDatas;
     
     // Compatibility properties để tương thích với code hiện tại
-    public EnemyData[] enemyData => enemyDatas;
-    public BossData[] bossData => bossDatas;
+    public EnemyData[] EnemyData => enemyDatas;
+    public BossData[] BossData => bossDatas;
 }

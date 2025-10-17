@@ -1,10 +1,10 @@
-﻿
-namespace CardSystem
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CardSystem;
+using UnityEngine;
 
+namespace _Game.Addons.Deck.Scripts
+{
     [CreateAssetMenu(fileName = "CardData", menuName = "Cards/New Card")]
     public class CardData : ScriptableObject
     {

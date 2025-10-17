@@ -1,21 +1,24 @@
 ﻿using CardSystem.PokerSystem;
 using System.Collections;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] MultTable multTable;
     [SerializeField] Room room;
     [SerializeField] TextMeshProUGUI multText;
-    public UnityEvent<float> AttackEnemy;
+    [FormerlySerializedAs("AttackEnemy")] public UnityEvent<float> attackEnemy;
 
     private float mult;
     private void Awake()
     {
         room.OnPokerHandResult.AddListener(UpdateMult);
-        Card.OnActive += CardEffect;
+        CardRuntime.OnActive += CardEffect;
     }
 
     private void UpdateMult(PokerHandResult result)
@@ -23,18 +26,18 @@ public class ScoreManager : MonoBehaviour
         mult = multTable.GetMult(result.HandType);
         multText.text = $"{result.HandType}: x{(int)mult}";
     }
-    private IEnumerator CardEffect(Card card)
+    private IEnumerator CardEffect(CardRuntime cardRuntime)
     {
         //Debug.Log($"Kích hoạt hiệu ứng cho {card}");
-        float dame =(int)card.Rank * mult;
-        AttackEnemy?.Invoke(dame);
+        float dame =(int)cardRuntime.Rank * mult;
+        attackEnemy?.Invoke(dame);
         yield return new WaitForSeconds(0.1f);
         //Debug.Log($"Hiệu ứng {card} kết thúc");
     }
 
     private void OnDestroy()
     {
-        Card.OnActive -= CardEffect;
+        CardRuntime.OnActive -= CardEffect;
 
     }
 }

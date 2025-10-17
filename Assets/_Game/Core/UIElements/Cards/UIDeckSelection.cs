@@ -1,6 +1,7 @@
 using CardSystem;
 using System;
 using System.Collections.Generic;
+using _Game.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,8 @@ public class UIDeckSelection : MonoBehaviour
 
     [SerializeField] private Button selectBtn;
     private int currentDetailDeckId;
-    private DeckData currentDetailDeck => GameInstance.Singleton.GetDeckData(currentDetailDeckId);
-    private int max => GameInstance.Singleton.deckData.Length; 
+    private DeckData CurrentDetailDeck => GameInstance.Singleton.GetDeckData(currentDetailDeckId);
+    private int Max => GameInstance.Singleton.deckData.Length; 
     private void OnEnable()
     {
         leftBtn.onClick.AddListener(OnLeftBtnClicked);
@@ -34,14 +35,14 @@ public class UIDeckSelection : MonoBehaviour
     }
     private void OnSelectBtnClicked()
     {
-        if (currentDetailDeck != null && currentDetailDeck.CheckUnlocked)
+        if (CurrentDetailDeck != null && CurrentDetailDeck.CheckUnlocked)
             PlayerSave.SetSelectedDeck(currentDetailDeckId);
     }
 
     private void OnRightBtnClicked()
     {
         currentDetailDeckId++;
-        if (currentDetailDeckId >= max)
+        if (currentDetailDeckId >= Max)
             currentDetailDeckId = 0;
         UpdateDeckView();
     }
@@ -50,14 +51,14 @@ public class UIDeckSelection : MonoBehaviour
     {
         currentDetailDeckId--;
         if (currentDetailDeckId < 0)
-            currentDetailDeckId = max - 1;
+            currentDetailDeckId = Max - 1;
         UpdateDeckView();
     }
 
     private void UpdateDeckView()
     {
         deckView.gameObject.SetActive(true);
-        var deck = currentDetailDeck;
+        var deck = CurrentDetailDeck;
         if (deck != null)
         {
             deckView.SetDeckName(deck.DeckName);

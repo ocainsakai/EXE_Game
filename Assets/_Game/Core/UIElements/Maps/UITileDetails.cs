@@ -1,6 +1,8 @@
-﻿using TMPro;
+﻿using _Game.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UITileDetails : MonoBehaviour
@@ -16,7 +18,7 @@ public class UITileDetails : MonoBehaviour
     [SerializeField] TextMeshProUGUI atkText;
     [SerializeField] TextMeshProUGUI rewardText;
 
-    public UnityEvent<EnemyData> OnPlayBtnClicked;
+    [FormerlySerializedAs("OnPlayBtnClicked")] public UnityEvent<EnemyData> onPlayBtnClicked;
     public void Show(Tile tile)
     {
         gameObject.SetActive(true);
@@ -45,9 +47,9 @@ public class UITileDetails : MonoBehaviour
         if (enemyData != null)
         {
             enemyStatsPanel.SetActive(true);
-            decription.text = enemyData.Name;
-            hpText.text = $"HP: {enemyData.HP}";
-            atkText.text = $"ATK: {enemyData.Atk}";
+            decription.text = enemyData.name;
+            hpText.text = $"HP: {enemyData.hp}";
+            atkText.text = $"ATK: {enemyData.atk}";
             rewardText.text = $"Reward: {enemyData.reward}"; // Lưu ý: Tên biến có thể khác
         }
         else
@@ -61,7 +63,7 @@ public class UITileDetails : MonoBehaviour
         playBtn.gameObject.SetActive(tile.IsWalkable);
         playBtn.onClick.RemoveAllListeners();
         playBtn.onClick.AddListener(() => {
-            OnPlayBtnClicked?.Invoke(enemyData);
+            onPlayBtnClicked?.Invoke(enemyData);
             Hide();
         });
     }

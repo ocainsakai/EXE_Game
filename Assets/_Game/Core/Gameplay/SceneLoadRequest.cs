@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game.Core.Gameplay;
 
 public class SceneLoadRequest
 {

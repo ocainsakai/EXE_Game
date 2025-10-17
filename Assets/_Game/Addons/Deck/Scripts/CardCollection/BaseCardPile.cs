@@ -1,43 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 
 public abstract class BaseCardPile : MonoBehaviour, ICardPile
 {
-    protected readonly List<Card> cards = new List<Card>();
-    public virtual void Add(Card card) { 
-        if (card == null) return;
-        cards.Add(card); 
+    protected readonly List<CardRuntime> cards = new List<CardRuntime>();
+    public virtual void Add(CardRuntime cardRuntime) { 
+        if (cardRuntime == null) return;
+        cards.Add(cardRuntime); 
     }
-    public virtual void AddRange(IEnumerable<Card> newCards)
+    public virtual void AddRange(IEnumerable<CardRuntime> newCards)
     {
         if (newCards == null || !newCards.Any()) return;
         cards.AddRange(newCards);
     }
 
-    public virtual Card RemoveTop()
+    public virtual CardRuntime RemoveTop()
     {
         if (cards.Count == 0) return null;
-        Card top = cards[0];
+        CardRuntime top = cards[0];
         cards.RemoveAt(0);
         return top;
     }
-    public virtual bool RemoveCard(Card card)
+    public virtual bool RemoveCard(CardRuntime cardRuntime)
     {
-        return cards.Remove(card);
+        return cards.Remove(cardRuntime);
     }
-    public virtual List<Card> RemoveAll()
+    public virtual List<CardRuntime> RemoveAll()
     {
-        var removed = new List<Card>(cards);
+        var removed = new List<CardRuntime>(cards);
         cards.Clear();
         
         return removed;
     }
 
     public int Count => cards.Count;
-    public IReadOnlyList<Card> Cards => cards.AsReadOnly();
-    protected void SortCards(Comparison<Card> comparison)
+    public IReadOnlyList<CardRuntime> Cards => cards.AsReadOnly();
+    protected void SortCards(Comparison<CardRuntime> comparison)
     {
         cards.Sort(comparison);
     }

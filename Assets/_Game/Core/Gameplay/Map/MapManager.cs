@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System;
+using _Game.Core;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+
 public class MapManager : MonoBehaviour
 {
     [Header("Map Settings")]
@@ -15,8 +18,8 @@ public class MapManager : MonoBehaviour
     public Color walkableColor = Color.white;
     public Color unwalkableColor = Color.black;
 
-    public UnityEvent<Tile> OnTileSelected;
-    public UnityEvent<EnemyData> OnTilePlay;
+    [FormerlySerializedAs("OnTileSelected")] public UnityEvent<Tile> onTileSelected;
+    [FormerlySerializedAs("OnTilePlay")] public UnityEvent<EnemyData> onTilePlay;
 
     private GridMap map;
     private UITileEntry[,] tileObjects;
@@ -76,17 +79,17 @@ public class MapManager : MonoBehaviour
                 var enemy = GameInstance.Singleton?.GetRandomEnemy();
                 if (enemy != null)
                 {
-                    tile.OccupantID = enemy.EnemyID;
-                    tile.Icon = enemy.Icon;
+                    tile.OccupantID = enemy.enemyID;
+                    tile.Icon = enemy.icon;
                 }
                 break;
 
             case TileType.Boss:
-                var boss = GameInstance.Singleton?.currentMap?.bossData?.FirstOrDefault();
+                var boss = GameInstance.Singleton?.currentMap?.BossData?.FirstOrDefault();
                 if (boss != null)
                 {
-                    tile.OccupantID = boss.EnemyID;
-                    tile.Icon = boss.Icon;
+                    tile.OccupantID = boss.enemyID;
+                    tile.Icon = boss.icon;
                 }
                 break;
         }
@@ -203,7 +206,7 @@ public class MapManager : MonoBehaviour
         var tile = map.GetTile(position);
         if (tile.Type == TileType.Player || tile.Type == TileType.Nothing) return;
         _currentTile = tile;
-        OnTileSelected?.Invoke(tile);
+        onTileSelected?.Invoke(tile);
     }
     public void OnEnterBattle()
     {

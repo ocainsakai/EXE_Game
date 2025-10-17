@@ -1,16 +1,18 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 
 public class UICardFactory : MonoBehaviour
 {
     [SerializeField] private CardEntry cardEntry;
     [SerializeField] private RectTransform container;
-    private Dictionary<Card, CardEntry> cardEntries = new();
+    private Dictionary<CardRuntime, CardEntry> cardEntries = new();
 
-    public CardEntry GetOrCreateCard(Card card)
+    public CardEntry GetOrCreateCard(CardRuntime cardRuntime)
     {
-        if (cardEntries.TryGetValue(card, out var entry) && entry != null)
+        if (cardEntries.TryGetValue(cardRuntime, out var entry) && entry != null)
         {
             return entry;
         }
@@ -18,8 +20,8 @@ public class UICardFactory : MonoBehaviour
         entry = Instantiate(cardEntry, container.position, Quaternion.identity);
         entry.transform.SetParent(container);
         entry.transform.localScale = Vector3.one;
-        entry.SetCard(card);
-        cardEntries.Add( card, entry);
+        entry.SetCard(cardRuntime);
+        cardEntries.Add( cardRuntime, entry);
         return entry;
         
     } 

@@ -2,10 +2,10 @@ using Cysharp.Threading.Tasks;
 
 public abstract class CommandBase : ICommand
 {
-    protected readonly IEntity entity;
+    protected readonly IEntity Entity;
     protected CommandBase(IEntity entity)
     {
-        this.entity = entity;
+        this.Entity = entity;
     }
     public abstract UniTask Execute();
 

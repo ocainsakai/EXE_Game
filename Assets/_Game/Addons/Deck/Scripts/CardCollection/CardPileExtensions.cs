@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 
 public static class CardPileExtensions
 {
-    public static void MoveCardTo(this ICardPile source, ICardPile target, Card card)
+    public static void MoveCardTo(this ICardPile source, ICardPile target, CardRuntime cardRuntime)
     {
-        if (source.Cards.Contains(card))
+        if (source.Cards.Contains(cardRuntime))
         {
-            source.RemoveCard(card);
-            target.Add(card);
+            source.RemoveCard(cardRuntime);
+            target.Add(cardRuntime);
         }
     }
-    public static IEnumerable<Card> DrawFrom(this ICardPile sources, ICardPile target, int amount)
+    public static IEnumerable<CardRuntime> DrawFrom(this ICardPile sources, ICardPile target, int amount)
     {
-        var drawnCards = new List<Card>();
+        var drawnCards = new List<CardRuntime>();
         if (amount > target.Count) return drawnCards;
         for (int i = 0; i < amount; i++)
         {

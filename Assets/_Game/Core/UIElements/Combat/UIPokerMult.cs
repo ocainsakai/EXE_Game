@@ -1,15 +1,16 @@
 using CardSystem.PokerSystem;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIPokerMult : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _pokerTxt;
-    [SerializeField] private TextMeshProUGUI _multTxt;
+    [FormerlySerializedAs("_pokerTxt")] [SerializeField] private TextMeshProUGUI pokerTxt;
+    [FormerlySerializedAs("_multTxt")] [SerializeField] private TextMeshProUGUI multTxt;
 
     public void SetPokerMult(PokerHandType poker = PokerHandType.None, float mult = 0)
     {
-        _pokerTxt.text = poker.ToString();
-        _multTxt.text = $"x{(int) mult}";
+        pokerTxt.text = poker.ToString();
+        multTxt.text = $"x{(int) mult}";
     }
 }

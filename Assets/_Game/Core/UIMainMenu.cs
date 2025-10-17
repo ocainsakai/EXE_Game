@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using _Game.Core.Gameplay;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIMainMenu : MonoBehaviour
 {
-    private ISceneLoader sceneLoader => SceneLoader.Instance;
+    private ISceneLoader SceneLoader => global::_Game.Core.Gameplay.SceneLoader.Instance;
 
     [Header("Main Buttons")]
     [SerializeField] private Button start;        // VÀO TRẬN
@@ -16,11 +17,11 @@ public class UIMainMenu : MonoBehaviour
     {
         // VÀO TRẬN
         start.onClick.RemoveAllListeners();
-        start.onClick.AddListener(() => sceneLoader.LoadSceneName("Map").Execute());
+        start.onClick.AddListener(() => SceneLoader.LoadSceneName("Map").Execute());
 
         // CÀI ĐẶT
         settings.onClick.RemoveAllListeners();
-        settings.onClick.AddListener(()=> sceneLoader.LoadSceneName("Setting").Execute());
+        settings.onClick.AddListener(()=> SceneLoader.LoadSceneName("Setting").Execute());
 
         // BỘ BÀI
         deckButton.onClick.RemoveAllListeners();
@@ -33,7 +34,7 @@ public class UIMainMenu : MonoBehaviour
 
         // CỬA HÀNG
         shop.onClick.RemoveAllListeners();
-        shop.onClick.AddListener(() => sceneLoader.LoadSceneName("Shop").Execute());
+        shop.onClick.AddListener(() => SceneLoader.LoadSceneName("Shop").Execute());
     }
 
     private void OpenDeck()

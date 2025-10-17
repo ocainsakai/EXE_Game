@@ -1,12 +1,14 @@
+using _Game.Addons.Deck.Scripts.CardCollection;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UIDeck : MonoBehaviour
 {
     [SerializeField] DeckManager manager;
-    [SerializeField] Image Art;
+    [FormerlySerializedAs("Art")] [SerializeField] Image art;
     private void OnEnable()
     {
-        Art.sprite = manager.DeckCover;
+        art.sprite = manager.DeckCover;
     }
 }
