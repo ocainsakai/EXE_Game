@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Game.Addons.Deck.Scripts;
+using _Game.Addons.Deck.Scripts.Card;
 using _Game.Core;
 using CardSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Game.Addons.Deck.Scripts.CardCollection
@@ -15,30 +17,11 @@ namespace _Game.Addons.Deck.Scripts.CardCollection
         public IReadOnlyCollection<Card.CardRuntime> Cards => cards;
 
         public Sprite DeckCover { get; private set; }
-    
+        public int CardCount => cards.Count;  
+
         public bool IsTestMode;
 
         public DeckData testDeck;
-        private void Awake()
-        {
-            if (IsTestMode)
-            {
-                originCards = (CreateCards(testDeck.Cards).ToList());
-                DeckCover = testDeck.DeckCover;
-                return;
-            }
-
-            var deckData = GameInstance.Singleton.GetDeckData(PlayerSave.GetSelectedDeck());
-            if (deckData == null)
-            {
-                Debug.LogError("DeckData is null");
-                return;
-            }
-
-            Debug.Log(deckData.ToString() + $"   {deckData.Cards.Count}");
-            originCards = (CreateCards(deckData.Cards).ToList());
-            DeckCover = deckData.DeckCover;
-        }
         public bool DestroyCard(SerializableGuid cardID)
         {
             if (originCards.Select(x => x.CardID).Contains(cardID))
@@ -65,13 +48,6 @@ namespace _Game.Addons.Deck.Scripts.CardCollection
             }
         }
 
-        public void CreateRuntimeDeck()
-        {
-            cards.Clear();
-            cards = new List<Card.CardRuntime>(originCards);
-            ShuffleDeck();
-        }
-
         public Card.CardRuntime DrawCard()
         {
             var card = cards.FirstOrDefault();
@@ -87,5 +63,24 @@ namespace _Game.Addons.Deck.Scripts.CardCollection
             }
         }
 
+        public void Clear()
+        {
+            originCards.Clear();
+            cards.Clear();
+        }
+
+        public void AddCardsAndShuffle(List<CardRuntime> startingCards)
+        {
+            originCards.AddRange(startingCards);    
+            cards.AddRange(startingCards);
+            ShuffleDeck();
+        }
+
+        public CardRuntime Draw()
+        {
+            var card = cards.FirstOrDefault();
+            cards.Remove(card);
+            return card;
+        }
     }
 }

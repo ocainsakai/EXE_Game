@@ -17,8 +17,8 @@ public class ScoreManager : MonoBehaviour
     private float mult;
     private void Awake()
     {
-        room.OnPokerHandResult.AddListener(UpdateMult);
-        CardRuntime.OnActive += CardEffect;
+        room.onPokerHandResult.AddListener(UpdateMult);
+        // CardRuntime.OnActive += CardEffect;
     }
 
     private void UpdateMult(PokerHandResult result)
@@ -37,7 +37,7 @@ public class ScoreManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        CardRuntime.OnActive -= CardEffect;
+  
 
     }
 }

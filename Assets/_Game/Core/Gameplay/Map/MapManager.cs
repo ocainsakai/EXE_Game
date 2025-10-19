@@ -18,8 +18,8 @@ public class MapManager : MonoBehaviour
     public Color walkableColor = Color.white;
     public Color unwalkableColor = Color.black;
 
-    [FormerlySerializedAs("OnTileSelected")] public UnityEvent<Tile> onTileSelected;
-    [FormerlySerializedAs("OnTilePlay")] public UnityEvent<EnemyData> onTilePlay;
+    public UnityEvent<Tile> onTileSelected;
+    public UnityEvent<EnemyData> onTilePlay;
 
     private GridMap map;
     private UITileEntry[,] tileObjects;

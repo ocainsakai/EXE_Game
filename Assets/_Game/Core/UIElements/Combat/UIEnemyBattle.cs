@@ -16,7 +16,7 @@ public class UIEnemyBattle : MonoBehaviour
     public void Show(Enemy enemy)
     {
         avatar.sprite = enemy.data.icon;
-        enemyNameText.text = enemy.data.name;
+        enemyNameText.text = enemy.data.nameDisplay;
     }
 
     public void OnTakeDameHandler(Enemy enemy)

@@ -1,19 +1,30 @@
+using System.Collections.Generic;
 using _Game.Addons.Deck.Scripts;
 using _Game.Addons.Deck.Scripts.Card;
 using DG.Tweening;
 using UnityEngine;
 
-public class DiscardPile : BaseCardPile
+public class DiscardPile : MonoBehaviour
 {
     [SerializeField] UICardFactory _cardManager;
     [SerializeField] private Transform discard;
-    public override void Add(CardRuntime cardRuntime)
+    
+    private List<CardRuntime> discardPile = new List<CardRuntime>();    
+    
+    public void Add(CardRuntime cardRuntime)
     {
-        base.Add(cardRuntime);
-        var entry = _cardManager.GetOrCreateCard(cardRuntime);
-        if (entry == null) return;
-        entry.transform.SetParent(discard);
-        entry.transform.DOMove(discard.position, 0.1f);
+        discardPile.Add(cardRuntime);   
     }
 
+    public void Clear()
+    {
+        discardPile.Clear();      
+    }
+
+    public List<CardRuntime> TakeAllCards()
+    {
+        var list = new List<CardRuntime>(discardPile);
+        Clear();
+        return list; 
+    }
 }

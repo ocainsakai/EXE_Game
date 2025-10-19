@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,104 +13,43 @@ namespace _Game.Core.Gameplay
 {
     public class PlayerActionController : MonoBehaviour
     {
-        [Header("System References"), SerializeField]
-        
+        [Header("System References")]
+        [SerializeField]
+        private CardManager cardManager;
+        [SerializeField]
         private BattleSystem battleSystem;
 
-        [FormerlySerializedAs("_deckManager"), SerializeField] 
-        private DeckManager deckManager;
-
-        [FormerlySerializedAs("_room"), SerializeField] 
-        private Room room;
-
-        [FormerlySerializedAs("_discardPile"), SerializeField] 
-        private DiscardPile discardPile;
-
-        [FormerlySerializedAs("_cardFactory"), SerializeField] 
-        private UICardFactory cardFactory;
-
-        [FormerlySerializedAs("_playerButton"), SerializeField] 
+        [SerializeField] 
         private PlayerButton playerButton;
 
+        [SerializeField] private GameObject ui;
         [Header("Settings"), SerializeField]
         
         private bool isTestMode;
 
         public UnityEvent onStartTurn;
-        [FormerlySerializedAs("OnEndTurn")] public UnityEvent<PlayerActionController> onEndTurn;
-
-        private void Start()
-        {
-            if (isTestMode)
-            {
-                Debug.Log("[PlayerActionController] Test Mode enabled. Creating initial deck.");
-                foreach (var card in deckManager.OriginCards)
-                {
-                    cardFactory.GetOrCreateCard(card);
-                }
-                ActivateRoom();
-            }
-        }
-
-        private void ActivateRoom()
-        {
-            Debug.Log("[PlayerActionController] Activating Room. Creating runtime deck and starting player turn.");
-            deckManager.CreateRuntimeDeck();
-            PlayerStartTurn();
-            room.UnselectAll();
-        }
-
-        private void PlayerDraw()
-        {
-            int cardNeed = room.RoomSize - room.Cards.Count;
-            Debug.Log($"[PlayerActionController] Drawing {cardNeed} card(s).");
-            for (int i = 0; i < cardNeed; i++)
-            {
-                var card = deckManager.DrawCard();
-                if (card != null)
-                {
-                    room.Add(card);
-                }
-                else
-                {
-                    Debug.LogWarning("[PlayerActionController] DrawCard returned null. Deck might be empty.");
-                    break;
-                }
-            }
-            room.CurrentSort();
-        }
-
+        public UnityEvent<PlayerActionController> onEndTurn;
+        
         public void PlayerDiscard()
         {
             Debug.Log("[PlayerActionController] Attempting to discard selected cards.");
             playerButton.DisableAllActions();
-
-            var cardsToDiscard = room.GetSelectCards;
-            if (cardsToDiscard.Count == 0)
-            {
-                Debug.LogWarning("[PlayerActionController] Discard failed: No cards selected.");
-                playerButton.EnableAllActions();
-                return;
-            }
-
             if (!battleSystem.CanDiscard())
             {
                 Debug.LogWarning("[PlayerActionController] Discard failed: Cannot afford energy cost.");
                 playerButton.EnableAllActions();
                 return;
             }
-
-            Debug.Log($"[PlayerActionController] Discarding {cardsToDiscard.Count} card(s).");
             battleSystem.UseEnergyDiscard();
-            room.Discards();
-            PlayerDraw();
+            cardManager.DiscardSelectedCards();
+            cardManager.DrawHand();
             playerButton.EnableAllActions();
         }
 
         public void PlayerPlay()
         {
             Debug.Log("[PlayerActionController] Attempting to play selected cards.");
-            var cardsToPlay = room.GetSelectCards;
+            var cardsToPlay = cardManager.SelectedCards;
 
             if (cardsToPlay.Count == 0)
             {
@@ -128,12 +68,12 @@ namespace _Game.Core.Gameplay
             StartCoroutine(PlayHand(cardsToPlay));
         }
 
-        public void PlayerStartTurn()
+        public void StartTurn()
         {
             Debug.Log("================= Player Start Turn =====================");
             battleSystem.RegenEnergy();
-            room.Discards(); // Discard remaining cards from last turn
-            PlayerDraw();
+            cardManager.DiscardSelectedCards(); // Discard remaining cards from last turn
+            cardManager.DrawHand();
             playerButton.EnableAllActions();
             onStartTurn?.Invoke();
         }
@@ -142,7 +82,6 @@ namespace _Game.Core.Gameplay
         {
             Debug.Log("================= Player End Turn =======================");
             playerButton.DisableAllActions();
-            room.UnselectAll();
             onEndTurn?.Invoke(this);
         }
 
@@ -164,6 +103,12 @@ namespace _Game.Core.Gameplay
                 battleSystem.UseEnergyPlay();
                 yield return card.Active();
             }
+        }
+
+        public void Active()
+        {
+            ui.gameObject.SetActive(true);
+            StartTurn();
         }
     }
 }

@@ -169,5 +169,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4b0ff06c347414c991a8b76e9d02b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _art: {fileID: 263678744205904543}
-  _selectBtn: {fileID: 311655446239594358}
+  art: {fileID: 263678744205904543}
+  selectBtn: {fileID: 311655446239594358}

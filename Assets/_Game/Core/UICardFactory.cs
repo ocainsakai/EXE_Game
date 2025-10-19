@@ -10,6 +10,15 @@ public class UICardFactory : MonoBehaviour
     [SerializeField] private RectTransform container;
     private Dictionary<CardRuntime, CardEntry> cardEntries = new();
 
+    public List<CardEntry> GetOrCreateCardEntries(List<CardRuntime> cards)
+    {
+        var list = new List<CardEntry>();
+        foreach (var card in cards)
+        {
+            list.Add(GetOrCreateCard(card));
+        }
+        return list;    
+    }
     public CardEntry GetOrCreateCard(CardRuntime cardRuntime)
     {
         if (cardEntries.TryGetValue(cardRuntime, out var entry) && entry != null)
@@ -20,12 +29,10 @@ public class UICardFactory : MonoBehaviour
         entry = Instantiate(cardEntry, container.position, Quaternion.identity);
         entry.transform.SetParent(container);
         entry.transform.localScale = Vector3.one;
-        entry.SetCard(cardRuntime);
+        entry.Setup(cardRuntime);
         cardEntries.Add( cardRuntime, entry);
         return entry;
-        
-    } 
-
+    }
     public void ReturnToPool(CardEntry entry)
     {
         entry.transform.DOLocalMoveX(1000f, 0.25f).OnComplete(() => entry.transform.SetParent(container));

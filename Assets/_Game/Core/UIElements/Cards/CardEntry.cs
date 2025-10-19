@@ -1,67 +1,78 @@
-﻿using DG.Tweening;
-using System;
+﻿// CardEntry.cs - Refactored
+using DG.Tweening;
 using _Game.Addons.Deck.Scripts;
 using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardEntry : MonoBehaviour
 {
-    [FormerlySerializedAs("_art")] [SerializeField] private Image art;
-    [FormerlySerializedAs("_selectBtn")] [SerializeField] private Button selectBtn;
-
-    [FormerlySerializedAs("CardID")] public SerializableGuid cardID;
+    [SerializeField] private Image art;
+    [SerializeField] private Button selectBtn;
+    
+    public SerializableGuid CardID => CardRuntime.CardID;
     public CardRuntime CardRuntime { get; private set; }
-    public bool IsSelected { get; private set; } // Trạng thái này sẽ được đồng bộ từ Card
-    public Action OnCardClicked; // Giữ lại nếu bạn cần thông báo cho một manager khác
+    private Room _room;
 
-
-    public void SetCard(CardRuntime cardRuntime)
+    public void SetRoom(Room room)
     {
-
+        _room = room;
+    }
+    public void Setup(CardRuntime cardRuntime)
+    {
         this.CardRuntime = cardRuntime;
-        cardID = cardRuntime.CardID;
-
-        if (art != null)
-        {
-            art.sprite = cardRuntime.Art;
-        }
+        
+        art.sprite = cardRuntime.Art;
+        
+        // Luôn đồng bộ trạng thái UI với trạng thái logic khi setup
+        UpdateVisuals(false); // Cập nhật ngay lập tức, không có animation
     }
 
-    public void SetButton(bool canSelect)
+    public void SetInteractable(bool isInteractable)
     {
-        selectBtn.interactable = canSelect;
+        selectBtn.interactable = isInteractable;
     }
 
     private void OnEnable()
     {
-        if (selectBtn != null)
-        {
-            // Đơn giản hóa listener, chỉ gọi một hàm
-            selectBtn.onClick.AddListener(HandleClick);
-        }
+        selectBtn.onClick.AddListener(HandleClick);
     }
 
     private void OnDisable()
     {
-        // Hủy đăng ký listener của button
-        if (selectBtn != null)
-        {
-            selectBtn.onClick.RemoveAllListeners();
-        }
+        selectBtn.onClick.RemoveListener(HandleClick);
     }
 
-    // Hàm được gọi khi button được nhấn
     private void HandleClick()
     {
-        OnCardClicked?.Invoke(); 
-        Debug.Log($"{gameObject} + {gameObject.name} + HandleClick ");
-        CardRuntime.IsSelected = !CardRuntime.IsSelected; 
-        IsSelected = CardRuntime.IsSelected;
+        // Logic kiểm tra đã đúng từ trước: chỉ chặn chọn thêm, luôn cho phép bỏ chọn.
+        if (!CardRuntime.IsSelected && !_room.CanSelectCard)
+        {
+            Debug.Log("Cannot select more cards!");
+            return;
+        }
 
-        // 2. Cập nhật giao diện dựa trên trạng thái mới
-        float targetY = IsSelected ? 50f : 0f;
-        transform.DOLocalMoveY(targetY, 0.2f).SetEase(Ease.OutQuad);
+        // Thay đổi trạng thái logic "nguồn"
+        CardRuntime.IsSelected = !CardRuntime.IsSelected;
+
+        // Cập nhật giao diện sau khi thay đổi logic
+        UpdateVisuals(true);
+    }
+
+    // Hàm riêng để cập nhật giao diện, có thể gọi từ nhiều nơi
+    public void UpdateVisuals(bool animated)
+    {
+        float targetY = CardRuntime.IsSelected ? 50f : 0f;
+        if (animated)
+        {
+            transform.DOLocalMoveY(targetY, 0.2f).SetEase(Ease.OutQuad);
+        }
+        else
+        {
+            // Cập nhật ngay lập tức
+            var pos = transform.localPosition;
+            pos.y = targetY;
+            transform.localPosition = pos;
+        }
     }
 }

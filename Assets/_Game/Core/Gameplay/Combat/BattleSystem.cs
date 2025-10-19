@@ -39,7 +39,7 @@ public class BattleSystem : MonoBehaviour
     {
         _state = new BattleState(player, enemy, startEnergy, maxEnergy, energyRegenPerRound);
 
-        Debug.Log($"[BattleSystem] Battle started: Player vs {enemy.name} (HP: {enemy.hp}, Energy: {startEnergy})");
+        Debug.Log($"[BattleSystem] Battle started: Player vs {enemy.nameDisplay} (HP: {enemy.hp}, Energy: {startEnergy})");
 
         onEnergyChanged?.Invoke(_state.CurrentEnergy, _state.MaxEnergy);
     }

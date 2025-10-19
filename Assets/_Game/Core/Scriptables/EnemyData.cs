@@ -5,8 +5,8 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData")]
 public class EnemyData : ScriptableObject
 {
-    [FormerlySerializedAs("EnemyID")] public string enemyID;
-    [FormerlySerializedAs("Name")] public string name;
+    public string enemyID;
+    public string nameDisplay;
     [FormerlySerializedAs("Icon")] public Sprite icon;
     [FormerlySerializedAs("Atk")] public int atk;
     [FormerlySerializedAs("HP")] public int hp;

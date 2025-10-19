@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.XR;
 
 namespace _Game.Core.Gameplay.Combat
 {
@@ -10,63 +11,79 @@ namespace _Game.Core.Gameplay.Combat
     public class BattleManager : MonoBehaviour
     {
         [SerializeField] private BattleSystem battleSystem;
+        [SerializeField] private CardManager cardManager;
         [SerializeField] private Enemy enemy;
         [SerializeField] private PlayerActionController playerActionController;
         [SerializeField] private PlayerStatComponent playerStatComponent;
         [SerializeField] private GameObject battlePanel;
-        [FormerlySerializedAs("OnBattleStart")] public UnityEvent onBattleStart;
-        [FormerlySerializedAs("OnBattleEnd")] public UnityEvent onBattleEnd;
-        [FormerlySerializedAs("OnBattleWin")] public UnityEvent onBattleWin;
-        [FormerlySerializedAs("OnBattleLose")] public UnityEvent onBattleLose;
+        public UnityEvent onBattleStart;
+        public UnityEvent onBattleWin;
+        public UnityEvent onBattleLose;
         public void BattleStart(EnemyData enemyData)
         {
+            // get data
+            var playerData = GameInstance.Singleton.playerData;
+            var deckData = GameInstance.Singleton.GetDeckData();
             // start UI
             battlePanel.SetActive(true);
 
             // start player
-            var playerData = GameInstance.Singleton.playerData;
             battleSystem.StartBattle(playerData, enemyData);
-            playerActionController.gameObject.SetActive(true);
             playerStatComponent.SetData(playerData);
-
+            cardManager.StartBattle(deckData.Cards);
             // start enemy
             enemy.SetData(enemyData);
             onBattleStart?.Invoke();
+            
+            // start turn
+            playerActionController.Active();
         }
         public void CheckCondition(object sender)
         {
             if (playerStatComponent.Hp <= 0)
             {
-                Debug.Log($"You lose");
-                // lose resolve
-                onBattleEnd?.Invoke();
-                onBattleLose?.Invoke();
+                HandleLose();
                 return;
             }
             if (enemy.hp <=0)
             {
-                Debug.Log($"You win");
-                // win resolve
-                onBattleEnd?.Invoke();
-                onBattleWin?.Invoke();
+                HandleWin();
                 return;
             }
-            if (sender != null && (sender is Enemy))
+            HandleNextTurn(sender);
+        }
+
+        private void HandleNextTurn(object sender)
+        {
+            if (sender is Enemy)
             {
                 Debug.Log($"You start your turn");
-                playerActionController.PlayerStartTurn();
+                playerActionController.StartTurn();  
                 return;
             }
-            if (sender != null && sender is PlayerActionController)
+            if (sender is PlayerActionController)
             {
                 Debug.Log($"You start enemy turn");
                 enemy.CountToAction();
-                return;
             }
         }
-        public void AttackPlayer(Enemy enemy)
+        private void HandleWin()
         {
-            playerStatComponent.Hp -= enemy.data.atk;
+            Debug.Log($"You win");
+            // win resolve
+            onBattleWin?.Invoke();
+        }
+
+        private void HandleLose()
+        {
+            Debug.Log($"You lose");
+            // lose resolve
+            onBattleLose?.Invoke();
+            
+        }
+        public void AttackPlayer(Enemy enemyAttacker)
+        {
+            playerStatComponent.Hp -= enemyAttacker.data.atk;
         }
     }
 }

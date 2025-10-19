@@ -1,145 +1,101 @@
-﻿using DG.Tweening;
+﻿// UIRoom.cs - Refactored (Event-Driven)
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Addons.Deck.Scripts;
 using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
 
 public class UIRoom : MonoBehaviour
 {
     [SerializeField] private UICardFactory cardFactory;
-    //[SerializeField] private Room room;
-    private List<CardEntry> cardEntries = new List<CardEntry>();
+    [SerializeField] private Room room; // << QUAN TRỌNG: Phải được gán trong Inspector
 
+    private List<CardEntry> _cardEntries = new List<CardEntry>();
 
-
-    public void UpdateInteract(bool canSelect)
+    private void Start()
     {
-        foreach (CardEntry entry in cardEntries)
+        if (room == null)
         {
-            entry.SetButton(canSelect || entry.IsSelected);
+            Debug.LogError("Room reference is not set in UIRoom!", this);
+            return;
         }
-    }
+        
+        // Đăng ký lắng nghe các sự kiện từ Room
+        room.OnCardAdd += (HandleCardAdded);
+        room.OnCardDiscard += (HandleCardDiscarded);
+        room.OnCardsChanged += (HandleCardsChanged);
+        room.canSelectCardChanged.AddListener(UpdateInteract);
 
-    public void UpdateCards(List<CardRuntime> newCards)
-    {
-        // Tạo dictionary để lookup nhanh
-        var cardEntryDict = cardEntries.ToDictionary(entry => entry.cardID, entry => entry);
-
-        // Tìm cards mới cần thêm vào
-        var cardsToAdd = newCards.Where(card => !cardEntryDict.ContainsKey(card.CardID)).ToList();
-
-        // Tìm cards cũ cần remove
-        var newCardIds = new HashSet<SerializableGuid>(newCards.Select(c => c.CardID));
-        var entriesToRemove = cardEntries.Where(entry => !newCardIds.Contains(entry.cardID)).ToList();
-
-        // Remove các cards không còn trong newCards
-        foreach (var entry in entriesToRemove)
-        {
-            cardEntries.Remove(entry);
-            cardFactory.ReturnToPool(entry);
-        }
-
-        // Add cards mới
-        if (cardsToAdd.Count > 0)
-        {
-            AddCardToRoom(cardsToAdd);
-        }
-
-        // Rebuild dictionary sau khi add
-        cardEntryDict = cardEntries.ToDictionary(entry => entry.cardID, entry => entry);
-
-        // Reorder theo thứ tự của newCards
-        cardEntries = newCards
-            .Where(card => cardEntryDict.ContainsKey(card.CardID))
-            .Select(card => cardEntryDict[card.CardID])
-            .ToList();
-
-        RepositionCards();
-    }
-
-    public void DiscardFormRoom(List<CardRuntime> cards)
-    {
-        var cardIds = new HashSet<SerializableGuid>(cards.Select(c => c.CardID));
-        var entriesToRemove = cardEntries.Where(e => cardIds.Contains(e.cardID)).ToList();
-
-        foreach (var entry in entriesToRemove)
-        {
-            cardEntries.Remove(entry);
-            cardFactory.ReturnToPool(entry);
-        }
-
-        RepositionCards();
-    }
-
-    public void AddCardToRoom(CardRuntime cardRuntime)
-    {
-        //Debug.Log(card.ToString() + "UI");
-        var entry = cardFactory.GetOrCreateCard(cardRuntime);
-        if (cardEntries.Contains(entry)) return;
-        AddCardToRoom(entry);
-        RepositionCards();
-    }
-    public void AddCardToRoom(List<CardRuntime> cards)
-    {
-        foreach (var card in cards)
-        {
-            AddCardToRoom(card);
-        }
-    }
-
-    public void AddCardToRoom(CardEntry entry)
-    {
-        if (entry == null || cardEntries.Contains(entry)) return;
-
-        entry.transform.SetParent(transform);
-        cardEntries.Add(entry);
-
-        entry.transform
-            .DOMove(transform.position, 0.1f)
-            .SetEase(Ease.OutQuad);
-    }
-    public void DiscardFromRoom(CardRuntime cardRuntime)
-    {
-        var entry = cardFactory.GetOrCreateCard(cardRuntime);
-        if (cardEntries.Contains(entry)) return;
-        DiscardFromRoom(entry);
-    }
-    public void DiscardFromRoom(CardEntry card)
-    {
-        if (card == null) return;
-
-        cardEntries.Remove(card);
-        cardFactory.ReturnToPool(card);
-        RepositionCards();
-    }
-
-    private void RepositionCards()
-    {
-        //Debug.Log("Reposition: " + cardEntries.Count + " cards");
-        if (cardEntries.Count == 0) return;
-
-        float totalWidth = 1000f;
-        float spacing = 0f;
-
-        if (cardEntries.Count > 1)
-            spacing = totalWidth / (cardEntries.Count - 1);
-
-        float startX = -totalWidth / 2f;
-
-        for (int i = 0; i < cardEntries.Count; i++)
-        {
-            float targetX = startX + i * spacing;
-            Vector3 targetPos = new Vector3(targetX, 0f, 0f);
-
-            cardEntries[i].transform
-                .DOLocalMoveX(targetPos.x, 0.2f)
-                .SetEase(Ease.OutQuad);
-        }
+        // Đồng bộ trạng thái ban đầu
+        HandleCardsChanged(room.Cards.ToList());
     }
 
     private void OnDestroy()
     {
-        StopAllCoroutines();
+        if (room != null)
+        {
+            room.OnCardAdd -= (HandleCardAdded);
+            room.OnCardDiscard -= (HandleCardDiscarded);
+            room.OnCardsChanged -= (HandleCardsChanged);
+            room.canSelectCardChanged.RemoveListener(UpdateInteract);
+        }
+    }
+
+    private void HandleCardAdded(CardRuntime cardRuntime)
+    {
+        Debug.Log("Card added");    
+        if (_cardEntries.Any(entry => entry.CardID == cardRuntime.CardID)) return;
+        Debug.Log("Card added after discarding");
+        var entry = cardFactory.GetOrCreateCard(cardRuntime);
+        entry.SetRoom(room);
+        entry.transform.SetParent(transform, false);
+        _cardEntries.Add(entry);
+        RepositionCards();
+    }
+
+    private void HandleCardDiscarded(CardRuntime cardRuntime)
+    {
+        var entryToRemove = _cardEntries.FirstOrDefault(e => e.CardID == cardRuntime.CardID);
+        if (entryToRemove != null)
+        {
+            _cardEntries.Remove(entryToRemove);
+            cardFactory.ReturnToPool(entryToRemove);
+            RepositionCards();
+        }
+    }
+    
+    private void HandleCardsChanged(List<CardRuntime> newCardOrder)
+    {
+        if (newCardOrder == null) return;
+        var entryLookup = _cardEntries.ToDictionary(entry => entry.CardID);
+        _cardEntries = newCardOrder
+            .Where(card => entryLookup.ContainsKey(card.CardID))
+            .Select(card => entryLookup[card.CardID])
+            .ToList();
+        RepositionCards();
+    }
+
+    private void UpdateInteract(bool canSelect)
+    {
+        foreach (CardEntry entry in _cardEntries)
+        {
+            bool isInteractable = canSelect || entry.CardRuntime.IsSelected;
+            entry.SetInteractable(isInteractable);
+        }
+    }
+
+    private void RepositionCards()
+    {
+        if (_cardEntries.Count == 0) return;
+
+        float totalWidth = 1000f;
+        float spacing = _cardEntries.Count > 1 ? totalWidth / (_cardEntries.Count - 1) : 0f;
+        float startX = -totalWidth / 2f;
+
+        for (int i = 0; i < _cardEntries.Count; i++)
+        {
+            _cardEntries[i].transform.SetSiblingIndex(i);
+            _cardEntries[i].transform.DOLocalMoveX(startX + i * spacing, 0.3f).SetEase(Ease.OutQuad);
+        }
     }
 }

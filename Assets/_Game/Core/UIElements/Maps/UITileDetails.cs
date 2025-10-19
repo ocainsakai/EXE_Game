@@ -47,7 +47,7 @@ public class UITileDetails : MonoBehaviour
         if (enemyData != null)
         {
             enemyStatsPanel.SetActive(true);
-            decription.text = enemyData.name;
+            decription.text = enemyData.nameDisplay;
             hpText.text = $"HP: {enemyData.hp}";
             atkText.text = $"ATK: {enemyData.atk}";
             rewardText.text = $"Reward: {enemyData.reward}"; // Lưu ý: Tên biến có thể khác
