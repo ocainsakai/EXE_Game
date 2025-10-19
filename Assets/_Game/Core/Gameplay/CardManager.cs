@@ -12,13 +12,10 @@ public class CardManager : MonoBehaviour
     [SerializeField] private Room room; 
     [SerializeField] private DiscardPile discardPile;
     [SerializeField] private UICardFactory uiCardFactory;
-    
     public List<CardRuntime> SelectedCards => room.SelectedCards;
     public void StartBattle(List<CardData> allCardDataInDeck)
     {
-        deck.Clear();
-        discardPile.Clear();
-        room.Clear();
+        Clear();
         
         // Tạo CardRuntime từ CardData
         var startingCards = allCardDataInDeck.Select(data => new CardRuntime(data)).ToList();
@@ -55,30 +52,6 @@ public class CardManager : MonoBehaviour
         }
         room.CurrentSort();
     }
-
-    // Ra lệnh đánh các lá bài đã chọn trên tay
-    public void PlaySelectedCards()
-    {
-        // Lấy danh sách copy để tránh lỗi khi thay đổi collection
-        var cardsToPlay = room.SelectedCards.ToList(); 
-        
-        if (!cardsToPlay.Any())
-        {
-            Debug.Log("No cards selected to play.");
-            return;
-        }
-
-        foreach (var card in cardsToPlay)
-        {
-            // 1. Thực hiện hành động của lá bài
-            StartCoroutine(card.Active());
-
-            // 2. Di chuyển lá bài từ Room sang DiscardPile
-            room.Remove(card);
-            discardPile.Add(card);
-        }
-    }
-
     // Xáo trộn Mộ Bài và đưa lại vào Deck
     private void ReshuffleDiscardIntoDeck()
     {
@@ -86,22 +59,29 @@ public class CardManager : MonoBehaviour
         var cardsFromDiscard = discardPile.TakeAllCards();
         deck.AddCardsAndShuffle(cardsFromDiscard);
     }
-    public void DiscardSelectedCards()
+    public bool DiscardSelectedCards()
     {
-        var cardsToDiscard = room.SelectedCards;
+        var cardsToDiscard = room.Discards();
         if (cardsToDiscard == null || cardsToDiscard.Count == 0)
         {
-            Debug.LogWarning("[CardManager] Discard failed: No cards selected.");
-            return;
+            Debug.LogWarning("[CardManager] Discard failed: No cards selected or returned null.");
+            return false;
         }
 
-        foreach (var card in cardsToDiscard.ToList())
+        
+        foreach (var card in cardsToDiscard)
         {
-            room.Remove(card);
             discardPile.Add(card);
         }
 
-        Debug.Log($"[CardManager] Discarded {cardsToDiscard.Count} card(s).");
-        room.UnselectAll();
+        return true;
+    }
+
+    public void Clear()
+    {
+        deck.Clear();
+        discardPile.Clear();
+        room.Clear(); 
+        uiCardFactory.DestroyAll();
     }
 }

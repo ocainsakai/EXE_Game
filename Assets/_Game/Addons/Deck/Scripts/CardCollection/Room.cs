@@ -14,6 +14,7 @@ public class Room : MonoBehaviour
     public UnityAction<List<CardRuntime>> OnCardsChanged;
     public UnityAction<CardRuntime> OnCardAdd;
     public UnityAction<CardRuntime> OnCardDiscard;
+    public UnityAction OnClear;
     public UnityEvent<PokerHandResult> onPokerHandResult;
     public Action OnDiscardComplete;
 
@@ -39,12 +40,7 @@ public class Room : MonoBehaviour
     
     private void OnDisable()
     {
-        // Unsubscribe events trước khi clear
-        foreach (var card in _cards)
-        {
-            card.SelectedChanged -= UpdateSelected;
-        }
-        _cards.Clear();
+        Clear();
     }
 
    
@@ -65,7 +61,7 @@ public class Room : MonoBehaviour
         OnCardsChanged?.Invoke(_cards); 
     }
 
-    public void Discards()
+    public List<CardRuntime> Discards()
     {
         var cardsToDiscard = SelectedCards;
 
@@ -73,7 +69,7 @@ public class Room : MonoBehaviour
         if (cardsToDiscard == null || !cardsToDiscard.Any())
         {
             Debug.LogWarning("No cards selected to discard!");
-            return;
+            return null;
         }
 
         _cards.RemoveAll(x => cardsToDiscard.Contains(x));
@@ -85,6 +81,7 @@ public class Room : MonoBehaviour
 
         UpdateUI();
         OnDiscardComplete?.Invoke();
+        return cardsToDiscard;
     }
 
     public void Sort()
@@ -156,12 +153,15 @@ public class Room : MonoBehaviour
         OnCardsChanged?.Invoke(_cards);
 
     }
-
-    public void Remove(CardRuntime card)
-    {
-    }
-
+    [ContextMenu("clear test")]
     public void Clear()
     {
+        // Unsubscribe events trước khi clear
+        foreach (var card in _cards)
+        {
+            card.SelectedChanged -= UpdateSelected;
+        }
+        _cards.Clear();
+        OnClear?.Invoke();
     }
 }

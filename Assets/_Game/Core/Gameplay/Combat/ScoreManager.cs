@@ -18,7 +18,6 @@ public class ScoreManager : MonoBehaviour
     private void Awake()
     {
         room.onPokerHandResult.AddListener(UpdateMult);
-        // CardRuntime.OnActive += CardEffect;
     }
 
     private void UpdateMult(PokerHandResult result)
@@ -26,7 +25,7 @@ public class ScoreManager : MonoBehaviour
         mult = multTable.GetMult(result.HandType);
         multText.text = $"{result.HandType}: x{(int)mult}";
     }
-    private IEnumerator CardEffect(CardRuntime cardRuntime)
+    public IEnumerator CardEffect(CardRuntime cardRuntime)
     {
         //Debug.Log($"Kích hoạt hiệu ứng cho {card}");
         float dame =(int)cardRuntime.Rank * mult;
@@ -35,9 +34,4 @@ public class ScoreManager : MonoBehaviour
         //Debug.Log($"Hiệu ứng {card} kết thúc");
     }
 
-    private void OnDestroy()
-    {
-  
-
-    }
 }

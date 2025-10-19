@@ -51,9 +51,9 @@ public class BattleSystem : MonoBehaviour
     /// </summary>
    
 
-    public bool CanPlayHand(List<CardRuntime> selectedCards)
+    public bool CanPlayHand(int count)
     {
-        int cost = selectedCards.Count * energyCostPlay;
+        int cost = count * energyCostPlay;
         if (_state.CurrentEnergy < cost)
         {
             return false;

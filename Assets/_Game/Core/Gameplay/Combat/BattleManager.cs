@@ -18,6 +18,7 @@ namespace _Game.Core.Gameplay.Combat
         [SerializeField] private GameObject battlePanel;
         public UnityEvent onBattleStart;
         public UnityEvent onBattleWin;
+        public UnityEvent onBattleComplete;
         public UnityEvent onBattleLose;
         public void BattleStart(EnemyData enemyData)
         {
@@ -71,15 +72,29 @@ namespace _Game.Core.Gameplay.Combat
         {
             Debug.Log($"You win");
             // win resolve
-            onBattleWin?.Invoke();
+            HandleEnd();
+            if (enemy.data is BossData)
+            {
+                onBattleComplete?.Invoke(); 
+            }
+            else
+            {
+                onBattleWin?.Invoke();
+            }
         }
 
         private void HandleLose()
         {
             Debug.Log($"You lose");
             // lose resolve
+            HandleEnd();
             onBattleLose?.Invoke();
-            
+        }
+
+        private void HandleEnd()
+        {
+            battlePanel.SetActive(false);
+            cardManager.Clear();
         }
         public void AttackPlayer(Enemy enemyAttacker)
         {

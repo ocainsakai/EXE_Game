@@ -1,13 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using _Game.Addons.Deck.Scripts;
-using _Game.Addons.Deck.Scripts.Card;
-using _Game.Addons.Deck.Scripts.CardCollection;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace _Game.Core.Gameplay
 {
@@ -18,7 +11,8 @@ namespace _Game.Core.Gameplay
         private CardManager cardManager;
         [SerializeField]
         private BattleSystem battleSystem;
-
+        [SerializeField]
+        private ScoreManager scoreManager;
         [SerializeField] 
         private PlayerButton playerButton;
 
@@ -40,8 +34,13 @@ namespace _Game.Core.Gameplay
                 playerButton.EnableAllActions();
                 return;
             }
+
+            if (!cardManager.DiscardSelectedCards())
+            {
+                playerButton.EnableAllActions();
+                return;
+            }
             battleSystem.UseEnergyDiscard();
-            cardManager.DiscardSelectedCards();
             cardManager.DrawHand();
             playerButton.EnableAllActions();
         }
@@ -49,9 +48,9 @@ namespace _Game.Core.Gameplay
         public void PlayerPlay()
         {
             Debug.Log("[PlayerActionController] Attempting to play selected cards.");
-            var cardsToPlay = cardManager.SelectedCards;
+            var cardsToPlay = cardManager.SelectedCards.Count;
 
-            if (cardsToPlay.Count == 0)
+            if (cardsToPlay == 0)
             {
                 Debug.LogWarning("[PlayerActionController] Play failed: No cards selected.");
                 return;
@@ -64,15 +63,13 @@ namespace _Game.Core.Gameplay
             }
 
             playerButton.DisableAllActions();
-            Debug.Log($"[PlayerActionController] Playing hand with {cardsToPlay.Count} card(s): {string.Join(", ", cardsToPlay.Select(c => c.Name))}");
-            StartCoroutine(PlayHand(cardsToPlay));
+            StartCoroutine(PlayHand());
         }
 
         public void StartTurn()
         {
             Debug.Log("================= Player Start Turn =====================");
             battleSystem.RegenEnergy();
-            cardManager.DiscardSelectedCards(); // Discard remaining cards from last turn
             cardManager.DrawHand();
             playerButton.EnableAllActions();
             onStartTurn?.Invoke();
@@ -80,29 +77,29 @@ namespace _Game.Core.Gameplay
 
         public void PlayerEndTurn()
         {
-            Debug.Log("================= Player End Turn =======================");
             playerButton.DisableAllActions();
             onEndTurn?.Invoke(this);
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator PlayHand(List<CardRuntime> cards)
+        private IEnumerator PlayHand()
         {
-            yield return ActivateCards(cards);
-            playerButton.DisableAllActions();
-            onEndTurn?.Invoke(this);
+            yield return ActivateCards();
+            PlayerEndTurn();
         }
 
-        private IEnumerator ActivateCards(List<CardRuntime> cards)
+        private IEnumerator ActivateCards()
         {
             // Create a copy to prevent issues if the original list is modified during iteration
-            var cardsToActivate = new List<CardRuntime>(cards);
+            var cardsToActivate = cardManager.SelectedCards;
             foreach (var card in cardsToActivate)
             {
                 Debug.Log($"[PlayerActionController] Activating card: {card.Name}");
                 battleSystem.UseEnergyPlay();
-                yield return card.Active();
+                yield return scoreManager.CardEffect(card);
             }
+            yield return new WaitForSeconds(0.5f);
+            cardManager.DiscardSelectedCards();
         }
 
         public void Active()

@@ -27,12 +27,6 @@ public class CardEntry : MonoBehaviour
         // Luôn đồng bộ trạng thái UI với trạng thái logic khi setup
         UpdateVisuals(false); // Cập nhật ngay lập tức, không có animation
     }
-
-    public void SetInteractable(bool isInteractable)
-    {
-        selectBtn.interactable = isInteractable;
-    }
-
     private void OnEnable()
     {
         selectBtn.onClick.AddListener(HandleClick);

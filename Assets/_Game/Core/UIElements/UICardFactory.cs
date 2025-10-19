@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Game.Addons.Deck.Scripts;
 using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
+using UnityUtils;
 
 public class UICardFactory : MonoBehaviour
 {
@@ -35,7 +36,28 @@ public class UICardFactory : MonoBehaviour
     }
     public void ReturnToPool(CardEntry entry)
     {
-        entry.transform.DOLocalMoveX(1000f, 0.25f).OnComplete(() => entry.transform.SetParent(container));
-        
+        entry.transform.DOKill(); // 🔒 Dừng tween cũ
+        entry.transform.SetParent(container);
+        entry.transform.DOLocalMoveX(1000f, 0.25f);
+    }
+
+    public void DestroyAll()
+    {
+        foreach (var entry in cardEntries.Values)
+        {
+            if (entry != null)
+            {
+                entry.transform.DOKill(); // 🔒 Hủy tween trước khi xóa
+                Destroy(entry.gameObject);
+            }
+        }
+
+        cardEntries.Clear();
+    }
+
+    public void ReturnToPool(CardRuntime cardRuntime)
+    {
+        var entry = GetOrCreateCard(cardRuntime);
+        ReturnToPool(entry);
     }
 }

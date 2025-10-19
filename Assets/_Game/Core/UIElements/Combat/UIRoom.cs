@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Addons.Deck.Scripts.Card;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIRoom : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class UIRoom : MonoBehaviour
 
     private List<CardEntry> _cardEntries = new List<CardEntry>();
 
+    public void Clear()
+    {
+        _cardEntries.Clear();   
+    }
     private void Start()
     {
         if (room == null)
@@ -24,6 +29,7 @@ public class UIRoom : MonoBehaviour
         room.OnCardAdd += (HandleCardAdded);
         room.OnCardDiscard += (HandleCardDiscarded);
         room.OnCardsChanged += (HandleCardsChanged);
+        room.OnClear += Clear;
         room.canSelectCardChanged.AddListener(UpdateInteract);
 
         // Đồng bộ trạng thái ban đầu
@@ -37,6 +43,7 @@ public class UIRoom : MonoBehaviour
             room.OnCardAdd -= (HandleCardAdded);
             room.OnCardDiscard -= (HandleCardDiscarded);
             room.OnCardsChanged -= (HandleCardsChanged);
+            room.OnClear -= Clear;
             room.canSelectCardChanged.RemoveListener(UpdateInteract);
         }
     }
@@ -55,12 +62,11 @@ public class UIRoom : MonoBehaviour
 
     private void HandleCardDiscarded(CardRuntime cardRuntime)
     {
+        cardFactory.ReturnToPool(cardRuntime);
         var entryToRemove = _cardEntries.FirstOrDefault(e => e.CardID == cardRuntime.CardID);
         if (entryToRemove != null)
         {
             _cardEntries.Remove(entryToRemove);
-            cardFactory.ReturnToPool(entryToRemove);
-            RepositionCards();
         }
     }
     
@@ -80,7 +86,8 @@ public class UIRoom : MonoBehaviour
         foreach (CardEntry entry in _cardEntries)
         {
             bool isInteractable = canSelect || entry.CardRuntime.IsSelected;
-            entry.SetInteractable(isInteractable);
+            var button = entry.GetComponent<Button>();
+            if (button != null) button.interactable = isInteractable;
         }
     }
 

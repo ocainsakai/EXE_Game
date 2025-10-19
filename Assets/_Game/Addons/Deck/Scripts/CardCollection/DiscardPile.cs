@@ -16,6 +16,10 @@ public class DiscardPile : MonoBehaviour
         discardPile.Add(cardRuntime);   
     }
 
+    public void AddRange(List<CardRuntime> cardsToDiscard)
+    {
+        discardPile.AddRange(cardsToDiscard);
+    }
     public void Clear()
     {
         discardPile.Clear();      
