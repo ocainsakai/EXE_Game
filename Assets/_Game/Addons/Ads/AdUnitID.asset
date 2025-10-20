@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97f542b08c2b1c499b468943575e7be, type: 3}
+  m_Name: AdUnitID
+  m_EditorClassIdentifier: Assembly-CSharp::AdUnitID
+  androidAppId: ca-app-pub-1225627572588030~5485920149
+  iosAppId: 
+  androidAppOpen: ca-app-pub-3940256099942544/9257395921
+  androidBanner: ca-app-pub-3940256099942544/6300978111
+  androidAdaptiveBanner: ca-app-pub-3940256099942544/9214589741
+  androidInterstitial: ca-app-pub-3940256099942544/1033173712
+  androidRewarded: ca-app-pub-3940256099942544/5224354917
+  androidRewardedInterstitial: ca-app-pub-3940256099942544/5354046379
+  androidNative: ca-app-pub-3940256099942544/2247696110
+  iosAppOpen: 
+  iosBanner: 
+  iosAdaptiveBanner: 
+  iosInterstitial: 
+  iosRewarded: 
+  iosRewardedInterstitial: 
+  iosNative: 
