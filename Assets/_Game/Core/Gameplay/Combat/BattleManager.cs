@@ -10,11 +10,10 @@ namespace _Game.Core.Gameplay.Combat
     /// </summary>
     public class BattleManager : MonoBehaviour
     {
-        [SerializeField] private BattleSystem battleSystem;
+        [SerializeField] public BattleMediator Mediator;
         [SerializeField] private CardManager cardManager;
         [SerializeField] private Enemy enemy;
-        [SerializeField] private PlayerActionController playerActionController;
-        [SerializeField] private PlayerStatComponent playerStatComponent;
+        [SerializeField] private PlayerController playerController;
         [SerializeField] private GameObject battlePanel;
         public UnityEvent onBattleStart;
         public UnityEvent onBattleWin;
@@ -29,24 +28,24 @@ namespace _Game.Core.Gameplay.Combat
             battlePanel.SetActive(true);
 
             // start player
-            battleSystem.StartBattle(playerData, enemyData);
-            playerStatComponent.SetData(playerData);
+            Mediator.StartBattle(playerData, enemyData);
+            playerController.Stat.SetData(playerData);
             cardManager.StartBattle(deckData.Cards);
             // start enemy
             enemy.SetData(enemyData);
             onBattleStart?.Invoke();
             
             // start turn
-            playerActionController.Active();
+            playerController.Action.Active();
         }
         public void CheckCondition(object sender)
         {
-            if (playerStatComponent.Hp <= 0)
+            if (playerController.Stat.health.CurrentValue <= 0)
             {
                 HandleLose();
                 return;
             }
-            if (enemy.hp <=0)
+            if (enemy.health.CurrentValue <=0)
             {
                 HandleWin();
                 return;
@@ -59,13 +58,13 @@ namespace _Game.Core.Gameplay.Combat
             if (sender is Enemy)
             {
                 Debug.Log($"You start your turn");
-                playerActionController.StartTurn();  
+                playerController.Action.StartTurn();  
                 return;
             }
             if (sender is PlayerActionController)
             {
                 Debug.Log($"You start enemy turn");
-                enemy.CountToAction();
+                enemy.HandleEnemyTurn();
             }
         }
         private void HandleWin()
@@ -96,9 +95,14 @@ namespace _Game.Core.Gameplay.Combat
             battlePanel.SetActive(false);
             cardManager.Clear();
         }
-        public void AttackPlayer(Enemy enemyAttacker)
+        public void AttackPlayer(float damage)
         {
-            playerStatComponent.Hp -= enemyAttacker.data.atk;
+            Mediator.Attack(playerController.Stat, damage);
+        }
+
+        public void AttackEnemy(float damage)
+        {
+            Mediator.Attack(enemy,  damage);
         }
     }
 }

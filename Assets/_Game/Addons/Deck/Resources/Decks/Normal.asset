@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   DeckID: 0
-  DeckName: Normal
-  DeckCover: {fileID: 163154373429064380, guid: f666516f04d0349409b7e02d1b9dafd1, type: 3}
+  DeckName: "C\u01A1 B\u1EA3n"
+  DeckCover: {fileID: 8164590975989804626, guid: c186381e71020c84e8140e3b9dee1f76, type: 3}
   Cards:
   - {fileID: 11400000, guid: 0ade8d31d4e6dc84b9822574e22e99cc, type: 2}
   - {fileID: 11400000, guid: b16b3bb83a2eec143bb66be8ba8ac20a, type: 2}

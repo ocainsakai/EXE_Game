@@ -7,15 +7,11 @@ namespace _Game.Core.Gameplay
     public class PlayerActionController : MonoBehaviour
     {
         [Header("System References")]
-        [SerializeField]
-        private CardManager cardManager;
-        [SerializeField]
-        private BattleSystem battleSystem;
-        [SerializeField]
-        private ScoreManager scoreManager;
-        [SerializeField] 
-        private PlayerButton playerButton;
-
+        
+        [SerializeField] private CardManager cardManager;
+        [SerializeField] private BattleMediator battleMediator;
+        [SerializeField] private ScoreManager scoreManager;
+        [SerializeField] private PlayerButton playerButton;
         [SerializeField] private GameObject ui;
         [Header("Settings"), SerializeField]
         
@@ -28,7 +24,7 @@ namespace _Game.Core.Gameplay
         {
             Debug.Log("[PlayerActionController] Attempting to discard selected cards.");
             playerButton.DisableAllActions();
-            if (!battleSystem.CanDiscard())
+            if (!battleMediator.CanAffordDiscard())
             {
                 Debug.LogWarning("[PlayerActionController] Discard failed: Cannot afford energy cost.");
                 playerButton.EnableAllActions();
@@ -40,7 +36,7 @@ namespace _Game.Core.Gameplay
                 playerButton.EnableAllActions();
                 return;
             }
-            battleSystem.UseEnergyDiscard();
+            battleMediator.UseEnergyDiscard();
             cardManager.DrawHand();
             playerButton.EnableAllActions();
         }
@@ -56,7 +52,7 @@ namespace _Game.Core.Gameplay
                 return;
             }
 
-            if (!battleSystem.CanPlayHand(cardsToPlay))
+            if (!battleMediator.CanAffordPlayHand(cardsToPlay))
             {
                 Debug.LogWarning("[PlayerActionController] Play failed: Not enough energy or invalid hand.");
                 return;
@@ -69,7 +65,7 @@ namespace _Game.Core.Gameplay
         public void StartTurn()
         {
             Debug.Log("================= Player Start Turn =====================");
-            battleSystem.RegenEnergy();
+            battleMediator.RegenEnergy();
             cardManager.DrawHand();
             playerButton.EnableAllActions();
             onStartTurn?.Invoke();
@@ -84,24 +80,10 @@ namespace _Game.Core.Gameplay
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator PlayHand()
         {
-            yield return ActivateCards();
+            yield return scoreManager.ActivateCards(cardManager.SelectedCards);
+            cardManager.DiscardSelectedCards();
             PlayerEndTurn();
         }
-
-        private IEnumerator ActivateCards()
-        {
-            // Create a copy to prevent issues if the original list is modified during iteration
-            var cardsToActivate = cardManager.SelectedCards;
-            foreach (var card in cardsToActivate)
-            {
-                Debug.Log($"[PlayerActionController] Activating card: {card.Name}");
-                battleSystem.UseEnergyPlay();
-                yield return scoreManager.CardEffect(card);
-            }
-            yield return new WaitForSeconds(0.5f);
-            cardManager.DiscardSelectedCards();
-        }
-
         public void Active()
         {
             ui.gameObject.SetActive(true);

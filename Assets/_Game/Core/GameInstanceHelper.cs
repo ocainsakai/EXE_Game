@@ -20,6 +20,15 @@ public class GameInstanceHelper : MonoBehaviour
             sceneName = sceneAsset.name;
         }
     }
+    public void LoadScene(SceneAsset asset)
+    {
+        if (asset != null)
+        {
+            sceneAsset = asset;
+            sceneName = sceneAsset.name;
+        }
+        LoadScene();
+    }
 #endif
 
     public void LoadScene()

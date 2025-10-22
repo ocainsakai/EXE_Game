@@ -44,24 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300240301eae6a24fabed1f352c110ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  battleManager: {fileID: 8897227781776193879}
+  battleVFXManager: {fileID: 0}
   multTable: {fileID: 11400000, guid: bcd55117bd7c0984693d7583ff16eb3b, type: 2}
   room: {fileID: 0}
   multText: {fileID: 0}
-  AttackEnemy:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8989258215971679612}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: TakeDame
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &4990886694721032549
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,88 +93,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de076183794bf594697434452354ec80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  Data: {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-  MaxHP: 0
-  HP: 0
-  MaxActionCount: 3
-  OnCounting:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UISliderBarHelper, Assembly-CSharp
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHealthChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UISliderBarHelper, Assembly-CSharp
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnTakeDame:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIEnemyBattle, Assembly-CSharp
-        m_MethodName: OnTakeDameHandler
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDeath:
+  uiEnemyBattle: {fileID: 0}
+  battleManager: {fileID: 8897227781776193879}
+  data: {fileID: 0}
+  health:
+    currentValue: 0
+    maxValue: 0
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    onDepleted:
+      m_PersistentCalls:
+        m_Calls: []
+    onFull:
+      m_PersistentCalls:
+        m_Calls: []
+  count:
+    currentValue: 0
+    maxValue: 0
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    onDepleted:
+      m_PersistentCalls:
+        m_Calls: []
+    onFull:
+      m_PersistentCalls:
+        m_Calls: []
+  onEndTurn:
     m_PersistentCalls:
       m_Calls: []
-  OnAction:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8897227781776193879}
-        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: AttackPlayer
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnEndTurn:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8897227781776193879}
-        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: CheckCondition
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5788227195133449408
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,27 +167,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089b999f32f15f14d8504253199930b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleSystem
-  multTable: {fileID: 11400000, guid: bcd55117bd7c0984693d7583ff16eb3b, type: 2}
   startEnergy: 10
   maxEnergy: 10
   energyRegenPerRound: 1
   energyCostPlay: 1
   energyCostDiscard: 1
-  OnEnergyChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UISliderBarHelper, Assembly-CSharp
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  energyBarHelper: {fileID: 0}
+  energy:
+    currentValue: 0
+    maxValue: 0
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls: []
+    onDepleted:
+      m_PersistentCalls:
+        m_Calls: []
+    onFull:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8254802600142977773
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,12 +232,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a055b6934ef06454b9500623b8922544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
-  battleSystem: {fileID: 3221262901083042184}
+  Mediator: {fileID: 3221262901083042184}
+  cardManager: {fileID: 0}
   enemy: {fileID: 8989258215971679612}
-  playerActionController: {fileID: 0}
-  playerStatComponent: {fileID: 0}
+  playerController: {fileID: 0}
   battlePanel: {fileID: 0}
-  OnBattleStart:
+  onBattleStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onBattleWin:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
@@ -320,22 +255,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnBattleEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnBattleWin:
+  onBattleComplete:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
@@ -350,7 +270,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  OnBattleLose:
+  onBattleLose:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}

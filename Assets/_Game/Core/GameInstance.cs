@@ -1,8 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using _Game.Addons.Deck.Scripts;
+using _Game.Core.Gameplay;
 using CardSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace _Game.Core
 {
@@ -40,6 +44,7 @@ namespace _Game.Core
                 Destroy(gameObject);
             }
         }
+        
 
         public bool IsInitialized() => isInitialized;
 

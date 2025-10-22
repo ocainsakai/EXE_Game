@@ -108,7 +108,7 @@ MonoBehaviour:
   onSortButtonClicked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3598264430245045957}
         m_TargetAssemblyTypeName: Room, Assembly-CSharp
         m_MethodName: Sort
         m_Mode: 1
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa9508c4b6e05c469b1be28bf5a3afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTestMode: 1
+  IsTestMode: 0
   testDeck: {fileID: 11400000, guid: 0c850ee6b91a2e74493deaa103c5cd96, type: 2}
 --- !u!1 &4042135108290560609
 GameObject:
@@ -214,7 +214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1085, y: -457.84076}
+  m_AnchoredPosition: {x: 1309, y: -457.84076}
   m_SizeDelta: {x: -1824.4524, y: -935.6814}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8698058161867208941
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 9058183201555212281}
   - component: {fileID: 6871216823121453827}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Mult Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -475,6 +475,7 @@ MonoBehaviour:
   deck: {fileID: 2506222354857994158}
   room: {fileID: 3598264430245045957}
   discardPile: {fileID: 3127269426214809994}
+  uiCardFactory: {fileID: 8698058161867208941}
 --- !u!1 &7542232168728981635
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2609364989385275212}
+  - component: {fileID: 3836240595474212338}
   - component: {fileID: 2395492821828149115}
   - component: {fileID: 2830895289671625854}
   m_Layer: 0
@@ -511,8 +513,23 @@ Transform:
   - {fileID: 2358769318751154201}
   - {fileID: 693067512950079715}
   - {fileID: 5160718039652735932}
+  - {fileID: 4015645800971418714}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3836240595474212338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7542232168728981635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ef9cc6d869520458f292328aac9a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  Action: {fileID: 0}
+  Stat: {fileID: 0}
 --- !u!114 &2395492821828149115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,12 +542,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c775edd5af7ed040b52f260a53188dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerActionController
-  battleSystem: {fileID: 0}
-  deckManager: {fileID: 2506222354857994158}
-  room: {fileID: 3598264430245045957}
-  discardPile: {fileID: 3127269426214809994}
-  cardFactory: {fileID: 8698058161867208941}
+  cardManager: {fileID: 6062667370320676763}
+  battleMediator: {fileID: 0}
+  scoreManager: {fileID: 0}
   playerButton: {fileID: 7877772154823976299}
+  ui: {fileID: 9131063252625333578}
   isTestMode: 0
   onStartTurn:
     m_PersistentCalls:
@@ -562,22 +578,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928f9b948ea1e63408bb90753cd897fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatComponent
-  maxHp: 300
-  onHpChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UISliderBarHelper, Assembly-CSharp
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  healthBarHelper: {fileID: 0}
+  health:
+    currentValue: 0
+    maxValue: 0
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UISliderBarHelper, Assembly-CSharp
+          m_MethodName: SetValue
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDepleted:
+      m_PersistentCalls:
+        m_Calls: []
+    onFull:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8427513202057735478
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +666,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &9066748311577432162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4015645800971418714}
+  m_Layer: 0
+  m_Name: VFX Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4015645800971418714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9066748311577432162}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2609364989385275212}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9131063252625333578
 GameObject:
   m_ObjectHideFlags: 0
