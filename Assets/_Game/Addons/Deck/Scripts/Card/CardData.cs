@@ -6,22 +6,22 @@ using UnityEngine;
 namespace _Game.Addons.Deck.Scripts
 {
     [CreateAssetMenu(fileName = "CardData", menuName = "Cards/New Card")]
-    public class CardData : ScriptableObject
-    {
-        public int CardID;
+        public class CardData : ScriptableObject
+        {
+            public int CardID;
 
-        [Header("Card Identity")]
-        public CardRank Rank;
-        public CardSuit Suit;
+            [Header("Card Identity")]
+            public CardRank Rank;
+            public CardSuit Suit;
 
-        [Header("Card Info")]
-        public int Cost;
-        public string Name;
-        [TextArea] public string Description;
-        public Sprite Art;
+            [Header("Card Info")]
+            public int Cost;
+            public string Name;
+            [TextArea] public string Description;
+            public Sprite Art;
 
-        public CardMask Mask => new CardMask(Rank, Suit);
-    }
+            public CardMask Mask => new CardMask(Rank, Suit);
+        }
 
     public static class CardSorter {
         // Thứ tự rank A → K → Q → J → 10 → 9 → ... → 2

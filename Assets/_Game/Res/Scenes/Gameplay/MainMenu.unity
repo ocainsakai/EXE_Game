@@ -987,7 +987,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 842584627}
   m_Father: {fileID: 1755648535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1805,17 +1806,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842584626}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1920574811}
-  m_Father: {fileID: 1755648535}
+  m_Father: {fileID: 503956483}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 410.66663, y: 0}
+  m_AnchoredPosition: {x: 458.6667, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &842584628
@@ -3840,7 +3841,6 @@ RectTransform:
   m_Children:
   - {fileID: 503956483}
   - {fileID: 944252041}
-  - {fileID: 842584627}
   - {fileID: 2122564428}
   - {fileID: 541303126}
   - {fileID: 1024682436}
@@ -4664,11 +4664,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2122564431}
         m_TargetAssemblyTypeName: GameInstanceHelper, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 2
+        m_MethodName: LoanMapScene
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 102900000, guid: 774fb9163552fcb42a79a26ae50d37d2, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEditor.SceneAsset, UnityEditor.CoreModule
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4949,8 +4949,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d7c59b7153342488695ff64ce27926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameInstanceHelper
-  sceneAsset: {fileID: 102900000, guid: 774fb9163552fcb42a79a26ae50d37d2, type: 3}
-  sceneName: Map
+  mapSceneName: Map
+  mainMenuSceneName: MainMenu
 --- !u!1 &2140979156
 GameObject:
   m_ObjectHideFlags: 0

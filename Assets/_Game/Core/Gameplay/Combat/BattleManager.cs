@@ -33,6 +33,8 @@ namespace _Game.Core.Gameplay.Combat
             cardManager.StartBattle(deckData.Cards);
             // start enemy
             enemy.SetData(enemyData);
+            
+            // 
             onBattleStart?.Invoke();
             
             // start turn

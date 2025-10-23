@@ -39,8 +39,10 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_SplashScreenLogos:
+  - logo: {fileID: -4320295261928297051, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
+    duration: 2
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: df4eefe6216b44547b91300b4720fe1d, type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
   defaultScreenHeight: 1080
@@ -175,7 +177,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 2
+  AndroidBundleVersionCode: 3
   AndroidMinSdkVersion: 24
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -268,7 +270,7 @@ PlayerSettings:
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 0}
+  androidSplashScreen: {fileID: 2800000, guid: df4eefe6216b44547b91300b4720fe1d, type: 3}
   AndroidKeystoreName: '{dedicated}: user.keystore'
   AndroidKeyaliasName: ocain17
   AndroidEnableArmv9SecurityFeatures: 0
@@ -298,17 +300,23 @@ PlayerSettings:
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
     m_Icons:
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
       m_Width: 324
       m_Height: 324
       m_Kind: 2
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
       m_Width: 216
       m_Height: 216
       m_Kind: 2
@@ -328,7 +336,8 @@ PlayerSettings:
       m_Height: 81
       m_Kind: 2
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 1
@@ -358,7 +367,8 @@ PlayerSettings:
       m_Height: 36
       m_Kind: 1
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 601e99d909072564ca575ba239d6bb0f, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 0
@@ -658,8 +668,8 @@ PlayerSettings:
   ps4IncludedModules: []
   ps4attribVROutputEnabled: 0
   monoEnv: 
-  splashScreenBackgroundSourceLandscape: {fileID: 0}
-  splashScreenBackgroundSourcePortrait: {fileID: 0}
+  splashScreenBackgroundSourceLandscape: {fileID: -3016541668600273912, guid: df4eefe6216b44547b91300b4720fe1d, type: 3}
+  splashScreenBackgroundSourcePortrait: {fileID: -3016541668600273912, guid: df4eefe6216b44547b91300b4720fe1d, type: 3}
   blurSplashScreenBackground: 1
   spritePackerPolicy: 
   webGLMemorySize: 32

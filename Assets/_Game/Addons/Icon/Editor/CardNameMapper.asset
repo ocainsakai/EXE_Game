@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7944aaf9f3f8440a550e1bf2ff2884, type: 3}
+  m_Name: CardNameMapper
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::CardNameMapper
+  rankMappings:
+  - english: Ace
+    vietnamese: "X\xEC"
+    number: A
+  - english: Two
+    vietnamese: 2
+    number: 2
+  - english: Three
+    vietnamese: 3
+    number: 3
+  - english: Four
+    vietnamese: 4
+    number: 4
+  - english: Five
+    vietnamese: 5
+    number: 5
+  - english: Six
+    vietnamese: 6
+    number: 6
+  - english: Seven
+    vietnamese: 7
+    number: 7
+  - english: Eight
+    vietnamese: 8
+    number: 8
+  - english: Nine
+    vietnamese: 9
+    number: 9
+  - english: Ten
+    vietnamese: 10
+    number: 10
+  - english: Jack
+    vietnamese: J
+    number: J
+  - english: Queen
+    vietnamese: Q
+    number: Q
+  - english: King
+    vietnamese: K
+    number: K
+  suitMappings:
+  - english: Clubs
+    vietnamese: "Chu\u1ED3n"
+    short_vietnamese: c
+  - english: Diamonds
+    vietnamese: "R\xF4"
+    short_vietnamese: ro
+  - english: Hearts
+    vietnamese: "C\u01A1"
+    short_vietnamese: co
+  - english: Spades
+    vietnamese: "B\xEDch"
+    short_vietnamese: b
+  customMappings: []
+  spriteNamePattern: '{rank} {suit}'
+  toLowerCase: 0
+  removeSpaces: 1

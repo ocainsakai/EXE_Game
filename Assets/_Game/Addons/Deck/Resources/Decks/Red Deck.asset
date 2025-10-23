@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeckID: 1
   DeckName: "Th\u1EA1ch S\xF9ng"
-  DeckCover: {fileID: 5049352709688832639, guid: 384ab52202d6b1e40b1c5bf95b2e0156, type: 3}
+  DeckCover: {fileID: 21300000, guid: 384ab52202d6b1e40b1c5bf95b2e0156, type: 3}
   Cards:
   - {fileID: 11400000, guid: b16b3bb83a2eec143bb66be8ba8ac20a, type: 2}
   - {fileID: 11400000, guid: 0eabfe0713c9bd1468e00f9c841a45b9, type: 2}

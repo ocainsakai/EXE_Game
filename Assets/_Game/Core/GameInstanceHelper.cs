@@ -1,45 +1,30 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using _Game.Core.Gameplay;
 
 public class GameInstanceHelper : MonoBehaviour
 {
-#if UNITY_EDITOR
-    [SerializeField] private SceneAsset sceneAsset; // Chỉ hiện trong Editor
-#endif
-    [SerializeField] private string sceneName; // Dùng khi build
+    [SerializeField] private string mapSceneName ="Map" ; 
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
 
-#if UNITY_EDITOR
-    private void OnValidate()
+    public void LoanMapScene()
     {
-        // Đồng bộ sceneName mỗi khi đổi sceneAsset trong Editor
-        if (sceneAsset != null)
-        {
-            sceneName = sceneAsset.name;
-        }
-    }
-    public void LoadScene(SceneAsset asset)
-    {
-        if (asset != null)
-        {
-            sceneAsset = asset;
-            sceneName = sceneAsset.name;
-        }
-        LoadScene();
-    }
-#endif
-
-    public void LoadScene()
-    {
-        if (string.IsNullOrEmpty(sceneName))
+        if (string.IsNullOrEmpty(mapSceneName))
         {
             Debug.LogWarning("Scene name is empty! Cannot load scene.");
             return;
         }
 
-        SceneLoader.Instance.LoadScene(sceneName);
+        SceneLoader.Instance.LoadScene(mapSceneName);
+    }
+    public void LoanMainMenuScene()
+    {
+        if (string.IsNullOrEmpty(mainMenuSceneName))
+        {
+            Debug.LogWarning("Scene name is empty! Cannot load scene.");
+            return;
+        }
+
+        SceneLoader.Instance.LoadScene(mainMenuSceneName);
     }
 }
 

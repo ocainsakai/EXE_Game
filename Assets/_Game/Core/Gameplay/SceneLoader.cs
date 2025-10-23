@@ -14,6 +14,7 @@ namespace _Game.Core.Gameplay
     public class SceneLoader : Singleton<SceneLoader>, ISceneLoader
     {
         [SerializeField] private GameObject loadingScreen;
+        [SerializeField] private UISliderBarHelper loadingScreenBar;
         [SerializeField] private float minLoadingTime = 0.5f;
 
         public SceneLoadRequest LoadSceneName(string sceneName)
@@ -22,7 +23,7 @@ namespace _Game.Core.Gameplay
             return new SceneLoadRequest(sceneName, this);
         }
 
-        internal void LoadScene(string sceneName, object data = null, Action onLoaded = null)
+        public void LoadScene(string sceneName, object data = null, Action onLoaded = null)
         {
             StartCoroutine(LoadSceneAsync(sceneName, data, onLoaded));
         }
@@ -56,6 +57,7 @@ namespace _Game.Core.Gameplay
                 op.allowSceneActivation = true;
 
                 while (!op.isDone) yield return null;
+                loadingScreenBar.SetValue(elapsed, minLoadingTime);
             }
 
             loadingScreen?.SetActive(false);

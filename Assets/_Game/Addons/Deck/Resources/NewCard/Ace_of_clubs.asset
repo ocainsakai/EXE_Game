@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
-  m_Name: Ace_of_clubs
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Addons.Deck.Scripts.CardData
+  m_Name: Ace_of_Clubs
+  m_EditorClassIdentifier: 
   CardID: 0
-  Rank: 0
-  Suit: 0
+  Rank: 14
+  Suit: 2
   Cost: 0
-  Name: 
-  Description: 
-  Art: {fileID: -6484105387576521143, guid: 02ac097fa5856fe4c88c24247810c58d, type: 3}
+  Name: Ace of Clubs
+  Description: This is the Ace of Clubs.
+  Art: {fileID: 21300000, guid: 02ac097fa5856fe4c88c24247810c58d, type: 3}

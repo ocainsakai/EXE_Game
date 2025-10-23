@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
+  m_Name: Eight_of_Diamonds
+  m_EditorClassIdentifier: 
+  CardID:
+    Part1: 504138275
+    Part2: 1294022792
+    Part3: 994673030
+    Part4: 2306735425
+  Rank: 8
+  Suit: 1
+  Cost: 0
+  Name: Eight of Diamonds
+  Description: This is the Eight of Diamonds.
+  Art: {fileID: -934473813298660644, guid: 78c6d0aaa21b86d438f6d5c869ddcf44, type: 3}
