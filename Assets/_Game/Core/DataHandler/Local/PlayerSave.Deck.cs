@@ -5,6 +5,8 @@ public static partial class PlayerSave
 {
     // ─────────────────────────────────────────────────── Keys
     private const string KeySelectedDeck= "PLAYERSELECTEDDECK_";
+
+    private const string MAP_KEY = "SelectedMapIndex";
     //private const string KEY_FAV_CHAR = "PLAYERFAVOURITECHARACTER_";
     //private const string KEY_MASTERY_LVL = "CHARACTERMASTERYLEVEL_";
     //private const string KEY_MASTERY_EXP = "CHARACTERMASTERYCURRENTEXP_";
@@ -31,4 +33,17 @@ public static partial class PlayerSave
         Debug.LogError("No unlocked characters available to select.");
         return 0;
     }
+    // Hàm lưu Map
+    public static void SetSelectedMap(int mapIndex)
+    {
+        PlayerPrefs.SetInt(MAP_KEY, mapIndex);
+        PlayerPrefs.Save();
+    }
+
+    // Hàm tải Map
+    public static int GetSelectedMap()
+    {
+        return PlayerPrefs.GetInt(MAP_KEY, 0);
+    }
+
 }
