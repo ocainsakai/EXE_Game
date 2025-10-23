@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c7f9c862fa83c42bc4171fcde991d1, type: 3}
-  m_Name: Map_002
+  m_Name: Ocean Map
   m_EditorClassIdentifier: Assembly-CSharp::MapData
-  MapID: map_002
-  MapName: Forest Map
+  mapID: Ocean Map
+  mapName: Ocean Map
   enemyDatas:
-  - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
-  - {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}
-  - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
+  - {fileID: 11400000, guid: 8745d776add4eb647b052e8bb896af2b, type: 2}
+  - {fileID: 11400000, guid: 90800f48756e8d6429a85ca4abfd467f, type: 2}
+  - {fileID: 11400000, guid: e54616f93510f71428bf358bfa904f70, type: 2}
+  - {fileID: 11400000, guid: ad7bbde6a3a856e48b70390a7de519ec, type: 2}
   bossDatas:
   - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
+  mapBackground: {fileID: -5864263735007254664, guid: 4bae7f61f9dbadf46bfceed1f099aefa, type: 3}
