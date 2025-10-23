@@ -1,5 +1,6 @@
 ﻿using System;
-using _Game.Core; // Đảm bảo namespace này đúng
+using _Game.Core;
+using _Game.Core.Gameplay; // Đảm bảo namespace này đúng
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,7 +72,7 @@ public class UIMapSelection : MonoBehaviour
             PlayerSave.SetSelectedMap(currentMapIndex);
 
             GameInstance.Singleton.SetCurrentMap(selectedMap.mapID);
-
+            SceneLoader.Instance.LoadScene("Map");
             Debug.Log($"Đã chọn Map: {selectedMap.mapName} (ID: {selectedMap.mapID}). Cập nhật GameInstance.");
 
         }

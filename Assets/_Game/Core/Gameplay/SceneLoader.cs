@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using BulletHellTemplate;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityUtils;
@@ -30,17 +31,19 @@ namespace _Game.Core.Gameplay
 
         public void ReloadCurrentScene(Action onLoaded = null)
         {
-            string currentScene = SceneManager.GetActiveScene().name;
+            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             LoadScene(currentScene, null, onLoaded);
         }
 
         private IEnumerator LoadSceneAsync(string sceneName, object data = null, Action onLoaded = null)
         {
         
+            AudioManager.Singleton.PlayLoadingMenu(loadingmusic, "ambient");
+            
             if (loadingScreen is not null && loadingScreen)
                 loadingScreen.SetActive(true);
 
-            AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+            AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
             if (op != null)
             {
                 op.allowSceneActivation = false;
@@ -61,10 +64,10 @@ namespace _Game.Core.Gameplay
             }
 
             loadingScreen?.SetActive(false);
-
+            AudioManager.Singleton.StopLoadingAudioPlay();
             onLoaded?.Invoke();
         }
-
+        [SerializeField] AudioClip loadingmusic;
         protected override void Awake()
         {
             base.Awake();
@@ -79,7 +82,7 @@ namespace _Game.Core.Gameplay
         {
             if (loadingScreen != null)
                 loadingScreen.SetActive(false);
-            if (SceneManager.GetActiveScene().name == "Entry")
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Entry")
             {
                 LoadScene("MainMenu");  
             }

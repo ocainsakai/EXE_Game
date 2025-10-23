@@ -2,6 +2,7 @@ using CardSystem;
 using System;
 using System.Collections.Generic;
 using _Game.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,22 +56,47 @@ public class UIDeckSelection : MonoBehaviour
         UpdateDeckView();
     }
 
+    // --- Thêm dòng này ở đầu class của bạn ---
+    [SerializeField] private TextMeshProUGUI selectBtnText;
+// Sau đó kéo component TextMeshProUGUI của nút Select vào đây trong Inspector
+
     private void UpdateDeckView()
     {
         deckView.gameObject.SetActive(true);
         var deck = CurrentDetailDeck;
-        if (deck != null)
-        {
-            deckView.SetDeckName(deck.DeckName);
-            if (deck.CheckUnlocked)
-                deckView.SetCardBack(deck.DeckCover != null ? deck.DeckCover : defaultCardBack);
-            else
-                deckView.SetCardBack(lockedCardBack);
-        }
-        else
+
+        // --- 1. Guard Clause (Thoát sớm) ---
+        // Nếu không có deck nào được chọn, set trạng thái "No Deck" và thoát
+        if (deck == null)
         {
             deckView.SetDeckName("No Deck");
             deckView.SetCardBack(defaultCardBack);
+            selectBtn.gameObject.SetActive(false); // Ẩn nút select đi
+            return; // Thoát khỏi hàm
+        }
+
+        // --- Logic chính (chỉ chạy khi 'deck' chắc chắn không null) ---
+
+        deckView.SetDeckName(deck.DeckName);
+
+        // --- 2. Logic được làm phẳng ---
+        if (deck.CheckUnlocked)
+        {
+            // Deck đã mở khóa
+            var cardBack = (deck.DeckCover != null) ? deck.DeckCover : defaultCardBack;
+            deckView.SetCardBack(cardBack);
+
+            // --- 3. Dùng toán tử ba ngôi (Ternary Operator) ---
+            bool isSelected = (deck.DeckID == PlayerSave.GetSelectedDeck());
+            selectBtnText.text = isSelected ? "SELECTED" : "SELECT";
+        
+            selectBtn.gameObject.SetActive(true); // Hiển thị nút
+        }
+        else
+        {
+            // Deck bị khóa
+            deckView.SetCardBack(lockedCardBack);
+            selectBtn.gameObject.SetActive(false); // Ẩn nút
         }
     }
 

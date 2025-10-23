@@ -82,6 +82,6 @@ public class SettingUI : MonoBehaviour
     }
     private void BackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }
