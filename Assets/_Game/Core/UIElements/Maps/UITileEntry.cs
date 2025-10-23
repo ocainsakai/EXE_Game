@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -13,12 +14,10 @@ public class UITileEntry : MonoBehaviour
     public void SetData(Vector2Int position,Sprite icon, Color bgColor)
     {
         _position = position;
-        if (icon != null) 
-        content.sprite = icon;
+        if (icon != null) content.sprite = icon;
         else content.gameObject.SetActive(false);
         background.color = bgColor;
 
-        button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => OnTileMapClicked?.Invoke(_position));
     }
 

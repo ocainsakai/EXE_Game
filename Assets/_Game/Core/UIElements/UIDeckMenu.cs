@@ -12,9 +12,9 @@ namespace _Game.Core
         [Tooltip("Panel that displays the details of a specific character.")]
         public GameObject deckDetails;
 
-        [FormerlySerializedAs("OnOpenMenu")] public UnityEvent onOpenMenu;
+        public UnityEvent onOpenMenu;
 
-        [FormerlySerializedAs("OnCloseMenu")] public UnityEvent onCloseMenu;
+        public UnityEvent onCloseMenu;
 
     
         void OnEnable()

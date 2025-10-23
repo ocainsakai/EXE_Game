@@ -37,7 +37,10 @@ public class UIDeckSelection : MonoBehaviour
     private void OnSelectBtnClicked()
     {
         if (CurrentDetailDeck != null && CurrentDetailDeck.CheckUnlocked)
+        {
             PlayerSave.SetSelectedDeck(currentDetailDeckId);
+            selectBtnText.text = "SELECTED";
+        }
     }
 
     private void OnRightBtnClicked()

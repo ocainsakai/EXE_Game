@@ -61,7 +61,7 @@ public class UITileDetails : MonoBehaviour
 
         // Logic của nút Play không đổi
         playBtn.gameObject.SetActive(tile.IsWalkable);
-        playBtn.onClick.RemoveAllListeners();
+        
         playBtn.onClick.AddListener(() => {
             onPlayBtnClicked?.Invoke(enemyData);
             Hide();
@@ -70,5 +70,10 @@ public class UITileDetails : MonoBehaviour
     public virtual void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    void OnDestroy()
+    {
+        playBtn.onClick.RemoveAllListeners();
     }
 }

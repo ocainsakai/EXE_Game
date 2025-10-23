@@ -2,6 +2,8 @@ using DG.Tweening;
 using System.Collections.Generic;
 using _Game.Addons.Deck.Scripts;
 using _Game.Addons.Deck.Scripts.Card;
+using BulletHellTemplate;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityUtils;
 
@@ -9,6 +11,7 @@ public class UICardFactory : MonoBehaviour
 {
     [SerializeField] private CardEntry cardEntry;
     [SerializeField] private RectTransform container;
+    [SerializeField] private AudioClip btnClick;
     private Dictionary<CardRuntime, CardEntry> cardEntries = new();
 
     public List<CardEntry> GetOrCreateCardEntries(List<CardRuntime> cards)
@@ -30,6 +33,7 @@ public class UICardFactory : MonoBehaviour
         entry = Instantiate(cardEntry, container.position, Quaternion.identity);
         entry.transform.SetParent(container);
         entry.transform.localScale = Vector3.one;
+        
         entry.Setup(cardRuntime);
         cardEntries.Add( cardRuntime, entry);
         return entry;

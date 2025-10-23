@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BulletHellTemplate;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ public class PlayerButton : MonoBehaviour
     // Using a Dictionary allows you to access buttons by name, which is more robust.
     private Dictionary<string, Button> actionButtons = new Dictionary<string, Button>();
 
+    [SerializeField] private AudioClip btnClick;
     public UnityEvent onPlayButtonClicked;
     public UnityEvent onDiscardButtonClicked;
     public UnityEvent onSortButtonClicked;
@@ -66,6 +68,9 @@ public class PlayerButton : MonoBehaviour
         newButtonGo.transform.SetParent(this.transform, false); // Set 'worldPositionStays' to false
         newButtonGo.transform.localScale = Vector3.one;
 
+        // 
+       
+        
         // Add Button and Image components
         var image = newButtonGo.AddComponent<Image>();
         image.color = Color.gray;
@@ -76,7 +81,9 @@ public class PlayerButton : MonoBehaviour
         {
             btn.onClick.AddListener(onClickAction);
         }
-
+        var btnAudio = btn.gameObject.AddComponent<ButtonAudio>();
+        btnAudio.audioTag = "master";
+        btnAudio.buttonClickAudio = btnClick;
         // Create the text object
         var textGo = new GameObject("Text", typeof(RectTransform));
         textGo.transform.SetParent(newButtonGo.transform, false);

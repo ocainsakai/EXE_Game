@@ -10481,6 +10481,7 @@ GameObject:
   - component: {fileID: 2088557533}
   - component: {fileID: 2088557532}
   - component: {fileID: 2088557531}
+  - component: {fileID: 2088557535}
   m_Layer: 5
   m_Name: Button Select
   m_TagString: Untagged
@@ -10610,6 +10611,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088557529}
   m_CullTransparentMesh: 1
+--- !u!114 &2088557535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088557529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e837045b27e88d04094b8ad7f2227cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletHellTemplate.ButtonAudio
+  buttonClickAudio: {fileID: 8300000, guid: 15fe9675f9ca746caa2a2a811a2e76ab, type: 3}
+  audioTag: master
 --- !u!1 &2100458019
 GameObject:
   m_ObjectHideFlags: 0
