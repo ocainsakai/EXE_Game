@@ -1114,6 +1114,14 @@ PrefabInstance:
       value: 'Battle '
       objectReference: {fileID: 0}
     - target: {fileID: 8897227781776193879, guid: 5e8ce61b92a354d41b544e0087ca86f4, type: 3}
+      propertyPath: winVfx
+      value: 
+      objectReference: {fileID: 8300000, guid: e00ac121338f9344b8e1da98b29b0e7b, type: 3}
+    - target: {fileID: 8897227781776193879, guid: 5e8ce61b92a354d41b544e0087ca86f4, type: 3}
+      propertyPath: loseVfx
+      value: 
+      objectReference: {fileID: 8300000, guid: f32401a57cf6f934db488b8ec58231c4, type: 3}
+    - target: {fileID: 8897227781776193879, guid: 5e8ce61b92a354d41b544e0087ca86f4, type: 3}
       propertyPath: battlePanel
       value: 
       objectReference: {fileID: 86699894}

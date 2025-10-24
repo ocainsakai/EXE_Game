@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BulletHellTemplate;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.XR;
@@ -19,6 +20,9 @@ namespace _Game.Core.Gameplay.Combat
         public UnityEvent onBattleWin;
         public UnityEvent onBattleComplete;
         public UnityEvent onBattleLose;
+
+        [SerializeField] private AudioClip winVfx;
+        [SerializeField] private AudioClip loseVfx;
         public void BattleStart(EnemyData enemyData)
         {
             // get data
@@ -71,6 +75,7 @@ namespace _Game.Core.Gameplay.Combat
         }
         private void HandleWin()
         {
+            AudioManager.Singleton.PlayAudio(winVfx, "master");
             Debug.Log($"You win");
             // win resolve
             HandleEnd();
@@ -86,6 +91,8 @@ namespace _Game.Core.Gameplay.Combat
 
         private void HandleLose()
         {
+            AudioManager.Singleton.PlayAudio(loseVfx, "master");
+
             Debug.Log($"You lose");
             // lose resolve
             HandleEnd();
