@@ -41,15 +41,15 @@ public class UIShop : MonoBehaviour
         timePanel.SetActive(false);
     }
     private void UpdateCurrencyUI()
-    {
-        var playerData = GameInstance.Singleton.playerData;
-        coinText.text = playerData.gold.ToString();
+    { 
+        Debug.Log(PlayerSave.GetPlayerCoin());
+        coinText.text = PlayerSave.GetPlayerCoin().ToString();
     }
 
     private void OpenGoldShop()
     {
         CloseAllUI();
-        goldPanel.SetActive(true);
+        goldPanel.SetActive(true); 
     }
 
     private void OpenCardShop()

@@ -21,7 +21,7 @@ public class BattleMediator : MonoBehaviour
 
     // State
     public Energy energy;
-    public void StartBattle(PlayerData player, EnemyData enemy)
+    public void StartBattle(EnemyData enemy)
     {
         energy = new(startEnergy, maxEnergy);
         energy.onValueChanged.AddListener(energyBarHelper.SetValue);

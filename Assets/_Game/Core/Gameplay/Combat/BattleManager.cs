@@ -11,7 +11,7 @@ namespace _Game.Core.Gameplay.Combat
     /// </summary>
     public class BattleManager : MonoBehaviour
     {
-        [SerializeField] public BattleMediator Mediator;
+        [SerializeField] public BattleMediator mediator;
         [SerializeField] private CardManager cardManager;
         [SerializeField] private Enemy enemy;
         [SerializeField] private PlayerController playerController;
@@ -21,19 +21,16 @@ namespace _Game.Core.Gameplay.Combat
         public UnityEvent onBattleComplete;
         public UnityEvent onBattleLose;
 
-        [SerializeField] private AudioClip winVfx;
-        [SerializeField] private AudioClip loseVfx;
+        
         public void BattleStart(EnemyData enemyData)
         {
-            // get data
-            var playerData = GameInstance.Singleton.playerData;
+            // get 
             var deckData = GameInstance.Singleton.GetDeckData();
             // start UI
             battlePanel.SetActive(true);
 
             // start player
-            Mediator.StartBattle(playerData, enemyData);
-            playerController.Stat.SetData(playerData);
+            mediator.StartBattle(enemyData);
             cardManager.StartBattle(deckData.Cards);
             // start enemy
             enemy.SetData(enemyData);
@@ -75,7 +72,6 @@ namespace _Game.Core.Gameplay.Combat
         }
         private void HandleWin()
         {
-            AudioManager.Singleton.PlayAudio(winVfx, "master");
             Debug.Log($"You win");
             // win resolve
             HandleEnd();
@@ -91,10 +87,8 @@ namespace _Game.Core.Gameplay.Combat
 
         private void HandleLose()
         {
-            AudioManager.Singleton.PlayAudio(loseVfx, "master");
 
             Debug.Log($"You lose");
-            // lose resolve
             HandleEnd();
             onBattleLose?.Invoke();
         }
@@ -106,12 +100,12 @@ namespace _Game.Core.Gameplay.Combat
         }
         public void AttackPlayer(float damage)
         {
-            Mediator.Attack(playerController.Stat, damage);
+            mediator.Attack(playerController.Stat, damage);
         }
 
         public void AttackEnemy(float damage)
         {
-            Mediator.Attack(enemy,  damage);
+            mediator.Attack(enemy,  damage);
         }
     }
 }

@@ -235,7 +235,7 @@ namespace BulletHellTemplate
             var dict = new Dictionary<string, string>();
             string[] prefixes =
             {
-                "KEY_SELECTED_DECK",
+                "KEY_SELECTED_DECK", "PLAYERCOIN", "SelectedMapIndex",
                 "PLAYERNAME_", "PLAYERICON_", "PLAYERFRAME_", "PLAYERACCOUNTLEVEL_",
                 "PLAYERACCOUNTCURRENTEXP_", "TUTORIALISDONE_", "PLAYERSELECTEDCHARACTER_",
                 "PLAYERFAVOURITECHARACTER_", "CHARACTERMASTERYLEVEL_", "CHARACTERMASTERYCURRENTEXP_",

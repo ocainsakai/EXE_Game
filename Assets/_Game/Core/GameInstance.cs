@@ -21,11 +21,8 @@ namespace _Game.Core
 
         // --- Map ---
         public MapData[] maps;         // danh sách map
+        [HideInInspector]
         public MapData currentMap;     // map đang chơi
-
-        // --- Player ---
-        [FormerlySerializedAs("PlayerData")] public PlayerData playerData;
-
         // --- Singleton ---
         public static GameInstance Singleton;
         private bool isInitialized;
@@ -44,7 +41,8 @@ namespace _Game.Core
                 Destroy(gameObject);
             }
         }
-        
+
+
 
         public bool IsInitialized() => isInitialized;
 

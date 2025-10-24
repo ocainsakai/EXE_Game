@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour, IHealth
     [SerializeField] private UIEnemyBattle uiEnemyBattle;
     [SerializeField] private BattleManager  battleManager;
     
+    [HideInInspector]
     public EnemyData data;
     public Health health;
     public Count count;

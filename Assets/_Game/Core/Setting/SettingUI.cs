@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,15 +20,21 @@ public class SettingUI : MonoBehaviour
     public Button soundButton;
     public Button infoButton;
     public Button creditButton;
-    public Button backButton;
 
     void Start()
     {
         soundButton.onClick.AddListener(ShowSoundPage);
         infoButton.onClick.AddListener(ShowInfoPage);
         creditButton.onClick.AddListener(ShowCreditPage);
-        backButton.onClick.AddListener(BackToMainMenu);
         ShowSoundPage();
+    }
+
+    private void OnDestroy()
+    {
+        soundButton.onClick.RemoveListener(ShowSoundPage);
+        infoButton.onClick.RemoveListener(ShowInfoPage);
+        creditButton.onClick.RemoveListener(ShowCreditPage);
+        
     }
 
     public void ShowSoundPage()
@@ -78,10 +85,6 @@ public class SettingUI : MonoBehaviour
     private void Highlight(Button btn, TMP_Text txt)
     {
         txt.color = Color.white;
-        btn.transform.localScale = Vector3.one * 1.3f;
-    }
-    private void BackToMainMenu()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        btn.transform.localScale = Vector3.one * 1.1f;
     }
 }

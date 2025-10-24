@@ -33,7 +33,7 @@ public class ScoreManager : MonoBehaviour
         foreach (var card in cardsToPlay)
         {
             Debug.Log($"[PlayerActionController] Activating card: {card.Name}");
-            battleManager.Mediator.UseEnergyPlay();
+            battleManager.mediator.UseEnergyPlay();
             yield return battleVFXManager?.PlayAttackVFX();
             yield return CardEffect(card);
         }
