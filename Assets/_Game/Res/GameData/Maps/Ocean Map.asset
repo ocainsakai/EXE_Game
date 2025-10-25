@@ -21,4 +21,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad7bbde6a3a856e48b70390a7de519ec, type: 2}
   bossDatas:
   - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
-  mapBackground: {fileID: -5864263735007254664, guid: 4bae7f61f9dbadf46bfceed1f099aefa, type: 3}
+  mapBackground: {fileID: -574485200383073598, guid: 052c184134b1c1046aa57f354e03e088, type: 3}
