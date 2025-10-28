@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 560814003235635969}
   - component: {fileID: 2878531768735899100}
   - component: {fileID: 4244662186790431058}
+  - component: {fileID: 6852744446590312748}
   m_Layer: 5
   m_Name: Lose Game
   m_TagString: Untagged
@@ -204,7 +205,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: be9861ff322f4334cb6faf793d5fef50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2884f841ccbcd23469db666e6589494c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -214,6 +215,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6852744446590312748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909601945783307731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711c387c759e4c28b76def06dfe531ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UILoseScreen
+  button1: {fileID: 6389924429869358521}
+  button2: {fileID: 1177774007177669032}
+  button3: {fileID: 0}
 --- !u!1 &1317413084803220392
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +402,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 318.14, y: 80.44}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2842477957922235743
 CanvasRenderer:
@@ -602,7 +618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -51.2509, y: 0}
+  m_AnchoredPosition: {x: -51.250854, y: 0}
   m_SizeDelta: {x: 102.5017, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66198266321825586
@@ -617,10 +633,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5accb5115f5da8d44b358c32cb105d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIScreens
-  winScreens: {fileID: 5708801137581045551}
-  completeScreens: {fileID: 6674967161550891605}
-  loseScreens: {fileID: 909601945783307731}
-  pauseScreens: {fileID: 4443356910371960297}
+  winScreens: {fileID: 3788827035581920860}
+  completeScreens: {fileID: 0}
+  loseScreens: {fileID: 6852744446590312748}
+  pauseScreens: {fileID: 2086440483649335771}
   winVfx: {fileID: 8300000, guid: e00ac121338f9344b8e1da98b29b0e7b, type: 3}
   loseVfx: {fileID: 8300000, guid: f32401a57cf6f934db488b8ec58231c4, type: 3}
 --- !u!1 &2747160652045917142
@@ -657,9 +673,9 @@ RectTransform:
   - {fileID: 1299837826650106126}
   m_Father: {fileID: 7717972527957270291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1351.8989, y: -15}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &70774304296903992
@@ -1212,67 +1228,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5640982601891875042}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameInstanceHelper, Assembly-CSharp
-        m_MethodName: LoanMainMenuScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameInstanceHelper, Assembly-CSharp
-        m_MethodName: LoanMainMenuScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6674967161550891605}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6674967161550891605}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4046388514112770767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,7 +1265,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 366.7, y: 80.44}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3140558527191322880
 CanvasRenderer:
@@ -1534,9 +1490,9 @@ RectTransform:
   - {fileID: 5825884758143890725}
   m_Father: {fileID: 1378904104655130221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 779.9057, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 783.9663, y: -15}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4411881864108923559
@@ -1620,19 +1576,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1429425057557561480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameInstanceHelper, Assembly-CSharp
-        m_MethodName: LoanMainMenuScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4443356910371960297
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,6 +1588,7 @@ GameObject:
   - component: {fileID: 9081449870591345437}
   - component: {fileID: 6632186236583621739}
   - component: {fileID: 819360475130055647}
+  - component: {fileID: 2086440483649335771}
   m_Layer: 5
   m_Name: pause
   m_TagString: Untagged
@@ -1669,7 +1614,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1819.8525, y: 980.08276}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6632186236583621739
 CanvasRenderer:
@@ -1699,7 +1644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 2884f841ccbcd23469db666e6589494c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1709,6 +1654,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2086440483649335771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4443356910371960297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ddbefb2bd34ed694f0fafaab4b1a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIWinScreen
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  button3: {fileID: 0}
+  mapManager: {fileID: 0}
 --- !u!1 &4722863894258184582
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,19 +2126,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6544712883946754420}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameInstanceHelper, Assembly-CSharp
-        m_MethodName: LoanMainMenuScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5708801137581045551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,6 +2138,7 @@ GameObject:
   - component: {fileID: 6185286356276206497}
   - component: {fileID: 122077795477528141}
   - component: {fileID: 5996792491351805930}
+  - component: {fileID: 3788827035581920860}
   m_Layer: 5
   m_Name: Win Game
   m_TagString: Untagged
@@ -2246,7 +2196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: be9861ff322f4334cb6faf793d5fef50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2884f841ccbcd23469db666e6589494c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2256,6 +2206,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3788827035581920860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708801137581045551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ddbefb2bd34ed694f0fafaab4b1a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIWinScreen
+  button1: {fileID: 2264628111483668154}
+  button2: {fileID: 3062735852029380618}
+  button3: {fileID: 0}
+  mapManager: {fileID: 0}
 --- !u!1 &6151652211442265771
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,9 +2256,9 @@ RectTransform:
   - {fileID: 2871658563055705413}
   m_Father: {fileID: 1378904104655130221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1339.717, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1351.8989, y: -15}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9107905562878019787
@@ -2376,19 +2342,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7601478735687262207}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameInstanceHelper, Assembly-CSharp
-        m_MethodName: LoanMainMenuScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &6674967161550891605
 GameObject:
   m_ObjectHideFlags: 0
@@ -2400,6 +2354,7 @@ GameObject:
   - component: {fileID: 8043331682931117164}
   - component: {fileID: 1645028064577024258}
   - component: {fileID: 583240464940521759}
+  - component: {fileID: 4607896974636317369}
   m_Layer: 5
   m_Name: Complete Game
   m_TagString: Untagged
@@ -2457,7 +2412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: be9861ff322f4334cb6faf793d5fef50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2884f841ccbcd23469db666e6589494c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2467,6 +2422,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4607896974636317369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6674967161550891605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94b55ca439f4f9e83c35709452fccd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UICompleteScreen
+  button1: {fileID: 8563241810446927959}
+  button2: {fileID: 3826003090734187775}
+  button3: {fileID: 0}
 --- !u!1 &7058657030715760023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,9 +2471,9 @@ RectTransform:
   - {fileID: 7392397420172584183}
   m_Father: {fileID: 7717972527957270291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 783.9663, y: -15}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5655536341198938347
@@ -2587,43 +2557,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7136829465970727829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
-        m_MethodName: OnBattleWin
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 5708801137581045551}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7375687308564468419
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Lanternfish
   m_EditorClassIdentifier: 
-  EnemyID: enemy_lanternfish
-  Name: Lanternfish
-  Icon: {fileID: 7241665243959948635, guid: a09dfc73c88cf3142b4770682bce07d7, type: 3}
-  Atk: 100
-  HP: 100
-  Count: 100
+  enemyID: 
+  nameDisplay: 
+  icon: {fileID: 5866152862056065949, guid: 886985eeb7302a3468455741b43f9f24, type: 3}
+  atk: 100
+  hp: 100
+  count: 100
   cost: 100
   reward: 100

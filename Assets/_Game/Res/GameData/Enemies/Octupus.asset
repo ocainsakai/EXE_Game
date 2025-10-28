@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Octupus
   m_EditorClassIdentifier: 
-  EnemyID: enemy_octupus
-  Name: Octupus
-  Icon: {fileID: 227784112655540353, guid: c2603f815b2a814478ec8f7c05a31854, type: 3}
-  Atk: 88
-  HP: 888
-  Count: 8
+  enemyID: 
+  nameDisplay: 
+  icon: {fileID: -846848168383044390, guid: b5b1558b379252843a5c295abe4c9e09, type: 3}
+  atk: 88
+  hp: 888
+  count: 8
   cost: 8
   reward: 888

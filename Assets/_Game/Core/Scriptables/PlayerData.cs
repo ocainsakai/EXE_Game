@@ -5,7 +5,7 @@ public class PlayerData : ScriptableObject
 {
     public float hp = 300;
     [Header("Currency")]
-    
+    public static PlayerData instance;
     public int Gold
     {
         get => PlayerSave.GetPlayerCoin();

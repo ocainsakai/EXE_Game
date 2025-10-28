@@ -11,7 +11,8 @@ public class MapManager : MonoBehaviour
     public int mapWidth = 5;
     public int mapHeight = 5;
 
-    [Header("Rendering")]
+    [Header("Rendering")] 
+    [SerializeField] private GameObject UIMap;
     public Transform containter;
     public UITileEntry tilePrefab;
     public Sprite playerIcon;
@@ -216,6 +217,7 @@ public class MapManager : MonoBehaviour
     public void OnBattleWin()
     {
         UpdatePlayerTile(_currentTile.Position);
+        UIMap.SetActive(true);
     }
 
     private void OnDestroy()
