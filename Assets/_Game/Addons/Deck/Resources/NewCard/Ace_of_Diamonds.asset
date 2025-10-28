@@ -18,4 +18,4 @@ MonoBehaviour:
   Cost: 0
   Name: Ace of Diamonds
   Description: This is the Ace of Diamonds.
-  Art: {fileID: -3512260357532645987, guid: 212e9928993f7eb4e88d45458f959b70, type: 3}
+  Art: {fileID: 21300000, guid: 212e9928993f7eb4e88d45458f959b70, type: 3}

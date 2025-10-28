@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Lanternfish
+  m_Script: {fileID: 11500000, guid: 67a6396b6ee56cd47ae5641f140c65ac, type: 3}
+  m_Name: BossData 1
   m_EditorClassIdentifier: 
   enemyID: 
   nameDisplay: 
-  icon: {fileID: 5866152862056065949, guid: 886985eeb7302a3468455741b43f9f24, type: 3}
+  icon: {fileID: 3221721577579406510, guid: a28e708630a60bd428885d007ecb2aa6, type: 3}
   atk: 100
   hp: 100
-  count: 100
+  count: 1
   cost: 100
   reward: 100
+  abilities:
+  - {fileID: 11400000, guid: 399259c8b58a8ae429b492dfee5855a5, type: 2}

@@ -21,6 +21,7 @@ namespace _Game.Core.Gameplay.Combat
         public UnityEvent onBattleComplete;
         public UnityEvent onBattleLose;
 
+        public int enemyReward => enemy.data.reward;
         
         public void BattleStart(EnemyData enemyData)
         {

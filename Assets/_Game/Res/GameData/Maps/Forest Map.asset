@@ -18,6 +18,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
   - {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}
   - {fileID: 11400000, guid: f01a5baf2af7d4a40ae947d4579bf097, type: 2}
+  - {fileID: 11400000, guid: 166eda993236b124194899221dd86c1a, type: 2}
+  - {fileID: 11400000, guid: e9da786bbaaf6dd48b538ccd5366484f, type: 2}
   bossDatas:
   - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
   mapBackground: {fileID: -5078337790934877545, guid: 9930c6cc4ecad74439ca3e266ce841e7, type: 3}

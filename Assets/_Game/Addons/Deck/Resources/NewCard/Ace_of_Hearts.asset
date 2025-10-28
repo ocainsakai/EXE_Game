@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Ace_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 3364758165
-    Part2: 1294427756
-    Part3: 327389373
-    Part4: 236317404
+  CardID: 0
   Rank: 14
   Suit: 0
   Cost: 0
   Name: Ace of Hearts
   Description: This is the Ace of Hearts.
-  Art: {fileID: 4289747667477137320, guid: 5647a52582d41054180618bfd3623161, type: 3}
+  Art: {fileID: 21300000, guid: 791383c75845d3c4dbd543aba874b83c, type: 3}

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Turtle
   m_EditorClassIdentifier: 
-  EnemyID: enemy_turtle
-  Name: Turtle
-  Icon: {fileID: -7442915053277858766, guid: c7bc824e9a7b9b042b463da1ed7b9afe, type: 3}
-  Atk: 100
-  HP: 100
-  Count: 100
+  enemyID: 
+  nameDisplay: 
+  icon: {fileID: -1874348630440426985, guid: 8f4739c0612331f409ecd2959470b59e, type: 3}
+  atk: 100
+  hp: 100
+  count: 100
   cost: 100
   reward: 100

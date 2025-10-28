@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  EnemyID: enemy_mushroom
-  Name: Mushroom
-  Icon: {fileID: -654737500350741434, guid: 17e1a40da00030a4e91c20e27a65a013, type: 3}
-  Atk: 10
-  HP: 50
-  Count: 1
+  enemyID: 
+  nameDisplay: 
+  icon: {fileID: 3842927124067323573, guid: 8c98b366a1dd9bd47949db48e147b459, type: 3}
+  atk: 10
+  hp: 50
+  count: 1
   cost: 100
   reward: 150

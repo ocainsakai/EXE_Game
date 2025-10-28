@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Lanternfish
+  m_Name: Turtle 3
   m_EditorClassIdentifier: 
   enemyID: 
   nameDisplay: 
-  icon: {fileID: 5866152862056065949, guid: 886985eeb7302a3468455741b43f9f24, type: 3}
+  icon: {fileID: 4887677840807297399, guid: b5eaf8fba48a01a41aa947879d87c9e2, type: 3}
   atk: 100
   hp: 100
   count: 100
