@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Cat
   m_EditorClassIdentifier: 
-  enemyID: 
+  enemyID: linh1
   nameDisplay: 
   icon: {fileID: -7487539194134751398, guid: 9dbba7070a07b284ebd8519bf048876a, type: 3}
   atk: 50

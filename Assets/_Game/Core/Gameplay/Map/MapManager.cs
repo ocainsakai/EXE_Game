@@ -4,6 +4,33 @@ using System;
 using _Game.Core;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
+
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
+
+// --- Thêm hai lớp này để lưu trữ dữ liệu ---
+
+[System.Serializable]
+public class SavedTileData
+{
+    public TileType Type;
+    public string OccupantID;
+    // Chúng ta không cần lưu IsWalkable (vì nó được tính toán lại)
+    // Chúng ta không thể lưu Icon (sẽ được tải lại từ OccupantID)
+}
+
+[System.Serializable]
+public class SavedMapData
+{
+    public int mapWidth;
+    public int mapHeight;
+    public Vector2Int playerPosition;
+
+    // JsonUtility không hỗ trợ mảng 2D, vì vậy chúng ta dùng mảng 1D
+    // và tự tính toán chỉ số (index)
+    public SavedTileData[] tiles;
+}
+
 
 public class MapManager : MonoBehaviour
 {
@@ -27,26 +54,206 @@ public class MapManager : MonoBehaviour
     private Vector2Int playerPosition;
 
     private Tile _currentTile;
+
+    // Khóa (key) để lưu/tải dữ liệu từ PlayerPrefs
+    public const string SAVE_KEY = "SavedMapData";
+
+    void Awake()
+    {
+        // OPTIMIZED: Đăng ký event chỉ một lần duy nhất.
+        UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
+    }
+
     void Start()
     {
-        GameInstance.Singleton.SetRandomCurrentMap();
+        // Thử tải map đã lưu
+        if (!LoadMap())
+        {
+            // Nếu không có, tạo map mới
+            CreateNewMap();
+        }
+    }
+    private void OnDestroy()
+    {
+        UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
+    }
+    // --- Các hàm Lưu / Tải / Tạo mới ---
+
+    /// <summary>
+    /// Hàm public để tạo một bản đồ hoàn toàn mới.
+    /// Sẽ xóa bất kỳ dữ liệu map nào đã lưu trước đó.
+    /// </summary>
+    public void CreateNewMap()
+    {
+        Debug.Log("Đang tạo bản đồ mới và xóa save cũ...");
+
+        // 1. Xóa save game cũ
+        DeleteSavedMap();
+
+        // 2. Lấy map data mới
+
         var currentMap = GameInstance.Singleton?.currentMap;
         if (currentMap == null)
         {
-            Debug.LogError("No current map set in GameInstance");
+            Debug.LogWarning("Không có map nào được set trong GameInstance. Sẽ chọn 1 map ngẫu nhiên.");
+            GameInstance.Singleton.SetRandomCurrentMap();
+            currentMap = GameInstance.Singleton?.currentMap;
+        }
+
+        // 3. Tạo dữ liệu logic
+        CreateAndPopulateMap();
+
+        // 4. Render UI (hàm này đã bao gồm xóa UI cũ)
+        RenderMapFirstTime();
+
+        // 5. Đặt vị trí player ban đầu
+        UpdatePlayerTile(new Vector2Int(0, 0), true);
+    }
+
+    /// <summary>
+    /// Lưu trạng thái hiện tại của bản đồ.
+    /// </summary>
+    public void SaveMap()
+    {
+        // 1. Tạo đối tượng data để lưu
+        SavedMapData savedData = new SavedMapData();
+        savedData.mapWidth = mapWidth;
+        savedData.mapHeight = mapHeight;
+        savedData.playerPosition = playerPosition;
+        savedData.tiles = new SavedTileData[mapWidth * mapHeight];
+
+        // 2. Chuyển đổi từ GridMap -> SavedMapData
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                Tile tile = map.GetTile(x, y);
+                SavedTileData tileData = new SavedTileData();
+                tileData.Type = tile.Type;
+                tileData.OccupantID = tile.OccupantID;
+                
+                // Chuyển từ 2D (x, y) sang 1D (index)
+                savedData.tiles[y * mapWidth + x] = tileData;
+            }
+        }
+
+        // 3. Serialize thành JSON và lưu vào PlayerPrefs
+        string jsonData = JsonUtility.ToJson(savedData);
+        PlayerPrefs.SetString(SAVE_KEY, jsonData);
+        PlayerPrefs.Save();
+        Debug.Log("Map đã được lưu!");
+    }
+
+    /// <summary>
+    /// Tải bản đồ từ dữ liệu đã lưu.
+    /// </summary>
+    /// <returns>Trả về true nếu tải thành công, false nếu không có dữ liệu.</returns>
+    public bool LoadMap()
+    {
+        if (!PlayerPrefs.HasKey(SAVE_KEY))
+        {
+            Debug.Log("Không tìm thấy map đã lưu.");
+            return false;
+        }
+
+        try
+        {
+            // 1. Tải JSON và Deserialize
+            string jsonData = PlayerPrefs.GetString(SAVE_KEY);
+            SavedMapData savedData = JsonUtility.FromJson<SavedMapData>(jsonData);
+
+            // 2. Thiết lập lại map
+            mapWidth = savedData.mapWidth;
+            mapHeight = savedData.mapHeight;
+            map = new GridMap(mapWidth, mapHeight);
+
+            // 3. Populate dữ liệu map
+            for (int x = 0; x < mapWidth; x++)
+            {
+                for (int y = 0; y < mapHeight; y++)
+                {
+                    Tile tile = map.GetTile(x, y);
+                    // Chuyển từ 1D (index) sang 2D (x, y)
+                    SavedTileData data = savedData.tiles[y * mapWidth + x];
+
+                    tile.Type = data.Type;
+                    tile.OccupantID = data.OccupantID;
+
+                    // Tái tạo lại Icon từ OccupantID
+                    RestoreTileIcon(tile);
+                }
+            }
+
+            // 4. Render map
+            RenderMapFirstTime();
+
+            // 5. Đặt player về vị trí đã lưu
+            UpdatePlayerTile(savedData.playerPosition, true);
+
+            Debug.Log("Map đã được tải từ save!");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Lỗi khi tải map: {e.Message}. Sẽ tạo map mới.");
+            PlayerPrefs.DeleteKey(SAVE_KEY); // Xóa file save bị lỗi
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Xóa dữ liệu map đã lưu.
+    /// </summary>
+    private void DeleteSavedMap()
+    {
+        DeleteMapSave(); // Sửa lại để gọi hàm static bên dưới
+    }
+
+    /// <summary>
+    /// Hàm static public để xóa save từ bất kỳ script nào khác.
+    /// </summary>
+    public static void DeleteMapSave()
+    {
+        if (PlayerPrefs.HasKey(SAVE_KEY))
+        {
+            PlayerPrefs.DeleteKey(SAVE_KEY);
+            PlayerPrefs.Save();
+            Debug.Log("Đã xóa dữ liệu map đã lưu (từ static).");
+        }
+    }
+
+    /// <summary>
+    /// Hàm hỗ trợ: Tải lại Icon cho ô dựa trên OccupantID.
+    /// </summary>
+    void RestoreTileIcon(Tile tile)
+    {
+        if (string.IsNullOrEmpty(tile.OccupantID))
+        {
+            tile.Icon = null;
             return;
         }
 
-        // OPTIMIZED: Đăng ký event chỉ một lần duy nhất.
-        UITileEntry.OnTileMapClicked += OnTileMapClickHandler;
+        // --- !! QUAN TRỌNG !! ---
+        // Bạn CẦN phải thêm hàm GetEnemyDataByID(string id) vào GameInstance.
+        // Hàm này phải có khả năng trả về EnemyData (hoặc BossData)
+        // dựa trên ID của nó.
+        var enemyData = GameInstance.Singleton.GetEnemyDataByID(tile.OccupantID);
 
-        CreateAndPopulateMap();
-        RenderMapFirstTime();
-
-        UpdatePlayerTile(new Vector2Int(0, 0), true); // isFirstTime = true
+        if (enemyData != null)
+        {
+            tile.Icon = enemyData.icon;
+        }
+        else if (tile.Type != TileType.Player && tile.Type != TileType.Nothing)
+        {
+            // Chỉ cảnh báo nếu nó *nên* có data (là Enemy/Boss)
+            Debug.LogWarning($"Không tìm thấy EnemyData cho OccupantID: {tile.OccupantID}");
+            tile.Icon = null; // Không tìm thấy
+        }
     }
 
-    // OPTIMIZED: Gộp các hàm khởi tạo map vào một chỗ cho gọn.
+
+    // --- Các hàm gốc của bạn (Không thay đổi) ---
+
     void CreateAndPopulateMap()
     {
         map = new GridMap(mapWidth, mapHeight);
@@ -96,7 +303,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    // OPTIMIZED: Đổi tên để rõ ràng đây là lần render đầu tiên, tạo ra các GameObjects.
     void RenderMapFirstTime()
     {
         if (tilePrefab == null || containter == null)
@@ -105,7 +311,6 @@ public class MapManager : MonoBehaviour
             return;
         }
 
-        // OPTIMIZED: Sử dụng Destroy thay vì DestroyImmediate.
         foreach (Transform child in containter)
         {
             Destroy(child.gameObject);
@@ -137,7 +342,6 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    // OPTIMIZED: Hàm mới chỉ để cập nhật hình ảnh của một ô cụ thể.
     void UpdateTileVisuals(int x, int y)
     {
         if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return;
@@ -151,7 +355,6 @@ public class MapManager : MonoBehaviour
         tileUI.SetData(new Vector2Int(x, y), tileData.Icon, tileColor);
     }
 
-    // OPTIMIZED: Sửa lại để không render toàn bộ map.
     void UpdatePlayerTile(Vector2Int newPosition, bool isFirstTime = false)
     {
         // 1. Dọn dẹp vị trí cũ của người chơi (nếu không phải lần đầu)
@@ -168,7 +371,7 @@ public class MapManager : MonoBehaviour
         var playerTile = map.GetTile(playerPosition.x, playerPosition.y);
         playerTile.Icon = playerIcon;
         playerTile.Type = TileType.Player;
-        playerTile.IsWalkable = false; // Người chơi không thể đi vào ô của chính mình
+        playerTile.IsWalkable = false;
 
         // 4. Set các ô xung quanh là walkable (trong data)
         var walkableTiles = map.GetNeighbors(playerTile);
@@ -180,8 +383,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // 5. Cập nhật lại hình ảnh cho TẤT CẢ các ô (chỉ cập nhật data, không tạo lại object)
-        // Đây là cách đơn giản nhất. Cách tối ưu hơn nữa là chỉ cập nhật những ô bị thay đổi.
+        // 5. Cập nhật lại hình ảnh cho TẤT CẢ các ô
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
@@ -197,8 +399,11 @@ public class MapManager : MonoBehaviour
         tile.Icon = null;
         tile.IsWalkable = false;
         tile.Type = TileType.Nothing;
+        
+        // --- QUAN TRỌNG KHI LƯU ---
+        // Khi người chơi rời đi, ô đó không còn Occupant
+        tile.OccupantID = null; 
 
-        // Cập nhật hình ảnh của ô vừa bị xóa
         UpdateTileVisuals(position.x, position.y);
     }
 
@@ -211,17 +416,31 @@ public class MapManager : MonoBehaviour
     }
     public void OnEnterBattle()
     {
-        UpdatePlayerTile(_currentTile.Position);
+        // Khi vào trận đấu, chúng ta nên lưu map
+        // phòng trường hợp người chơi thoát game giữa chừng
+        SaveMap(); 
+        
+        // ... (các logic khác của bạn)
     }
 
     public void OnBattleWin()
     {
         UpdatePlayerTile(_currentTile.Position);
         UIMap.SetActive(true);
+        
+        // Khi thắng, lưu lại vị trí mới của người chơi
+        SaveMap();
     }
 
-    private void OnDestroy()
+    public void SaveAndReturnToMainMenu()
     {
-        UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
+        // 1. Gọi hàm SaveMap() chúng ta đã tạo
+        Debug.Log("Đang lưu map trước khi về menu...");
+        SaveMap();
+
+        // 2. Tải Scene Main Menu
+        UnitySceneManager.LoadScene("MainMenu");
     }
+
+
 }
