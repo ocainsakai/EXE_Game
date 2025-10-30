@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Octupus
   m_EditorClassIdentifier: 
-  enemyID: 
+  enemyID: linh6
   nameDisplay: 
   icon: {fileID: -846848168383044390, guid: b5b1558b379252843a5c295abe4c9e09, type: 3}
   atk: 88

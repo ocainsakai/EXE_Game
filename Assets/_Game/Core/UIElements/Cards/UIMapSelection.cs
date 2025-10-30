@@ -1,6 +1,6 @@
 ﻿using System;
 using _Game.Core;
-using _Game.Core.Gameplay; // Đảm bảo namespace này đúng
+using _Game.Core.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +44,6 @@ public class UIMapSelection : MonoBehaviour
         rightBtn.onClick.AddListener(OnRightBtnClicked);
         selectBtn.onClick.AddListener(OnSelectBtnClicked);
 
-
         currentMapIndex = PlayerSave.GetSelectedMap();
 
         // Kiểm tra nếu chỉ số lưu bị lỗi
@@ -66,16 +65,38 @@ public class UIMapSelection : MonoBehaviour
     private void OnSelectBtnClicked()
     {
         var selectedMap = CurrentDetailMap;
-        if (selectedMap != null)
+
+        // --- Cải tiến: Thêm kiểm tra an toàn ---
+        if (selectedMap == null)
         {
-
-            PlayerSave.SetSelectedMap(currentMapIndex);
-
-            GameInstance.Singleton.SetCurrentMap(selectedMap.mapID);
-            SceneLoader.Instance.LoadScene("Map");
-            Debug.Log($"Đã chọn Map: {selectedMap.mapName} (ID: {selectedMap.mapID}). Cập nhật GameInstance.");
-
+            Debug.LogError("Lỗi: Không thể chọn map vì CurrentDetailMap là null.");
+            return;
         }
+
+        if (GameInstance.Singleton == null)
+        {
+            Debug.LogError("Lỗi: GameInstance.Singleton là null.");
+            return;
+        }
+
+        if (SceneLoader.Instance == null)
+        {
+            Debug.LogError("Lỗi: SceneLoader.Instance là null.");
+            return;
+        }
+
+        // 1. Lưu map nào VỪA ĐƯỢC CHỌN
+        PlayerSave.SetSelectedMap(currentMapIndex);
+        GameInstance.Singleton.SetCurrentMap(selectedMap.mapID);
+
+        // 2. --- THAY ĐỔI CHÍNH ---
+        // Xóa bất kỳ tiến trình cũ nào đã lưu của map.
+        // Điều này sẽ buộc MapManager.Start() gọi CreateNewMap().
+        MapManager.DeleteMapSave();
+
+        // 3. Tải scene "Map"
+        SceneLoader.Instance.LoadScene("Map");
+        Debug.Log($"Đang TẠO MAP MỚI: {selectedMap.mapName} (ID: {selectedMap.mapID}).");
     }
 
     private void OnRightBtnClicked()

@@ -125,5 +125,54 @@ namespace _Game.Core
             }
             return currentMap.BossData.FirstOrDefault(x => x.enemyID == occupantID);
         }
+
+        public EnemyData GetEnemyDataByID(string id)
+        {
+            // Kiểm tra an toàn
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            // 'maps' là mảng (array) chứa TẤT CẢ MapData
+            // mà GameInstance của bạn quản lý.
+            if (maps == null || maps.Length == 0)
+            {
+                Debug.LogError("GameInstance.maps chưa được gán hoặc bị rỗng!");
+                return null;
+            }
+
+            // Lặp qua TẤT CẢ các map có trong GameInstance
+            foreach (var map in maps)
+            {
+                if (map == null) continue;
+
+                // 1. Tìm trong danh sách EnemyData của map này
+                if (map.EnemyData != null)
+                {
+                    foreach (var enemy in map.EnemyData)
+                    {
+                        if (enemy != null && enemy.enemyID == id)
+                            return enemy;
+                    }
+                }
+
+                // 2. Tìm trong danh sách BossData của map này
+                if (map.BossData != null)
+                {
+                    foreach (var boss in map.BossData)
+                    {
+                        // Giả định BossData cũng là một dạng EnemyData
+                        if (boss != null && boss.enemyID == id)
+                            return boss;
+                    }
+                }
+            }
+
+            // Không tìm thấy ở bất cứ đâu
+            Debug.LogWarning($"GetEnemyDataByID: Không tìm thấy EnemyData cho ID: {id}");
+            return null;
+        }
+
     }
 }

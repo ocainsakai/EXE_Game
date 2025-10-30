@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
   m_Name: Turtle 3
   m_EditorClassIdentifier: 
-  enemyID: 
+  enemyID: linh10
   nameDisplay: 
   icon: {fileID: 4887677840807297399, guid: b5eaf8fba48a01a41aa947879d87c9e2, type: 3}
   atk: 100
