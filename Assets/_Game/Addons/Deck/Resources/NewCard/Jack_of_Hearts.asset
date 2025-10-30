@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Jack_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 3238615921
-    Part2: 1242477329
-    Part3: 1879840910
-    Part4: 562816455
+  CardID: 0
   Rank: 11
   Suit: 0
   Cost: 0
   Name: Jack of Hearts
   Description: This is the Jack of Hearts.
-  Art: {fileID: -7272930264268907403, guid: c977b6b7c87c3ac4597c8de0a0395f97, type: 3}
+  Art: {fileID: 21300000, guid: e7b21f0dcf8a3e2458c1b9572c32c066, type: 3}

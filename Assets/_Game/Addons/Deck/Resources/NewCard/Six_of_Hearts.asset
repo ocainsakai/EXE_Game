@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Six_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 2599592211
-    Part2: 1147107219
-    Part3: 2883250620
-    Part4: 1544996772
+  CardID: 0
   Rank: 6
   Suit: 0
   Cost: 0
   Name: Six of Hearts
   Description: This is the Six of Hearts.
-  Art: {fileID: 3283007950855111838, guid: 18e8917c5d7c5474896712b3444454fc, type: 3}
+  Art: {fileID: 21300000, guid: f8cca18e112381a47b9b39d00919203d, type: 3}

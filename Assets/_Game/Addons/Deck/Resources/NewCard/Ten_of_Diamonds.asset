@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Ten_of_Diamonds
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 3658898824
-    Part2: 1122688373
-    Part3: 4272845203
-    Part4: 2026549840
+  CardID: 0
   Rank: 10
   Suit: 1
   Cost: 0
   Name: Ten of Diamonds
   Description: This is the Ten of Diamonds.
-  Art: {fileID: -1101429936069739422, guid: a7f864c0b849f5647be1ed60f0b92e03, type: 3}
+  Art: {fileID: 21300000, guid: 88e0c1c1baa50d743be4c383bf91f6d2, type: 3}

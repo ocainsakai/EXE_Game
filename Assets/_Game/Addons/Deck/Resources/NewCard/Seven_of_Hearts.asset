@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Seven_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 4225483992
-    Part2: 1137131854
-    Part3: 3672060323
-    Part4: 3291787811
+  CardID: 0
   Rank: 7
   Suit: 0
   Cost: 0
   Name: Seven of Hearts
   Description: This is the Seven of Hearts.
-  Art: {fileID: -7124409537721979863, guid: 5eb2b887d1e83c04ea001eb291e78982, type: 3}
+  Art: {fileID: 21300000, guid: 0d09c8809d97a8d4fbaf5718798aae27, type: 3}

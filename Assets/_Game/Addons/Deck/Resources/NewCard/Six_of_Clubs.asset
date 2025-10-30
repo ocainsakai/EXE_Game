@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Six_of_Clubs
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 997639748
-    Part2: 1140416642
-    Part3: 3517589642
-    Part4: 4075029673
+  CardID: 0
   Rank: 6
   Suit: 2
   Cost: 0
   Name: Six of Clubs
   Description: This is the Six of Clubs.
-  Art: {fileID: 3110341584932237930, guid: 4f58842b028e89348a9f74b7da9d0486, type: 3}
+  Art: {fileID: 21300000, guid: c65213ac058ca8741924830793f8cc15, type: 3}

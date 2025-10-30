@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Ten_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 4149583885
-    Part2: 1186232394
-    Part3: 538646426
-    Part4: 3890589165
+  CardID: 0
   Rank: 10
   Suit: 0
   Cost: 0
   Name: Ten of Hearts
   Description: This is the Ten of Hearts.
-  Art: {fileID: 2975699305617224511, guid: 426097541057d324cbad43e9cce081ca, type: 3}
+  Art: {fileID: 21300000, guid: 13da0212007b3eb439906bb55e4bc095, type: 3}

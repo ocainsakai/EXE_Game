@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Queen_of_Diamonds
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 3242411271
-    Part2: 1098113230
-    Part3: 3248325032
-    Part4: 2365932256
+  CardID: 0
   Rank: 12
   Suit: 1
   Cost: 0
   Name: Queen of Diamonds
   Description: This is the Queen of Diamonds.
-  Art: {fileID: -7298341867934554027, guid: b7b66064759870a4c89a3c24f5416c2f, type: 3}
+  Art: {fileID: 21300000, guid: 1324ec6f9e0166a41b835fdfb6a43241, type: 3}

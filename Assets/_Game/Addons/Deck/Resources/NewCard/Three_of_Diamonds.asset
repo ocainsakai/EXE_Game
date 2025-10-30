@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Three_of_Diamonds
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 1873586476
-    Part2: 1117010177
-    Part3: 3809068691
-    Part4: 424114470
+  CardID: 0
   Rank: 3
   Suit: 1
   Cost: 0
   Name: Three of Diamonds
   Description: This is the Three of Diamonds.
-  Art: {fileID: 8219775157891397005, guid: 4af3e55f27ca91d43bfb0c9916797ce5, type: 3}
+  Art: {fileID: 21300000, guid: 1d7c20e2d58d9e242a8b50a146a9d3aa, type: 3}

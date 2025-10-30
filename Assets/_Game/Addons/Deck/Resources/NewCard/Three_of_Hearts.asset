@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Three_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 1813551985
-    Part2: 1119065608
-    Part3: 213133718
-    Part4: 1659113395
+  CardID: 0
   Rank: 3
   Suit: 0
   Cost: 0
   Name: Three of Hearts
   Description: This is the Three of Hearts.
-  Art: {fileID: -8295627335049275314, guid: 05fdf3e62aa725b45b265cb5116725e5, type: 3}
+  Art: {fileID: 21300000, guid: b489d4e293fc6be459e5f038602b9bbb, type: 3}

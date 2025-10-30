@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Two_of_Hearts
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 2879806438
-    Part2: 1166886353
-    Part3: 2174321546
-    Part4: 258193242
+  CardID: 0
   Rank: 2
   Suit: 0
   Cost: 0
   Name: Two of Hearts
   Description: This is the Two of Hearts.
-  Art: {fileID: 3757878209201975682, guid: 683bb2b343ffb6f45b60c52f25666c5e, type: 3}
+  Art: {fileID: 21300000, guid: 78fc07c807091724daaf95add1b9e3e6, type: 3}

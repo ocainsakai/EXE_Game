@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Seven_of_Diamonds
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 3906463441
-    Part2: 1081392181
-    Part3: 26846634
-    Part4: 3434571775
+  CardID: 0
   Rank: 7
   Suit: 1
   Cost: 0
   Name: Seven of Diamonds
   Description: This is the Seven of Diamonds.
-  Art: {fileID: 772679925971894921, guid: 1e3094cf43fd30048a53b6befa4f8a96, type: 3}
+  Art: {fileID: 21300000, guid: acd61c0f95313da418a2dd92a406fbb6, type: 3}

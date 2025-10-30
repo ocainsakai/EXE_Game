@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Queen_of_Spades
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 3278499320
-    Part2: 1166920362
-    Part3: 3004076459
-    Part4: 343661499
+  CardID: 0
   Rank: 12
   Suit: 3
   Cost: 0
   Name: Queen of Spades
   Description: This is the Queen of Spades.
-  Art: {fileID: 7423857372119259060, guid: 51456e0835670d9449915fd49a6cc2bd, type: 3}
+  Art: {fileID: 21300000, guid: 7219d0c7eaddc444caa0ff03fd831107, type: 3}

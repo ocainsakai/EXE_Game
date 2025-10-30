@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: King_of_Spades
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 1672327607
-    Part2: 1099733988
-    Part3: 1094504633
-    Part4: 1453098333
+  CardID: 0
   Rank: 13
   Suit: 3
   Cost: 0
   Name: King of Spades
   Description: This is the King of Spades.
-  Art: {fileID: -431265726642068221, guid: f30db492aa3d40c4f967f04154494c91, type: 3}
+  Art: {fileID: 21300000, guid: d409e93db0fa5f4438de7c22e88f166e, type: 3}

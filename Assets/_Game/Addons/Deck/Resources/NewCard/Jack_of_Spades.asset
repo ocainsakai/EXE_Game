@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee249cd4f3113be4d84cafc47fdaccef, type: 3}
   m_Name: Jack_of_Spades
   m_EditorClassIdentifier: 
-  CardID:
-    Part1: 868626036
-    Part2: 1213193907
-    Part3: 1898990782
-    Part4: 3914204938
+  CardID: 0
   Rank: 11
   Suit: 3
   Cost: 0
   Name: Jack of Spades
   Description: This is the Jack of Spades.
-  Art: {fileID: 2087476722716373978, guid: 1d6cc85235fc94b4cb904fa54e53ff20, type: 3}
+  Art: {fileID: 21300000, guid: e1fd34ce6ebd4904e9006d596d81b4d3, type: 3}
