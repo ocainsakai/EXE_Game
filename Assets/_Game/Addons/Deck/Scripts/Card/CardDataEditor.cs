@@ -2,6 +2,7 @@ using _Game.Addons.Deck.Scripts;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CardData))]
 public class CardDataEditor : Editor
 {
@@ -45,3 +46,4 @@ public class CardDataEditor : Editor
         }
     }
 }
+#endif
