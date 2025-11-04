@@ -9,7 +9,10 @@ public class SceneManager : MonoBehaviour
     {
         AudioManager.Singleton.PlayAmbientAudio(backgroundSceneMusic, "master");
     }
-    
 
 
+    public static AsyncOperation LoadSceneAsync(string sceneName)
+    {
+        return null;
+    }
 }

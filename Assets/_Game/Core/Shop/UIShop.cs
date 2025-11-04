@@ -23,13 +23,13 @@ public class UIShop : MonoBehaviour
     {
         // Gán sự kiện cho các nút shop
         goldButton.onClick.RemoveAllListeners();
-        goldButton.onClick.AddListener(OpenGoldShop);
+        goldButton.onClick.AddListener(OnBuy500CoinsClicked);
 
         cardButton.onClick.RemoveAllListeners();
-        cardButton.onClick.AddListener(OpenCardShop);
+        cardButton.onClick.AddListener(OnBuy1000CoinsClicked);
 
         timeButton.onClick.RemoveAllListeners();
-        timeButton.onClick.AddListener(OpenTimeShop);
+        timeButton.onClick.AddListener(OnBuyRemoveAdsClicked);
         
         UpdateCurrencyUI();
     }
@@ -73,6 +73,7 @@ public class UIShop : MonoBehaviour
 
     public void OnBuy500CoinsClicked()
     {
+        Debug.Log("Buy500CoinsClicked");    
         IAPManager.Instance.BuyProduct(APProductKey.coin500);
     }
 

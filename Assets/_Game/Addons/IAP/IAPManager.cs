@@ -20,7 +20,7 @@ public class IAPManager : MonoBehaviour
     public static IAPManager Instance { get; private set; }
 
     // [00:06:58] Tham chiếu đến script ShopPanel để trao thưởng
-    [SerializeField] private UIShop shopPanel;
+    private UIShop currentShopPanel;
 
     // [00:06:15] ID sản phẩm (PHẢI KHỚP VỚI GOOGLE PLAY)
     private const string coin500Product = "coin500product";   // [00:06:22]
@@ -48,8 +48,26 @@ public class IAPManager : MonoBehaviour
     {
         // [00:07:35] Bắt đầu khởi tạo IAP
         await InitIAP();
+;
     }
-
+    public void RegisterShopPanel(UIShop panel)
+    {
+        currentShopPanel = panel;
+        Debug.Log("ShopPanel đã đăng ký với IAPManager.");
+    
+        // (Tùy chọn) Cập nhật giá ngay khi shop vừa mở
+        // Bạn có thể tạo một hàm mới để làm việc này
+        // UpdatePricesOnShop(); 
+    }
+    public void UnregisterShopPanel(UIShop panel)
+    {
+        // Chỉ unregister nếu đúng là nó
+        if (currentShopPanel == panel)
+        {
+            currentShopPanel = null;
+            Debug.Log("ShopPanel đã hủy đăng ký.");
+        }
+    }
     private void OnDestroy()
     {
         // Hủy đăng ký tất cả các sự kiện
@@ -122,7 +140,7 @@ public class IAPManager : MonoBehaviour
             // [00:39:31] Và nếu đó là gói "Remove Ads"
             if (product.definition.id == removeAdsProduct)
             {
-                shopPanel.RemoveAdsReward();
+                currentShopPanel.RemoveAdsReward();
             }
         }
     }
@@ -145,6 +163,8 @@ public class IAPManager : MonoBehaviour
             Debug.LogError("IAP not initialized.");
             return;
         }
+        
+        Debug.Log("BuyProduct");
 
         string productId = "";
         switch (key)
@@ -173,11 +193,12 @@ public class IAPManager : MonoBehaviour
         // [00:12:00] Lấy lịch sử mua hàng của người chơi
         storeController.FetchPurchases();
 
+        if (currentShopPanel == null) return;   
         // [00:22:19] Cập nhật giá tiền lên các nút bấm
         foreach (var product in products)
         {
             // [00:22:27] Giả sử ShopPanel có hàm UpdateButtonPrice
-            shopPanel.UpdateButtonPrice(product.definition.id, product.metadata.localizedPriceString);
+            currentShopPanel.UpdateButtonPrice(product.definition.id, product.metadata.localizedPriceString);
         }
     }
 
@@ -219,19 +240,22 @@ public class IAPManager : MonoBehaviour
         // [00:35:15] Lấy số lượng từ biên lai (receipt)
         int quantity = GetPurchaseQuantity(purchase);
 
+        if (currentShopPanel == null) return;   
+        
+        Debug.Log("PurchaseConfirmed");
         if (purchase?.Info?.PurchasedProductInfo != null && purchase.Info.PurchasedProductInfo.Count > 0)
         {
             string productionID = purchase.Info.PurchasedProductInfo[0].productId;
             switch (productionID)
             {
                 case coin500Product:
-                    shopPanel.AddRewardCoin(500 * quantity); // [00:37:28]
+                    currentShopPanel.AddRewardCoin(500 * quantity); // [00:37:28]
                     break;
                 case coin1000Product:
-                    shopPanel.AddRewardCoin(1000 * quantity); // [00:37:36]
+                    currentShopPanel.AddRewardCoin(1000 * quantity); // [00:37:36]
                     break;
                 case removeAdsProduct:
-                    shopPanel.RemoveAdsReward(); // [00:19:41]
+                    currentShopPanel.RemoveAdsReward(); // [00:19:41]
                     break;
             }
         }
