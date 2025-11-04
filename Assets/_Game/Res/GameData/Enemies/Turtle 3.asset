@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Turtle 3
   m_EditorClassIdentifier: 
   enemyID: linh10
-  nameDisplay: 
+  nameDisplay: Linh 10
   icon: {fileID: 4887677840807297399, guid: b5eaf8fba48a01a41aa947879d87c9e2, type: 3}
   atk: 100
   hp: 100

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cat
   m_EditorClassIdentifier: 
   enemyID: linh1
-  nameDisplay: 
+  nameDisplay: Linh 1
   icon: {fileID: -7487539194134751398, guid: 9dbba7070a07b284ebd8519bf048876a, type: 3}
   atk: 50
   hp: 300

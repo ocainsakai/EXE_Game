@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mushroom
   m_EditorClassIdentifier: 
   enemyID: linh5
-  nameDisplay: 
+  nameDisplay: Linh 5
   icon: {fileID: 3842927124067323573, guid: 8c98b366a1dd9bd47949db48e147b459, type: 3}
   atk: 10
   hp: 50

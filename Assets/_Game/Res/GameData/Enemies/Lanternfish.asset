@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lanternfish
   m_EditorClassIdentifier: 
   enemyID: linh4
-  nameDisplay: 
+  nameDisplay: Linh 4
   icon: {fileID: 5866152862056065949, guid: 886985eeb7302a3468455741b43f9f24, type: 3}
   atk: 100
   hp: 100

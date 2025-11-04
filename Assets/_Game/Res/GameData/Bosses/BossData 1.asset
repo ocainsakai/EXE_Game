@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a6396b6ee56cd47ae5641f140c65ac, type: 3}
   m_Name: BossData 1
   m_EditorClassIdentifier: 
-  enemyID: 
-  nameDisplay: 
+  enemyID: boss_1
+  nameDisplay: Boss 2
   icon: {fileID: 3221721577579406510, guid: a28e708630a60bd428885d007ecb2aa6, type: 3}
   atk: 100
   hp: 100

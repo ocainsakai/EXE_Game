@@ -19,5 +19,10 @@ public static partial class PlayerSave
         return 0;
     }
 
+    public static void AddCoin(int amount)
+    {
+        var coin = GetPlayerCoin();
+        SetPlayerCoin(coin + amount);
+    }
 }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fish
   m_EditorClassIdentifier: 
   enemyID: linh2
-  nameDisplay: 
+  nameDisplay: Linh 2
   icon: {fileID: 8453286820495335250, guid: 51e952d07de3e9946a3a057f911736d2, type: 3}
   atk: 10
   hp: 100

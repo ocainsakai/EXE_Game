@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fly Box
   m_EditorClassIdentifier: 
   enemyID: linh3
-  nameDisplay: 
+  nameDisplay: Linh 3
   icon: {fileID: 8034120489083570744, guid: 5d2d76421a55ac54286f02e793aeab8c, type: 3}
   atk: 10
   hp: 100
