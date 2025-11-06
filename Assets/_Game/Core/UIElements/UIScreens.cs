@@ -21,7 +21,7 @@ namespace _Game.Core.UIElements
         // Hàm Awake() bây giờ không còn gì cả, 
         // vì mỗi screen đã tự đăng ký listener
 
-        private void CloseAllScreens()
+        public void CloseAllScreens()
         {
             // Gọi hàm Hide() thay vì SetActive(false)
             winScreens.Hide();

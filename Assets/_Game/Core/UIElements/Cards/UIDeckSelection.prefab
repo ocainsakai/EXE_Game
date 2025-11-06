@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e0753b986450f4c87c1714c6f9b8e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardBack: {fileID: 0}
+  cardBack: {fileID: 6034550716542600295}
   deckNameText: {fileID: 857226131779080159}
 --- !u!114 &146255744176520513
 MonoBehaviour:
