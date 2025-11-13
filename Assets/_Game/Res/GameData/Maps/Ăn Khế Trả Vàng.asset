@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c7f9c862fa83c42bc4171fcde991d1, type: 3}
-  m_Name: Forest Map
+  m_Name: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
   m_EditorClassIdentifier: Assembly-CSharp::MapData
-  mapID: map_002
-  mapName: Forest Map
+  mapID: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
+  mapName: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
   enemyDatas:
   - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
   - {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}
@@ -22,4 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9da786bbaaf6dd48b538ccd5366484f, type: 2}
   bossDatas:
   - {fileID: 11400000, guid: a366e91b526b71042a1b9252146d9289, type: 2}
-  mapBackground: {fileID: -5078337790934877545, guid: 9930c6cc4ecad74439ca3e266ce841e7, type: 3}
+  mapBackground: {fileID: -4746868973178829720, guid: 63debabfb93a1b44eae52dc7c5ebd2ea, type: 3}

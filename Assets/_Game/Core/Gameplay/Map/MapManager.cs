@@ -317,7 +317,7 @@ public class MapManager : MonoBehaviour
         }
 
         tileObjects = new UITileEntry[mapWidth, mapHeight];
-        float tileSize = 150f;
+        float tileSize = 180f;
         float offsetX = -(mapWidth * tileSize) / 2f + tileSize / 2f;
         float offsetY = -(mapHeight * tileSize) / 2f + tileSize / 2f;
 
