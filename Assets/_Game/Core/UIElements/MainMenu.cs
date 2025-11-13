@@ -17,21 +17,6 @@ public class MainMenu : MonoBehaviour
         // Nếu không, vô hiệu hóa (làm mờ) nút
         continueButton.interactable = saveFileExists;
     }
-
-    public void OnNewGameClicked()
-    {
-        // 1. (Tùy chọn) Bạn có thể set map được chọn ở đây
-        // GameInstance.Singleton.SetCurrentMap(...);
-
-        // 2. Xóa save cũ để ép tạo map mới
-        MapManager.DeleteMapSave();
-
-        // 3. Tải scene
-        SceneLoader.Instance.LoadScene("Map");
-    }
-
-    // --- ĐÂY LÀ HÀM BẠN CẦN ---
-    // Hàm này được gọi bởi nút "Continue" / "Load Game"
     public void OnContinueClicked()
     {
         // Chỉ cần tải scene.

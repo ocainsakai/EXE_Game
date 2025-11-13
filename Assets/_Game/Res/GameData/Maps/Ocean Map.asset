@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ocean Map
   m_EditorClassIdentifier: Assembly-CSharp::MapData
   mapID: Ocean Map
-  mapName: Ocean Map
+  mapName: "Bi\u1EC3n"
   enemyDatas:
   - {fileID: 11400000, guid: 8745d776add4eb647b052e8bb896af2b, type: 2}
   - {fileID: 11400000, guid: 90800f48756e8d6429a85ca4abfd467f, type: 2}

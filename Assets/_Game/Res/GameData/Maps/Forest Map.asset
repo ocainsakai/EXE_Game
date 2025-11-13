@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Forest Map
   m_EditorClassIdentifier: Assembly-CSharp::MapData
   mapID: map_002
-  mapName: Forest Map
+  mapName: "R\u1EEBng"
   enemyDatas:
   - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
   - {fileID: 11400000, guid: 0820a666443678543914cdfa35af6ee9, type: 2}

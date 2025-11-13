@@ -71,18 +71,14 @@ public class MapManager : MonoBehaviour
         {
             // Nếu không có, tạo map mới
             CreateNewMap();
+            OnTileMapClickHandler(playerPosition);
         }
     }
     private void OnDestroy()
     {
         UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
     }
-    // --- Các hàm Lưu / Tải / Tạo mới ---
 
-    /// <summary>
-    /// Hàm public để tạo một bản đồ hoàn toàn mới.
-    /// Sẽ xóa bất kỳ dữ liệu map nào đã lưu trước đó.
-    /// </summary>
     public void CreateNewMap()
     {
         Debug.Log("Đang tạo bản đồ mới và xóa save cũ...");

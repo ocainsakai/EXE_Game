@@ -14,7 +14,7 @@ public class DeckEntry : MonoBehaviour
         {
             deckNameText = GetComponentInChildren<TextMeshProUGUI>();
 
-            deckNameText.text = "No Name";
+            deckNameText.text = "Không Tên";
         }
     }
 

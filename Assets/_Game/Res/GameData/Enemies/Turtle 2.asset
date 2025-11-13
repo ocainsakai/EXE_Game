@@ -16,7 +16,7 @@ MonoBehaviour:
   nameDisplay: Linh 9
   icon: {fileID: 8560218906780252610, guid: c7980cc7df17e3e4b9b01ba7c5eaddf8, type: 3}
   atk: 100
-  hp: 100
-  count: 100
+  hp: 50
+  count: 2
   cost: 100
   reward: 100
