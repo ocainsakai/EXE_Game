@@ -1,5 +1,6 @@
 ﻿using System;
 using _Game.Core.Gameplay.Combat;
+using TMPro;
 using UnityEngine;
 
 public class UIWinScreen : BaseScreen
@@ -7,10 +8,16 @@ public class UIWinScreen : BaseScreen
     // Chỉ WinScreen mới cần MapManager
     [SerializeField] private MapManager mapManager;
     [SerializeField] private BattleManager battleManager;
+    [SerializeField] TextMeshProUGUI coinsText;
     private void Start()
     {
         battleManager = FindFirstObjectByType<BattleManager>();  
         mapManager = FindFirstObjectByType<MapManager>();
+    }
+
+    private void OnEnable()
+    {
+        coinsText.text = $"{battleManager.enemyReward} coins";
     }
 
     protected override void OnButton1Clicked()
@@ -25,10 +32,7 @@ public class UIWinScreen : BaseScreen
 
     protected override void OnButton2Clicked()
     {
-        // --- BÂY GIỜ BẠN CÓ THỂ THÊM LOGIC VÀO ĐÂY ---
-        Debug.Log("Watching Ad for x2 reward...");
-        
-        // Bạn nên dùng callback của AdManager để đảm bảo xem xong Ad
+     
         AdManager.Instance.ShowRewardedAd(OnAdRewardSuccess);
     }
 

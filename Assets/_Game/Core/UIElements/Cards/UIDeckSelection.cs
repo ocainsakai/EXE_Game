@@ -39,7 +39,7 @@ public class UIDeckSelection : MonoBehaviour
         if (CurrentDetailDeck != null && CurrentDetailDeck.CheckUnlocked)
         {
             PlayerSave.SetSelectedDeck(currentDetailDeckId);
-            selectBtnText.text = "SELECTED";
+            selectBtnText.text = "Đã chọn";
         }
     }
 
@@ -72,7 +72,7 @@ public class UIDeckSelection : MonoBehaviour
         // Nếu không có deck nào được chọn, set trạng thái "No Deck" và thoát
         if (deck == null)
         {
-            deckView.SetDeckName("No Deck");
+            deckView.SetDeckName("Không Có");
             deckView.SetCardBack(defaultCardBack);
             selectBtn.gameObject.SetActive(false); // Ẩn nút select đi
             return; // Thoát khỏi hàm
@@ -91,7 +91,7 @@ public class UIDeckSelection : MonoBehaviour
 
             // --- 3. Dùng toán tử ba ngôi (Ternary Operator) ---
             bool isSelected = (deck.DeckID == PlayerSave.GetSelectedDeck());
-            selectBtnText.text = isSelected ? "SELECTED" : "SELECT";
+            selectBtnText.text = isSelected ? "Đã chọn" : "Chọn";
         
             selectBtn.gameObject.SetActive(true); // Hiển thị nút
         }

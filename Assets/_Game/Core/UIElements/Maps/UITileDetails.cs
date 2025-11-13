@@ -1,4 +1,5 @@
-﻿using _Game.Core;
+﻿using System;
+using _Game.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,7 +19,7 @@ public class UITileDetails : MonoBehaviour
     [SerializeField] TextMeshProUGUI atkText;
     [SerializeField] TextMeshProUGUI rewardText;
 
-    [FormerlySerializedAs("OnPlayBtnClicked")] public UnityEvent<EnemyData> onPlayBtnClicked;
+    public UnityEvent<EnemyData> onPlayBtnClicked;
     public void Show(Tile tile)
     {
         gameObject.SetActive(true);
@@ -47,16 +48,16 @@ public class UITileDetails : MonoBehaviour
         if (enemyData != null)
         {
             enemyStatsPanel.SetActive(true);
-            decription.text = enemyData.nameDisplay;
+            tileNameText.text = enemyData.nameDisplay;
+            decription.text = "Mô Tả";
             hpText.text = $"HP: {enemyData.hp}";
             atkText.text = $"ATK: {enemyData.atk}";
-            rewardText.text = $"Reward: {enemyData.reward}"; // Lưu ý: Tên biến có thể khác
+            rewardText.text = $"Phần Thưởng: {enemyData.reward}"; 
         }
         else
         {
-            // Nếu là ô trống hoặc loại khác không có dữ liệu
             enemyStatsPanel.SetActive(false);
-            tileNameText.text = $"Tile ({tile.Position.x}, {tile.Position.y})";
+            tileNameText.text = "";
         }
 
         // Logic của nút Play không đổi
@@ -70,6 +71,11 @@ public class UITileDetails : MonoBehaviour
     public virtual void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        Hide();
     }
 
     void OnDestroy()

@@ -42,10 +42,10 @@ public class PlayerButton : MonoBehaviour
         // We pair the button name with the event it should trigger.
         var buttonData = new[]
         {
-            new { Name = "Play",    Action = new UnityAction(onPlayButtonClicked.Invoke) },
-            new { Name = "Discard", Action = new UnityAction(onDiscardButtonClicked.Invoke) },
-            new { Name = "Sort",    Action = new UnityAction(onSortButtonClicked.Invoke) },
-            new { Name = "End",     Action = new UnityAction(onEndTurntButtonClicked.Invoke) }
+            new { Name = "Đánh",    Action = new UnityAction(onPlayButtonClicked.Invoke) },
+            new { Name = "Bỏ bài", Action = new UnityAction(onDiscardButtonClicked.Invoke) },
+            new { Name = "Sắp xếp",    Action = new UnityAction(onSortButtonClicked.Invoke) },
+            new { Name = "Kết thúc lượt",     Action = new UnityAction(onEndTurntButtonClicked.Invoke) }
         };
 
         // 3. Loop through the data to create and configure each button.
