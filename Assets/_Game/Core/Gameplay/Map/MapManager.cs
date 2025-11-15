@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System;
+using System.Collections;
 using _Game.Core;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -40,7 +41,7 @@ public class MapManager : MonoBehaviour
 
     [Header("Rendering")] 
     [SerializeField] private GameObject UIMap;
-    public Transform containter;
+    public RectTransform containter;
     public UITileEntry tilePrefab;
     public Sprite playerIcon;
     public Color walkableColor = Color.white;
@@ -70,8 +71,7 @@ public class MapManager : MonoBehaviour
         if (!LoadMap())
         {
             // Nếu không có, tạo map mới
-            CreateNewMap();
-            OnTileMapClickHandler(playerPosition);
+            StartCoroutine(CreateNewMap()); 
         }
     }
     private void OnDestroy()
@@ -79,8 +79,9 @@ public class MapManager : MonoBehaviour
         UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
     }
 
-    public void CreateNewMap()
+    public IEnumerator CreateNewMap()
     {
+        yield return null;
         Debug.Log("Đang tạo bản đồ mới và xóa save cũ...");
 
         // 1. Xóa save game cũ
@@ -104,6 +105,7 @@ public class MapManager : MonoBehaviour
 
         // 5. Đặt vị trí player ban đầu
         UpdatePlayerTile(new Vector2Int(0, 0), true);
+        OnTileMapClickHandler(playerPosition);
     }
 
     /// <summary>
@@ -313,7 +315,8 @@ public class MapManager : MonoBehaviour
         }
 
         tileObjects = new UITileEntry[mapWidth, mapHeight];
-        float tileSize = 180f;
+        
+        float tileSize =( (Mathf.Min(containter.rect.width, containter.rect.height) - 10f) / mapWidth) - 10f; 
         float offsetX = -(mapWidth * tileSize) / 2f + tileSize / 2f;
         float offsetY = -(mapHeight * tileSize) / 2f + tileSize / 2f;
 
