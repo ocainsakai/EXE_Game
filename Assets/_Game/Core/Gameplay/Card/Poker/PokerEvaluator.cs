@@ -82,7 +82,7 @@ namespace CardSystem.PokerSystem
             {
                 return new PokerHandResult
                 {
-                    HandType = PokerHandType.None,
+                    HandType = PokerHandType.KhongCo,
                     BestCards = new List<CardMask>()
                 };
             }
@@ -95,8 +95,8 @@ namespace CardSystem.PokerSystem
             if (straightFlush != null)
             {
                 if (straightFlush.Max(c => c.ERank) == CardRank.Ace)
-                    return new PokerHandResult { HandType = PokerHandType.RoyalFlush, BestCards = straightFlush };
-                return new PokerHandResult { HandType = PokerHandType.StraightFlush, BestCards = straightFlush };
+                    return new PokerHandResult { HandType = PokerHandType.ThungPhaSanhHoangGia, BestCards = straightFlush };
+                return new PokerHandResult { HandType = PokerHandType.ThungPhaSanh, BestCards = straightFlush };
             }
 
             // Four of a Kind
@@ -104,9 +104,7 @@ namespace CardSystem.PokerSystem
             {
                 var four = counts.First(c => c.Value == 4).Key;
                 var best = hand.Where(c => c.ERank == four).Take(4).ToList();
-                //var kicker = hand.Where(c => c.ERank != four).OrderByDescending(c => c.Rank).FirstOrDefault();
-                //if (kicker != null) best.Add(kicker);
-                return new PokerHandResult { HandType = PokerHandType.FourOfAKind, BestCards = best };
+                return new PokerHandResult { HandType = PokerHandType.TuQuy, BestCards = best };
             }
 
             // Full House
@@ -117,18 +115,18 @@ namespace CardSystem.PokerSystem
 
                 var best = hand.Where(c => c.ERank == three).Take(3).ToList();
                 best.AddRange(hand.Where(c => c.ERank == pair).Take(2));
-                return new PokerHandResult { HandType = PokerHandType.FullHouse, BestCards = best };
+                return new PokerHandResult { HandType = PokerHandType.CuLu, BestCards = best };
             }
 
             // Flush
             var flush = GetFlush(hand);
             if (flush != null)
-                return new PokerHandResult { HandType = PokerHandType.Flush, BestCards = flush };
+                return new PokerHandResult { HandType = PokerHandType.Thung, BestCards = flush };
 
             // Straight
             var straight = GetStraight(hand);
             if (straight != null)
-                return new PokerHandResult { HandType = PokerHandType.Straight, BestCards = straight };
+                return new PokerHandResult { HandType = PokerHandType.Sanh, BestCards = straight };
 
             // Three of a Kind
             if (counts.Any(c => c.Value == 3))
@@ -136,7 +134,7 @@ namespace CardSystem.PokerSystem
                 var three = counts.Where(c => c.Value == 3).OrderByDescending(c => c.Key).First().Key;
                 var best = hand.Where(c => c.ERank == three).Take(3).ToList();
                 best.AddRange(hand.Where(c => c.ERank != three).OrderByDescending(c => c.Rank).Take(2));
-                return new PokerHandResult { HandType = PokerHandType.ThreeOfAKind, BestCards = best };
+                return new PokerHandResult { HandType = PokerHandType.SamCo, BestCards = best };
             }
 
             // Two Pair
@@ -146,12 +144,7 @@ namespace CardSystem.PokerSystem
                 var best = hand.Where(c => c.ERank == pairs[0].Key).Take(2).ToList();
                 best.AddRange(hand.Where(c => c.ERank == pairs[1].Key).Take(2));
 
-                //var kicker = hand.Where(c => c.ERank != pairs[0].Key && c.ERank != pairs[1].Key)
-                //                 .OrderByDescending(c => c.Rank)
-                //                 .FirstOrDefault();
-                //if (kicker != null) best.Add(kicker);
-
-                return new PokerHandResult { HandType = PokerHandType.TwoPair, BestCards = best };
+                return new PokerHandResult { HandType = PokerHandType.HaiDoi, BestCards = best };
             }
 
             // One Pair
@@ -160,13 +153,13 @@ namespace CardSystem.PokerSystem
                 var pair = pairs[0].Key;
                 var best = hand.Where(c => c.ERank == pair).Take(2).ToList();
                 best.AddRange(hand.Where(c => c.ERank != pair).OrderByDescending(c => c.Rank).Take(3));
-                return new PokerHandResult { HandType = PokerHandType.OnePair, BestCards = best };
+                return new PokerHandResult { HandType = PokerHandType.MotDoi, BestCards = best };
             }
 
             // High Card
             return new PokerHandResult
             {
-                HandType = PokerHandType.HighCard,
+                HandType = PokerHandType.BaiCao,
                 BestCards = hand.OrderByDescending(c => c.Rank).Take(5).ToList()
             };
         }

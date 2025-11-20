@@ -49,7 +49,7 @@ public class UITileDetails : MonoBehaviour
         {
             enemyStatsPanel.SetActive(true);
             tileNameText.text = enemyData.nameDisplay;
-            decription.text = "Mô Tả";
+            decription.text = enemyData.nameDisplay;
             hpText.text = $"HP: {enemyData.hp}";
             atkText.text = $"ATK: {enemyData.atk}";
             rewardText.text = $"Phần Thưởng: {enemyData.reward}"; 

@@ -17,7 +17,7 @@ public class UIWinScreen : BaseScreen
 
     private void OnEnable()
     {
-        coinsText.text = $"{battleManager.enemyReward} coins";
+        coinsText.text = $"{battleManager.enemyReward} xu";
     }
 
     protected override void OnButton1Clicked()

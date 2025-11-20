@@ -8,9 +8,9 @@ public class UIPokerMult : MonoBehaviour
     [FormerlySerializedAs("_pokerTxt")] [SerializeField] private TextMeshProUGUI pokerTxt;
     [FormerlySerializedAs("_multTxt")] [SerializeField] private TextMeshProUGUI multTxt;
 
-    public void SetPokerMult(PokerHandType poker = PokerHandType.None, float mult = 0)
+    public void SetPokerMult(PokerHandType poker = PokerHandType.KhongCo, float mult = 0)
     {
-        pokerTxt.text = poker.ToString();
+        pokerTxt.text = PokerHandNames.GetDisplayName(poker);
         multTxt.text = $"x{(int) mult}";
     }
 }

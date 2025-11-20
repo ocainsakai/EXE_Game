@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   DeckID: 0
-  DeckName: "C\u01A1 B\u1EA3n"
+  DeckName: "Con R\u1ED3ng Ch\xE1u Ti\xEAn"
   DeckCover: {fileID: 21300000, guid: c186381e71020c84e8140e3b9dee1f76, type: 3}
   Cards:
   - {fileID: 11400000, guid: f9b6cfce8f1a01945800b6243b39baa2, type: 2}

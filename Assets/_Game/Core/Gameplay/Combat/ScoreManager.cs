@@ -26,7 +26,9 @@ public class ScoreManager : MonoBehaviour
     private void UpdateMult(PokerHandResult result)
     {
         mult = multTable.GetMult(result.HandType);
-        multText.text = $"{result.HandType}: x{(int)mult}";
+        string tenBaiCoDau = PokerHandNames.GetDisplayName(result.HandType);
+
+        multText.text = $"{tenBaiCoDau}: x{(int)mult}";
     }
     public IEnumerator ActivateCards(List<CardRuntime>  cardsToPlay)
     {

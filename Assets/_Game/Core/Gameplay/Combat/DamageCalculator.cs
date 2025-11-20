@@ -30,7 +30,7 @@ namespace _Game.Core.Gameplay.Combat
             {
                 handResult = new PokerHandResult
                 {
-                    HandType = PokerHandType.None,
+                    HandType = PokerHandType.KhongCo,
                     BestCards = new List<CardMask>()
                 };
                 return 0;
