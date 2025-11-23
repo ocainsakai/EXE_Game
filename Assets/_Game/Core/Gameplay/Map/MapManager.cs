@@ -23,6 +23,7 @@ public class SavedTileData
 [System.Serializable]
 public class SavedMapData
 {
+    public string mapID;
     public int mapWidth;
     public int mapHeight;
     public Vector2Int playerPosition;
@@ -67,13 +68,27 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        // Thử tải map đã lưu
+        // Dùng Coroutine để đợi 1 frame cho chắc ăn
+        StartCoroutine(InitMapRoutine());
+    }
+    IEnumerator InitMapRoutine()
+    {
+        // Đợi đến cuối frame để đảm bảo GameInstance đã thức dậy hoàn toàn
+        yield return new WaitForEndOfFrame();
+
+        // Kiểm tra file save
         if (!LoadMap())
         {
-            // Nếu không có, tạo map mới
-            StartCoroutine(CreateNewMap()); 
+            Debug.Log("Không load được map save, tạo map mới.");
+            StartCoroutine(CreateNewMap());
+        }
+        else
+        {
+            Debug.Log("Load Map thành công từ MainMenu!");
         }
     }
+
+
     private void OnDestroy()
     {
         UITileEntry.OnTileMapClicked -= OnTileMapClickHandler;
@@ -115,6 +130,16 @@ public class MapManager : MonoBehaviour
     {
         // 1. Tạo đối tượng data để lưu
         SavedMapData savedData = new SavedMapData();
+        // Lưu ID của map hiện tại để lần sau load lại đúng map đó
+        if (GameInstance.Singleton.currentMap != null)
+        {
+            savedData.mapID = GameInstance.Singleton.currentMap.mapID;
+        }
+        else
+        {
+            Debug.LogError("SaveMap: CurrentMap bị null! Không lưu được MapID.");
+        }
+        // --------------------------------
         savedData.mapWidth = mapWidth;
         savedData.mapHeight = mapHeight;
         savedData.playerPosition = playerPosition;
@@ -136,10 +161,10 @@ public class MapManager : MonoBehaviour
         }
 
         // 3. Serialize thành JSON và lưu vào PlayerPrefs
-        string jsonData = JsonUtility.ToJson(savedData);
+        string jsonData = JsonUtility.ToJson(savedData, true); // true để in đẹp dễ đọc log
+        Debug.Log("Dữ liệu Save: " + jsonData); // <--- LOG QUAN TRỌNG ĐỂ KIỂM TRA
         PlayerPrefs.SetString(SAVE_KEY, jsonData);
         PlayerPrefs.Save();
-        Debug.Log("Map đã được lưu!");
     }
 
     /// <summary>
@@ -148,53 +173,53 @@ public class MapManager : MonoBehaviour
     /// <returns>Trả về true nếu tải thành công, false nếu không có dữ liệu.</returns>
     public bool LoadMap()
     {
-        if (!PlayerPrefs.HasKey(SAVE_KEY))
-        {
-            Debug.Log("Không tìm thấy map đã lưu.");
-            return false;
-        }
+        if (!PlayerPrefs.HasKey(SAVE_KEY)) return false;
 
         try
         {
-            // 1. Tải JSON và Deserialize
             string jsonData = PlayerPrefs.GetString(SAVE_KEY);
+            Debug.Log("Đang tải dữ liệu: " + jsonData); // <--- LOG QUỂ KIỂM TRA
+
             SavedMapData savedData = JsonUtility.FromJson<SavedMapData>(jsonData);
 
-            // 2. Thiết lập lại map
+            // --- MỚI: Khôi phục Map trong GameInstance ---
+            if (!string.IsNullOrEmpty(savedData.mapID))
+            {
+                GameInstance.Singleton.SetCurrentMap(savedData.mapID);
+                Debug.Log($"Đã khôi phục map: {savedData.mapID}");
+            }
+            else
+            {
+                Debug.LogWarning("File save không chứa mapID! Có thể do file save cũ.");
+            }
+            // ---------------------------------------------
+
             mapWidth = savedData.mapWidth;
             mapHeight = savedData.mapHeight;
             map = new GridMap(mapWidth, mapHeight);
 
-            // 3. Populate dữ liệu map
             for (int x = 0; x < mapWidth; x++)
             {
                 for (int y = 0; y < mapHeight; y++)
                 {
                     Tile tile = map.GetTile(x, y);
-                    // Chuyển từ 1D (index) sang 2D (x, y)
                     SavedTileData data = savedData.tiles[y * mapWidth + x];
 
                     tile.Type = data.Type;
                     tile.OccupantID = data.OccupantID;
 
-                    // Tái tạo lại Icon từ OccupantID
+                    // Khôi phục hình ảnh
                     RestoreTileIcon(tile);
                 }
             }
 
-            // 4. Render map
             RenderMapFirstTime();
-
-            // 5. Đặt player về vị trí đã lưu
             UpdatePlayerTile(savedData.playerPosition, true);
-
-            Debug.Log("Map đã được tải từ save!");
             return true;
         }
         catch (Exception e)
         {
-            Debug.LogError($"Lỗi khi tải map: {e.Message}. Sẽ tạo map mới.");
-            PlayerPrefs.DeleteKey(SAVE_KEY); // Xóa file save bị lỗi
+            Debug.LogError($"Lỗi LoadMap: {e.Message}");
             return false;
         }
     }
@@ -225,27 +250,35 @@ public class MapManager : MonoBehaviour
     /// </summary>
     void RestoreTileIcon(Tile tile)
     {
+        // 1. Nếu không có ID, thì chắc chắn không có Icon -> Thoát
         if (string.IsNullOrEmpty(tile.OccupantID))
         {
             tile.Icon = null;
             return;
         }
 
-        // --- !! QUAN TRỌNG !! ---
-        // Bạn CẦN phải thêm hàm GetEnemyDataByID(string id) vào GameInstance.
-        // Hàm này phải có khả năng trả về EnemyData (hoặc BossData)
-        // dựa trên ID của nó.
+        // 2. Cố gắng tìm dữ liệu từ GameInstance
         var enemyData = GameInstance.Singleton.GetEnemyDataByID(tile.OccupantID);
 
         if (enemyData != null)
         {
+            // TÌM THẤY!
             tile.Icon = enemyData.icon;
+
+            // Kiểm tra xem ScriptableObject có quên gắn ảnh không?
+            if (tile.Icon == null)
+            {
+                Debug.LogError($"[DATA ERROR] Tìm thấy ID '{tile.OccupantID}' nhưng EnemyData này chưa gắn ảnh (Sprite bị None)!");
+            }
         }
-        else if (tile.Type != TileType.Player && tile.Type != TileType.Nothing)
+        else
         {
-            // Chỉ cảnh báo nếu nó *nên* có data (là Enemy/Boss)
-            Debug.LogWarning($"Không tìm thấy EnemyData cho OccupantID: {tile.OccupantID}");
-            tile.Icon = null; // Không tìm thấy
+            // KHÔNG TÌM THẤY! -> Đây là lý do map trắng bóc
+            if (tile.Type != TileType.Player && tile.Type != TileType.Nothing)
+            {
+                Debug.LogError($"[MISSING DATA] Không tìm thấy EnemyData nào có ID là: '{tile.OccupantID}'. Kiểm tra lại GameInstance!");
+                tile.Icon = null;
+            }
         }
     }
 

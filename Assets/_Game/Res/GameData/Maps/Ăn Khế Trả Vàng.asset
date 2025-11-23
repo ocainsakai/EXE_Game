@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c7f9c862fa83c42bc4171fcde991d1, type: 3}
   m_Name: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
   m_EditorClassIdentifier: Assembly-CSharp::MapData
-  mapID: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
+  mapID: An_khe_Tra_Vang
   mapName: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
   enemyDatas:
   - {fileID: 11400000, guid: 53d31623abf69804aabb261bb253df99, type: 2}
