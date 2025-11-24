@@ -33,7 +33,7 @@ public class UIWinScreen : BaseScreen
     protected override void OnButton2Clicked()
     {
      
-        AdManager.Instance.ShowRewardedAd(OnAdRewardSuccess);
+        AdsManager.Instance.ShowRewardedAd(OnAdRewardSuccess);
     }
 
     private void OnAdRewardSuccess()
