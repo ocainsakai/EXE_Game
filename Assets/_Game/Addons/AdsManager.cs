@@ -1,26 +1,42 @@
 using System;
 using UnityEngine;
-using UnityEngine.Advertisements; // Thư viện quan trọng
+using UnityEngine.Advertisements;
 
 public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    public static AdsManager Instance; 
-    [SerializeField] string _androidGameId = "1234567"; // Thay ID của bạn vào đây
-    [SerializeField] bool _testMode = true; // ĐỂ TRUE KHI TEST, SỬA THÀNH FALSE KHI XUẤT APK
-    string _adUnitId = "Interstitial_Android"; // Hoặc "Rewarded_Android"
-    private string _rewardedAdUnitId = "Rewarded_Android";
+    public static AdsManager Instance;
+    
+    // --- CẤU HÌNH ---
+    [SerializeField] string _androidGameId = "5485920"; // Thay đúng ID 7 số của bạn
+    
+    // QUAN TRỌNG: Chỉ tắt Test Mode khi Build bản cuối cùng để up lên mạng
+    // Khi đang code và test trên máy mình thì nên để true
+    [SerializeField] bool _testMode = true; 
+
+    string _interstitialAdId = "Interstitial_Android"; 
+    string _rewardedAdId = "Rewarded_Android";
+    
     private Action _onRewardComplete;
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // Giữ AdsManager không bị mất khi chuyển cảnh
         }
         else
         {
             Destroy(gameObject);
             return;
         }
+
+        // Tự động bật chế độ Test nếu đang chạy trong Unity Editor hoặc bản Development Build
+        if (Debug.isDebugBuild) 
+        {
+            _testMode = true;
+        }
+
         InitializeAds();
     }
 
@@ -31,59 +47,57 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
             Advertisement.Initialize(_androidGameId, _testMode, this);
         }
     }
+
+    // 1. Gọi Quảng cáo Thưởng (Hồi sinh, Nhận vàng...)
     public void ShowRewardedAd(Action onSuccess)
     {
         _onRewardComplete = onSuccess;
-
         Debug.Log("Đang tải quảng cáo thưởng...");
-        Advertisement.Load(_rewardedAdUnitId, this);
+        Advertisement.Load(_rewardedAdId, this);
     }
-    // Hàm này gọi khi bạn muốn hiện quảng cáo (gắn vào nút bấm hoặc khi thua game)
+
+    // 2. Gọi Quảng cáo xen kẽ (Chuyển màn, Thua game...)
     public void ShowAd()
     {
-        Debug.Log("Đang tải quảng cáo...");
-        Advertisement.Load(_adUnitId, this);
+        Debug.Log("Đang tải quảng cáo xen kẽ...");
+        Advertisement.Load(_interstitialAdId, this);
     }
 
-    // --- Các hàm Interface bắt buộc (Copy y nguyên là chạy) ---
-
-    public void OnInitializationComplete()
-    {
-        Debug.Log("Unity Ads khởi tạo thành công.");
-    }
-
-    public void OnInitializationFailed(UnityAdsInitializationError error, string message)
-    {
-        Debug.Log($"Lỗi khởi tạo: {error.ToString()} - {message}");
-    }
+    // --- INTERFACE ---
 
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
-        // Tải xong thì hiện luôn
+        // Tải xong hiện luôn
         Advertisement.Show(adUnitId, this);
     }
 
-    public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
-    {
-        Debug.Log($"Lỗi tải quảng cáo: {message}");
-    }
-
-    public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message) { }
-
-    public void OnUnityAdsShowStart(string adUnitId) { }
-
-    public void OnUnityAdsShowClick(string adUnitId) { }
-
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState) 
     {
-        if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        if (showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
-            Debug.Log("Người dùng đã xem hết quảng cáo. Thưởng quà thôi!");
-            if (_onRewardComplete != null)
+            // SỬA LỖI: Kiểm tra đúng ID của loại quảng cáo Thưởng
+            if (adUnitId.Equals(_rewardedAdId))
             {
-                _onRewardComplete.Invoke(); // Kích hoạt đoạn code trong UILoseScreen
-                _onRewardComplete = null;   // Reset để tránh lỗi lần sau
+                Debug.Log("Đã xem xong Reward Video. Trao thưởng!");
+                if (_onRewardComplete != null)
+                {
+                    _onRewardComplete.Invoke();
+                    _onRewardComplete = null;
+                }
+            }
+            // Kiểm tra nếu là quảng cáo xen kẽ (thường không có thưởng)
+            else if (adUnitId.Equals(_interstitialAdId))
+            {
+                Debug.Log("Đã xem xong Interstitial Ad.");
             }
         }
     }
+
+    // Các hàm báo lỗi
+    public void OnInitializationComplete() { Debug.Log("Ads Init Success"); }
+    public void OnInitializationFailed(UnityAdsInitializationError error, string message) { Debug.Log($"Init Failed: {message}"); }
+    public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message) { Debug.Log($"Load Failed: {message}"); }
+    public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message) { Debug.Log($"Show Failed: {message}"); }
+    public void OnUnityAdsShowStart(string adUnitId) { }
+    public void OnUnityAdsShowClick(string adUnitId) { }
 }

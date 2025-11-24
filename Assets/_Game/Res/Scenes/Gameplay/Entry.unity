@@ -431,8 +431,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397093150}
-  - component: {fileID: 397093151}
   - component: {fileID: 397093152}
+  - component: {fileID: 397093153}
   m_Layer: 0
   m_Name: AdsManager
   m_TagString: Untagged
@@ -455,18 +455,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &397093151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 397093149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fede00b0bc22214ebee64f1e82e90ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AdManager
 --- !u!114 &397093152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,6 +467,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7753738c3a6c8ba4e9e6390619bda544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IAPManager
+--- !u!114 &397093153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397093149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fac316ae2f0ed149bae92544e1a904a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AdsManager
+  _androidGameId: 5990971
+  _testMode: 0
 --- !u!1 &421510354
 GameObject:
   m_ObjectHideFlags: 0
