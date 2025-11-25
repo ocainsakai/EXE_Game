@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a16cf7e3650aa7447a0c2e2ca83da18a, type: 3}
-  m_Name: Yellow Deck
+  m_Name: AnKheTraVang
   m_EditorClassIdentifier: 
   DeckID: 2
   DeckName: "\u0102n Kh\u1EBF Tr\u1EA3 V\xE0ng"
