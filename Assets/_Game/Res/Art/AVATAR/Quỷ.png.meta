@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c7980cc7df17e3e4b9b01ba7c5eaddf8
+guid: 9dbba7070a07b284ebd8519bf048876a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8560218906780252610
-    second: "Li\u0301nh 9_0"
+      213: -7487539194134751398
+    second: "li\u0301nh 1_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -53,7 +53,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -74,8 +74,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
+    textureFormat: 4
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Li\u0301nh 9_0"
+      name: "li\u0301nh 1_0"
       rect:
         serializedVersion: 2
         x: 0
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c93832edb10cc670800000000000000
-      internalID: 8560218906780252610
+      spriteID: a5798cb06cae61890800000000000000
+      internalID: -7487539194134751398
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Li\u0301nh 9_0": 8560218906780252610
+      "li\u0301nh 1_0": -7487539194134751398
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

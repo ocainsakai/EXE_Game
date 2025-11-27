@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Fish
+  m_Name: Trau
   m_EditorClassIdentifier: 
-  enemyID: linh2
-  nameDisplay: Linh 2
-  icon: {fileID: 8453286820495335250, guid: 51e952d07de3e9946a3a057f911736d2, type: 3}
-  atk: 10
-  hp: 100
-  count: 2
+  enemyID: linh6
+  nameDisplay: "Ng\u01B0u Ma T\u01B0\u1EDBng"
+  icon: {fileID: -846848168383044390, guid: b5b1558b379252843a5c295abe4c9e09, type: 3}
+  atk: 80
+  hp: 900
+  count: 5
   cost: 100
-  reward: 300
+  reward: 350

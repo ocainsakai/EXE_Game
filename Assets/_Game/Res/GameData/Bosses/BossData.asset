@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BossData
   m_EditorClassIdentifier: 
   enemyID: boss_0
-  nameDisplay: Boos 1
+  nameDisplay: "\u0110\u1EA1i B\xE0ng D\u0169ng M\xE3nh"
   icon: {fileID: -2336039528399532061, guid: 49adf646a7b1c634ca9e83209ed40d67, type: 3}
   atk: 100
-  hp: 100
-  count: 1
+  hp: 2200
+  count: 2
   cost: 100
-  reward: 100
+  reward: 2000
   abilities:
   - {fileID: 11400000, guid: 399259c8b58a8ae429b492dfee5855a5, type: 2}

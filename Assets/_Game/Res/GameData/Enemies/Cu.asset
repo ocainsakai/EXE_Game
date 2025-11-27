@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Fly Box
+  m_Name: Cu
   m_EditorClassIdentifier: 
-  enemyID: linh3
-  nameDisplay: Linh 3
-  icon: {fileID: 8034120489083570744, guid: 5d2d76421a55ac54286f02e793aeab8c, type: 3}
-  atk: 10
+  enemyID: linh10
+  nameDisplay: "D\u1EA1 Ki\xEAu Trinh S\xE1t"
+  icon: {fileID: 4887677840807297399, guid: b5eaf8fba48a01a41aa947879d87c9e2, type: 3}
+  atk: 40
   hp: 100
-  count: 3
-  cost: 150
-  reward: 250
+  count: 2
+  cost: 100
+  reward: 50

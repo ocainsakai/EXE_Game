@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67a6396b6ee56cd47ae5641f140c65ac, type: 3}
-  m_Name: BossData 1
+  m_Name: Ran 2 dau
   m_EditorClassIdentifier: 
   enemyID: boss_1
-  nameDisplay: Boss 2
+  nameDisplay: "Song X\xE0 Ch\xFAa"
   icon: {fileID: 3221721577579406510, guid: a28e708630a60bd428885d007ecb2aa6, type: 3}
-  atk: 100
-  hp: 100
-  count: 1
+  atk: 150
+  hp: 3000
+  count: 4
   cost: 100
-  reward: 100
+  reward: 2000
   abilities:
   - {fileID: 11400000, guid: 399259c8b58a8ae429b492dfee5855a5, type: 2}

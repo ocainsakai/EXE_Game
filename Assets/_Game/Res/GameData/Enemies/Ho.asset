@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Octupus
+  m_Name: Ho
   m_EditorClassIdentifier: 
-  enemyID: linh6
-  nameDisplay: Linh 6
-  icon: {fileID: -846848168383044390, guid: b5b1558b379252843a5c295abe4c9e09, type: 3}
-  atk: 88
-  hp: 888
-  count: 8
-  cost: 8
-  reward: 888
+  enemyID: linh7
+  nameDisplay: "B\u1EA1ch H\u1ED5 T\u01B0\u1EDBng"
+  icon: {fileID: -1874348630440426985, guid: 8f4739c0612331f409ecd2959470b59e, type: 3}
+  atk: 100
+  hp: 600
+  count: 3
+  cost: 100
+  reward: 250

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8d030a8f5d3674429692bbb27251ede, type: 3}
-  m_Name: Cat
+  m_Name: Ran
   m_EditorClassIdentifier: 
-  enemyID: linh1
-  nameDisplay: Linh 1
-  icon: {fileID: -7487539194134751398, guid: 9dbba7070a07b284ebd8519bf048876a, type: 3}
-  atk: 50
-  hp: 300
+  enemyID: linh3
+  nameDisplay: "X\xE0 Tinh V\u1EC7"
+  icon: {fileID: 8034120489083570744, guid: 5d2d76421a55ac54286f02e793aeab8c, type: 3}
+  atk: 45
+  hp: 170
   count: 3
-  cost: 300
-  reward: 500
+  cost: 100
+  reward: 60
