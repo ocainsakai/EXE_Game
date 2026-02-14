@@ -19,10 +19,6 @@ public class BattleVFXManager : MonoBehaviour
     [SerializeField] private GameObject healVFXPrefab;
     [SerializeField] private TextMeshProUGUI damageTextPrefab;
 
-    [Header("UI References")]
-    [SerializeField] private UISliderBarHelper playerHealthBar;
-    [SerializeField] private UISliderBarHelper enemyHealthBar;
-
     private Queue<GameObject> vfxPool = new Queue<GameObject>();
 
     private void Awake()
@@ -51,16 +47,7 @@ public class BattleVFXManager : MonoBehaviour
 
     public void PlayHitVFX(int damage, bool isPlayer = false, bool isCritical = false)
     {
-        UISliderBarHelper targetBar = isPlayer ? playerHealthBar : enemyHealthBar;
         Transform targetPoint = isPlayer ? playerPoint : enemyPoint;
-
-        /*// 1. Thanh máu rung nhẹ
-        targetBar.transform.DOShakePosition(0.2f, 5f, 10, 90, false, true);
-
-        // 2. Flash màu đỏ
-        targetBar.FlashVFX(Color.red, 0.25f);*/
-
-        // 3. Floating damage text
         var dmgText = Instantiate(damageTextPrefab, targetPoint.position, Quaternion.identity, vfxContainer);
         dmgText.text = (isCritical ? "CRIT " : "") + "-" + damage;
         dmgText.color = isCritical ? Color.yellow : Color.red;
@@ -72,14 +59,8 @@ public class BattleVFXManager : MonoBehaviour
         if (isCritical)
             mainCamera.transform.DOShakePosition(0.25f, 0.4f);
     }
-
-    // ============================================================
-    // 💚 HỒI MÁU
-    // ============================================================
-
     public void PlayHealVFX(int amount, bool isPlayer = false)
     {
-        UISliderBarHelper targetBar = isPlayer ? playerHealthBar : enemyHealthBar;
         Transform targetPoint = isPlayer ? playerPoint : enemyPoint;
 
         // Hiệu ứng particle heal (nếu có)
@@ -89,9 +70,6 @@ public class BattleVFXManager : MonoBehaviour
             vfx.transform.position = targetPoint.position;
             Destroy(vfx, 1.2f);
         }
-
-        // Flash xanh lá
-        targetBar.FlashVFX(Color.green, 0.25f);
 
         // Floating heal text
         var healText = Instantiate(damageTextPrefab, targetPoint.position, Quaternion.identity, vfxContainer);

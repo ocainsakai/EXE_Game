@@ -1,36 +1,30 @@
-using System;
-using _Game.Core.Gameplay.Combat;
-using _Game.Core.UIElements;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace _Game.Core
 {
-    [SerializeField] MapManager mapManager;
-    [SerializeField] BattleManager battleManager;
-
-    [SerializeField] private GameObject mapUI;
-    [SerializeField] private UIScreens uiScreens;
-
-    public static GameManager instance;
-    public void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (instance != null && instance != this)
+
+        public static GameManager instance;
+
+        public void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
         }
 
-        instance = this;
-    }
+        public void Start()
+        {
+            InitGame();
+        }
 
-    public void Start()
-    {
-        InitGame();
-    }
-
-    void InitGame()
-    {
-        mapUI.SetActive(true);
-        uiScreens.CloseAllScreens();         
+        private void InitGame()
+        {
+        }
     }
 }

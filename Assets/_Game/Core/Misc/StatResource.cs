@@ -17,7 +17,6 @@ public class StatResource
 
     public float Percent => maxValue > 0 ? (float)currentValue / maxValue : 0f;
 
-    // 🧩 Các sự kiện hữu ích
     public UnityEvent<int, int> onValueChanged = new();   // (current, max)
     public UnityEvent onDepleted = new();                // Khi = 0
     public UnityEvent onFull = new();                    // Khi = max

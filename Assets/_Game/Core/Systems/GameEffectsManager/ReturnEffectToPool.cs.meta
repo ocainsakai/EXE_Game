@@ -1,9 +1,0 @@
-fileFormatVersion: 2
-guid: 1da461819a09a9a4daf90eb3e1065004
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293814
-  packageName: BulletHell Elemental Template
-  packageVersion: 1.3.0
-  assetPath: Assets/BulletHellTemplate/Core/Systems/InstancePool/GameEffectsManager/ReturnEffectToPool.cs
-  uploadId: 777582
